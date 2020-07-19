@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D70910F24C3C04000F0337C /* BrowseSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D70910D24C3C04000F0337C /* BrowseSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70911C24C3F9D700F0337C /* BrowseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0D70910A24C3C04000F0337C /* BrowseSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BrowseSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D70910D24C3C04000F0337C /* BrowseSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowseSDK.h; sourceTree = "<group>"; };
 		0D70910E24C3C04000F0337C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D70911724C3C34000F0337C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0D70911C24C3F9D700F0337C /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,10 +48,26 @@
 		0D70910C24C3C04000F0337C /* BrowseSDK */ = {
 			isa = PBXGroup;
 			children = (
-				0D70910D24C3C04000F0337C /* BrowseSDK.h */,
 				0D70910E24C3C04000F0337C /* Info.plist */,
+				0D70911B24C3F99100F0337C /* View */,
+				0D70911A24C3F50100F0337C /* Model */,
 			);
 			path = BrowseSDK;
+			sourceTree = "<group>";
+		};
+		0D70911A24C3F50100F0337C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0D70911B24C3F99100F0337C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0D70911C24C3F9D700F0337C /* BrowseViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -61,7 +77,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D70910F24C3C04000F0337C /* BrowseSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +87,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0D70911224C3C04000F0337C /* Build configuration list for PBXNativeTarget "BrowseSDK" */;
 			buildPhases = (
+				0D70911924C3D2FF00F0337C /* SwiftFormat */,
+				0D70911824C3D2A500F0337C /* SwiftLint */,
 				0D70910524C3C04000F0337C /* Headers */,
 				0D70910624C3C04000F0337C /* Sources */,
 				0D70910724C3C04000F0337C /* Frameworks */,
@@ -128,11 +145,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0D70911824C3D2A500F0337C /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		0D70911924C3D2FF00F0337C /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0D70910624C3C04000F0337C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
