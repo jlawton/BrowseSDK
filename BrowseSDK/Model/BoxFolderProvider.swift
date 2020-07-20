@@ -9,9 +9,6 @@ import UIKit
 struct BoxFolderProvider {
     let client: BoxClient
 
-    // So we don't have to re-fetch thumbnails constantly.
-    // This would probably be better as an on-disk cache somewhere else.
-    private let imageCache = ImageCache(named: "BoxFolderProvider")
     // Limit the number of thumbnail requests made at once so there is room for
     // other requests.
     private var thumbnailRequestSema = DispatchSemaphore(value: 4)
@@ -68,13 +65,6 @@ struct BoxFolderProvider {
         }
 
         thumbnailQueue.async {
-            // Try the in-memory cache first
-            if let cached = imageCache[identifier] {
-                progress.completedUnitCount = 10
-                done(cached)
-                return
-            }
-
             // Don't make too many requests at once
             thumbnailRequestSema.wait()
 
@@ -85,7 +75,6 @@ struct BoxFolderProvider {
                     case let .success(data):
                         progress.completedUnitCount = 8
                         let image = UIImage(data: data, scale: 0)
-                        imageCache[identifier] = image
                         progress.completedUnitCount = 10
                         done(image)
                     case .failure:
