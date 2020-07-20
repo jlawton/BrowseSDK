@@ -20,7 +20,7 @@ struct BoxFolderProvider {
     private var thumbnailRequestSema = DispatchSemaphore(value: 4)
     private var thumbnailQueue = DispatchQueue(label: "BoxFolderProvider.thumbnails")
 
-    private static let root = BoxSDK.Constants.rootFolder
+    static let root = BoxSDK.Constants.rootFolder
     private let folderPageSize = 35
     private let searchPageSize = 20
 

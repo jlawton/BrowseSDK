@@ -30,6 +30,7 @@ class DefaultBrowseRouter: BrowseRouter {
                 browseToFile: browseToFile
             )
             dest.listingViewModel = item.listingViewModel()
+            dest.searchViewModel = item.searchViewModel()
             nav.pushViewController(dest, animated: true)
             return true
         }

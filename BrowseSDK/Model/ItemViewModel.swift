@@ -106,6 +106,13 @@ class ItemViewModel {
             createEnumerator: { provider.enumerator(for: identifier) }
         )
     }
+
+    func searchViewModel() -> SearchViewModel? {
+        guard isFolder else {
+            return nil
+        }
+        return SearchViewModel(provider: provider, folderID: identifier)
+    }
 }
 
 // MARK: - Equality

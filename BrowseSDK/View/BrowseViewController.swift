@@ -7,6 +7,23 @@ import UIKit
 
 public class BrowseViewController: AbstractListingViewController {
 
+    // MARK: - Data
+
+    var searchViewModel: SearchViewModel? {
+        didSet {
+            guard let searchVM = searchViewModel else {
+                navigationItem.searchController = nil
+                return
+            }
+
+            let searchResultsController = SearchResultsViewController(nibName: nil, bundle: nil)
+            searchResultsController.listingViewModel = searchVM.listingViewModel
+
+            let searchController = UISearchController(searchResultsController: searchResultsController)
+            navigationItem.searchController = searchController
+            searchController.searchResultsUpdater = self
+        }
+    }
 
     // MARK: - Lifecycle
 
@@ -14,6 +31,7 @@ public class BrowseViewController: AbstractListingViewController {
         super.viewDidLoad()
         tableView.register(BrowseItemCell.self, forCellReuseIdentifier: reuseIdentifier)
 
+        definesPresentationContext = true
     }
 
     override public func viewWillAppear(_ animated: Bool) {
@@ -22,3 +40,10 @@ public class BrowseViewController: AbstractListingViewController {
     }
 }
 
+// MARK: - Search
+
+extension BrowseViewController: UISearchResultsUpdating {
+    public func updateSearchResults(for searchController: UISearchController) {
+        searchViewModel?.update(query: searchController.searchBar.text ?? "")
+    }
+}

@@ -30,6 +30,11 @@ private extension BrowseViewController {
             createEnumerator: { provider.rootEnumerator() }
         )
 
+        searchViewModel = SearchViewModel(
+            provider: provider,
+            folderID: BoxFolderProvider.root
+        )
+
         router = DefaultBrowseRouter(
             source: self,
             navigationController: navigationController,
