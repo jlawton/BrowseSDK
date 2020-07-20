@@ -19,6 +19,7 @@ struct BoxFolderProvider {
 
     private static let root = BoxSDK.Constants.rootFolder
     private let folderPageSize = 35
+    private let searchPageSize = 20
 
     func rootEnumerator() -> BoxFolderEnumerator {
         enumerator(for: Self.root)
@@ -31,6 +32,21 @@ struct BoxFolderProvider {
                 usemarker: true,
                 limit: folderPageSize,
                 fields: nil,
+                completion: done
+            )
+        }
+    }
+
+    // MARK: Searching
+
+    func search(query: String, in folderID: String = Self.root) -> BoxFolderEnumerator {
+        BoxFolderEnumerator(pageSize: searchPageSize) { done in
+            client.search.query(
+                query: query,
+                ancestorFolderIDs: (folderID != Self.root) ? [folderID] : nil,
+                searchTrash: false,
+                fields: nil,
+                limit: searchPageSize,
                 completion: done
             )
         }
