@@ -13,6 +13,8 @@ struct BoxFolderProvider {
         self.client = client
     }
 
+    private let fields = ["name", "permissions"]
+
     // Limit the number of thumbnail requests made at once so there is room for
     // other requests.
     private var thumbnailRequestSema = DispatchSemaphore(value: 4)
@@ -32,7 +34,7 @@ struct BoxFolderProvider {
                 folderId: identifier,
                 usemarker: true,
                 limit: folderPageSize,
-                fields: nil,
+                fields: fields,
                 completion: done
             )
         }
@@ -46,7 +48,7 @@ struct BoxFolderProvider {
                 query: query,
                 ancestorFolderIDs: (folderID != Self.root) ? [folderID] : nil,
                 searchTrash: false,
-                fields: nil,
+                fields: fields,
                 limit: searchPageSize,
                 completion: done
             )
