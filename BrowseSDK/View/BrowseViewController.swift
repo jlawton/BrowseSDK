@@ -41,7 +41,12 @@ public class BrowseViewController: UITableViewController, NeedsListingViewModel 
     var router: BrowseRouter?
 
     func browseTo(item: ItemViewModel) {
-        router?.browseTo(item: item)
+        let success = router?.browseTo(item: item) ?? false
+        if !success {
+            for row in tableView.indexPathsForSelectedRows ?? [] {
+                tableView.deselectRow(at: row, animated: true)
+            }
+        }
     }
 
     // MARK: - UITableViewDataSource

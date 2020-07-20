@@ -33,7 +33,7 @@ private extension BrowseViewController {
         router = DefaultBrowseRouter(
             source: self,
             navigationController: navigationController,
-            browseToFile: { _, _ in }
+            browseToFile: { _, _ in false }
         )
     }
 }

@@ -6,11 +6,11 @@
 import UIKit
 
 protocol BrowseRouter {
-    func browseTo(item: ItemViewModel)
+    func browseTo(item: ItemViewModel) -> Bool
 }
 
 class DefaultBrowseRouter: BrowseRouter {
-    typealias BrowseToFile = (_ identifier: String, _ from: UIViewController) -> Void
+    typealias BrowseToFile = (_ identifier: String, _ from: UIViewController) -> Bool
     let browseToFile: BrowseToFile
     weak var source: UIViewController?
     weak var navigationController: UINavigationController?
@@ -21,7 +21,7 @@ class DefaultBrowseRouter: BrowseRouter {
         self.browseToFile = browseToFile
     }
 
-    func browseTo(item: ItemViewModel) {
+    func browseTo(item: ItemViewModel) -> Bool {
         if let nav = navigationController, item.isFolder {
             let dest = BrowseViewController(nibName: nil, bundle: nil)
             dest.router = DefaultBrowseRouter(
@@ -31,9 +31,11 @@ class DefaultBrowseRouter: BrowseRouter {
             )
             dest.listingViewModel = item.listingViewModel()
             nav.pushViewController(dest, animated: true)
+            return true
         }
         else if let source = source {
-            browseToFile(item.identifier, source)
+            return browseToFile(item.identifier, source)
         }
+        return false
     }
 }
