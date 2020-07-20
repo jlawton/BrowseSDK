@@ -8,14 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		0D4B732824C5500300FA43F1 /* BoxSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0D4B732724C5500300FA43F1 /* BoxSDK */; };
+		0D4B732A24C550D800FA43F1 /* BoxFolderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732924C550D800FA43F1 /* BoxFolderEnumerator.swift */; };
+		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
 		0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70911C24C3F9D700F0337C /* BrowseViewController.swift */; };
+		0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D4B732924C550D800FA43F1 /* BoxFolderEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxFolderEnumerator.swift; sourceTree = "<group>"; };
+		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		0D70910A24C3C04000F0337C /* BrowseSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BrowseSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D70910E24C3C04000F0337C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D70911724C3C34000F0337C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0D70911C24C3F9D700F0337C /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxFolderProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +36,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D4B732D24C5582F00FA43F1 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				0D4B732E24C5584200FA43F1 /* ImageCache.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		0D70910024C3C04000F0337C = {
 			isa = PBXGroup;
 			children = (
@@ -53,6 +67,7 @@
 				0D70910E24C3C04000F0337C /* Info.plist */,
 				0D70911B24C3F99100F0337C /* View */,
 				0D70911A24C3F50100F0337C /* Model */,
+				0D4B732D24C5582F00FA43F1 /* Utility */,
 			);
 			path = BrowseSDK;
 			sourceTree = "<group>";
@@ -60,6 +75,8 @@
 		0D70911A24C3F50100F0337C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */,
+				0D4B732924C550D800FA43F1 /* BoxFolderEnumerator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -200,6 +217,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
+				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,
+				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
+				0D4B732A24C550D800FA43F1 /* BoxFolderEnumerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
