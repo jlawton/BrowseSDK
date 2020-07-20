@@ -43,21 +43,21 @@ extension UIImage {
             return UIImage(systemName: "folder.fill", withConfiguration: configuration)!
                 .withRenderingMode(.alwaysTemplate)
                 .squareThumbnail(size, fillColor: UIColor { (traits) -> UIColor in
-                    (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) : #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+                    (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) : #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
                 })
         case .genericDocument:
             // swiftlint:disable:next force_unwrapping
             return UIImage(systemName: "doc.fill", withConfiguration: configuration)!
                 .withRenderingMode(.alwaysTemplate)
                 .squareThumbnail(size, fillColor: UIColor { (traits) -> UIColor in
-                    (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) : #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+                    (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) : #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
                 })
         case .weblink:
             // swiftlint:disable:next force_unwrapping
             return UIImage(systemName: "link.circle.fill", withConfiguration: configuration)!
                 .withRenderingMode(.alwaysTemplate)
                 .squareThumbnail(size, fillColor: UIColor { (traits) -> UIColor in
-                    (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) : #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+                    (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) : #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
                 })
         }
     }
