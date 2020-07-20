@@ -38,7 +38,7 @@ public class AbstractListingViewController: UITableViewController,
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        listingViewModel?.reloadFirstPage()
+        listingViewModel?.loadNextPage()
     }
 
     // MARK: - Routing
