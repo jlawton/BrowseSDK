@@ -22,6 +22,7 @@
 		0DC58FF724C607FB00B7BA00 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF624C607FB00B7BA00 /* SearchViewModel.swift */; };
 		0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */; };
 		0DC58FFB24C6251400B7BA00 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FFA24C6251400B7BA00 /* SearchResultsViewController.swift */; };
+		0DC58FFD24C642BF00B7BA00 /* UIImage+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		0DC58FF624C607FB00B7BA00 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractListingViewController.swift; sourceTree = "<group>"; };
 		0DC58FFA24C6251400B7BA00 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Icon.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				0D4B732E24C5584200FA43F1 /* ImageCache.swift */,
 				0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */,
 				0DC58FF424C5B84400B7BA00 /* Math.swift */,
+				0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,
 				0DC58FF724C607FB00B7BA00 /* SearchViewModel.swift in Sources */,
 				0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */,
+				0DC58FFD24C642BF00B7BA00 /* UIImage+Icon.swift in Sources */,
 				0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */,
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,

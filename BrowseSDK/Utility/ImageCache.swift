@@ -30,6 +30,15 @@ final class ImageCache {
             }
         }
     }
+
+    subscript(key: String, default create: @autoclosure () -> UIImage) -> UIImage {
+        if let cached = self[key] {
+            return cached
+        }
+        let created = create()
+        self[key] = created
+        return created
+    }
 }
 
 extension UIImage {
