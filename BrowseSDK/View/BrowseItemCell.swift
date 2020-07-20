@@ -7,22 +7,29 @@ import UIKit
 
 class BrowseItemCell: UITableViewCell, NeedsItemViewModel {
 
+    override init(style _: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var itemViewModel: ItemViewModel? {
         didSet {
             oldValue?.cancelThumbnailLoading()
 
             textLabel?.text = itemViewModel?.name
-
-            let thumbSize = ItemViewModel.preferredThumbnailSize()
-            let configuration = UIImage.SymbolConfiguration(pointSize: CGFloat(thumbSize))
+            detailTextLabel?.text = itemViewModel?.detail
 
             if itemViewModel?.isFolder == true {
                 accessoryType = .disclosureIndicator
-                imageView?.image = UIImage(systemName: "folder.fill", withConfiguration: configuration)?.squareThumbnail(thumbSize)
+                imageView?.image = (itemViewModel?.icon).map(UIImage.icon(_:))
             }
             else {
                 accessoryType = .none
-                imageView?.image = UIImage(systemName: "doc.fill", withConfiguration: configuration)?.squareThumbnail(thumbSize)
+                imageView?.image = (itemViewModel?.icon).map(UIImage.icon(_:))
                 itemViewModel?.requestThumbnail { thumb in
                     self.imageView?.image = thumb
                     self.setNeedsLayout()
@@ -34,6 +41,7 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel {
             else {
                 textLabel?.textColor = .label
             }
+            detailTextLabel?.textColor = .secondaryLabel
         }
     }
 

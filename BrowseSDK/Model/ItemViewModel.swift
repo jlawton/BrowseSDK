@@ -45,6 +45,41 @@ class ItemViewModel {
         }
     }
 
+    var detail: String {
+        switch item {
+        case let .folder(folder):
+            return [
+                folder.modifiedAt.flatMap(Self.dateFormatter.string(from:))
+            ].compactMap { $0 }.joined(separator: " · ")
+        case let .file(file):
+            return [
+                file.size.flatMap(Self.sizeFormatter.string(for:)),
+                file.modifiedAt.flatMap(Self.dateFormatter.string(from:))
+            ].compactMap { $0 }.joined(separator: " · ")
+        case let .webLink(link):
+            return [
+                link.modifiedAt.flatMap(Self.dateFormatter.string(from:))
+            ].compactMap { $0 }.joined(separator: " · ")
+        }
+    }
+
+    var icon: UIImage.Icon {
+        switch item {
+        case let .folder(folder):
+            if folder.isExternallyOwned ?? false {
+                return .externalFolder
+            }
+            else if folder.hasCollaborations ?? false {
+                return .sharedFolder
+            }
+            return .personalFolder
+        case .file:
+            return .genericDocument
+        case .webLink:
+            return .weblink
+        }
+    }
+
     var isFolder: Bool {
         if case .folder = item {
             return true
@@ -173,4 +208,20 @@ extension ItemViewModel: CustomStringConvertible {
     var description: String {
         return "VM(\(item))"
     }
+}
+
+extension ItemViewModel {
+    static let sizeFormatter: ByteCountFormatter = {
+        let formatter = ByteCountFormatter()
+        formatter.countStyle = .file
+        return formatter
+    }()
+
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        formatter.doesRelativeDateFormatting = true
+        return formatter
+    }()
 }

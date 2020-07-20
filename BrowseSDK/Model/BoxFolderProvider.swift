@@ -13,7 +13,10 @@ struct BoxFolderProvider {
         self.client = client
     }
 
-    private let fields = ["name", "permissions"]
+    private let fields = [
+        "name", "permissions", "sha1", "size", "modified_at", "path_collection",
+        "has_collaborations", "is_externally_owned"
+    ]
 
     // Limit the number of thumbnail requests made at once so there is room for
     // other requests.
