@@ -14,11 +14,12 @@
 		0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */; };
 		0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */; };
 		0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */; };
-		0DC58FC624C5937900B7BA00 /* ListingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */; };
+		0DC58FC624C5937900B7BA00 /* BrowseItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC524C5937900B7BA00 /* BrowseItemCell.swift */; };
 		0DC58FC824C59A1500B7BA00 /* BrowseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */; };
 		0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */; };
 		0DC58FF324C5B76800B7BA00 /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */; };
 		0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF424C5B84400B7BA00 /* Math.swift */; };
+		0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,11 +32,12 @@
 		0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxFolderProvider.swift; sourceTree = "<group>"; };
 		0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewModel.swift; sourceTree = "<group>"; };
 		0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
-		0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingItemCell.swift; sourceTree = "<group>"; };
+		0DC58FC524C5937900B7BA00 /* BrowseItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseItemCell.swift; sourceTree = "<group>"; };
 		0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseRouter.swift; sourceTree = "<group>"; };
 		0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowseViewController+Convenience.swift"; sourceTree = "<group>"; };
 		0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
 		0DC58FF424C5B84400B7BA00 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractListingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +106,8 @@
 			children = (
 				0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */,
 				0D70911C24C3F9D700F0337C /* BrowseViewController.swift */,
-				0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */,
+				0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */,
+				0DC58FC524C5937900B7BA00 /* BrowseItemCell.swift */,
 				0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */,
 			);
 			path = View;
@@ -241,13 +244,14 @@
 				0DC58FF324C5B76800B7BA00 /* UIImage+Scaling.swift in Sources */,
 				0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */,
 				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
-				0DC58FC624C5937900B7BA00 /* ListingItemCell.swift in Sources */,
+				0DC58FC624C5937900B7BA00 /* BrowseItemCell.swift in Sources */,
 				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,
 				0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */,
 				0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */,
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
 				0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */,
+				0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

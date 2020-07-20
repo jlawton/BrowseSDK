@@ -5,9 +5,7 @@
 
 import UIKit
 
-class ListingItemCell: UITableViewCell {
-
-    static let reuseIdentifier = "ListingItemCell"
+class BrowseItemCell: UITableViewCell, NeedsItemViewModel {
 
     var itemViewModel: ItemViewModel? {
         didSet {

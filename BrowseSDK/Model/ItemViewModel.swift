@@ -7,6 +7,10 @@ import BoxSDK
 import Foundation
 import UIKit
 
+protocol NeedsItemViewModel: AnyObject {
+    var itemViewModel: ItemViewModel? { get set }
+}
+
 class ItemViewModel {
 
     private let item: FolderItem
