@@ -7,14 +7,16 @@ import BoxSDK
 import Foundation
 
 /// An adapter to make folder enumeration a bit nicer to connect to UI.
-class BoxFolderEnumerator {
-    typealias FolderEnumeratorResult = Result<[FolderItem], Error>
-    private let pageSize: Int
-    private var iteratorResult: Result<PagingIterator<FolderItem>, Error>?
-    // This is gross, and shouldn't be necessary
-    private var pageCallbacks: [(FolderEnumeratorResult) -> Void] = []
+class BoxEnumerator {
+    typealias PageResult = Result<[FolderItem], Error>
+    typealias Iterator = PagingIterator<FolderItem>
 
-    init(pageSize: Int, _ createIterator: @escaping (@escaping Callback<PagingIterator<FolderItem>>) -> Void) {
+    private let pageSize: Int
+    private var iteratorResult: Result<Iterator, Error>?
+    // This is gross, and shouldn't be necessary
+    private var pageCallbacks: [(PageResult) -> Void] = []
+
+    init(pageSize: Int, _ createIterator: @escaping (@escaping Callback<Iterator>) -> Void) {
         self.pageSize = pageSize
         // I think it's pretty gross that the init causes a fetch from the
         // network, but otherwise there's more state to track
@@ -33,7 +35,7 @@ class BoxFolderEnumerator {
     }
 
     // This must be called from the main thread!
-    func getNextPage(completion: @escaping (FolderEnumeratorResult) -> Void) {
+    func getNextPage(completion: @escaping (PageResult) -> Void) {
         guard let iteratorResult = self.iteratorResult else {
             pageCallbacks.append(completion)
             return

@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0D4B732824C5500300FA43F1 /* BoxSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0D4B732724C5500300FA43F1 /* BoxSDK */; };
-		0D4B732A24C550D800FA43F1 /* BoxFolderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732924C550D800FA43F1 /* BoxFolderEnumerator.swift */; };
+		0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */; };
 		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
 		0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70911C24C3F9D700F0337C /* BrowseViewController.swift */; };
 		0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D4B732924C550D800FA43F1 /* BoxFolderEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxFolderEnumerator.swift; sourceTree = "<group>"; };
+		0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxEnumerator.swift; sourceTree = "<group>"; };
 		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		0D70910A24C3C04000F0337C /* BrowseSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BrowseSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D70910E24C3C04000F0337C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */,
-				0D4B732924C550D800FA43F1 /* BoxFolderEnumerator.swift */,
+				0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -219,7 +219,7 @@
 				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
 				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
-				0D4B732A24C550D800FA43F1 /* BoxFolderEnumerator.swift in Sources */,
+				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
