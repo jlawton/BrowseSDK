@@ -63,8 +63,12 @@ public class AbstractListingViewController: UITableViewController,
     override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // swiftlint:disable:next force_cast
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ListingItemCell
-        cell.itemViewModel = listingViewModel?.item(at: indexPath)
+        configure(cell, at: indexPath)
         return cell
+    }
+
+    func configure(_ cell: ListingItemCell, at indexPath: IndexPath) {
+        cell.itemViewModel = listingViewModel?.item(at: indexPath)
     }
 
     // MARK: - UITableViewDelegate

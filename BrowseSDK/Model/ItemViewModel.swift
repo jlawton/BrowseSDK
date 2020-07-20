@@ -45,7 +45,19 @@ class ItemViewModel {
         }
     }
 
-    var detail: String {
+    enum Mode {
+        case browse
+        case search
+    }
+
+    func detail(for mode: Mode) -> String {
+        switch mode {
+        case .browse: return sizeAndModification
+        case .search: return breadcrumbs ?? sizeAndModification
+        }
+    }
+
+    var sizeAndModification: String {
         switch item {
         case let .folder(folder):
             return [

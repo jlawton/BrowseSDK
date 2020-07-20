@@ -16,12 +16,14 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var mode: ItemViewModel.Mode = .browse
+
     var itemViewModel: ItemViewModel? {
         didSet {
             oldValue?.cancelThumbnailLoading()
 
             textLabel?.text = itemViewModel?.name
-            detailTextLabel?.text = itemViewModel?.detail
+            detailTextLabel?.text = itemViewModel?.detail(for: mode)
 
             if itemViewModel?.isFolder == true {
                 accessoryType = .disclosureIndicator

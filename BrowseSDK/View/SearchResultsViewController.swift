@@ -13,4 +13,11 @@ public class SearchResultsViewController: AbstractListingViewController {
         super.viewDidLoad()
         tableView.register(BrowseItemCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
+
+    override func configure(_ cell: ListingItemCell, at indexPath: IndexPath) {
+        if let browseCell = cell as? BrowseItemCell {
+            browseCell.mode = .search
+        }
+        super.configure(cell, at: indexPath)
+    }
 }
