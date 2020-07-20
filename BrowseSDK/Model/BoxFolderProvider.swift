@@ -76,7 +76,7 @@ struct BoxFolderProvider {
 
             progress.performAsCurrent(withPendingUnitCount: 8) {
                 // Hit the network and cache any successful result
-                client.files.getThumbnail(forFile: identifier, extension: .jpg) { result in
+                client.files.getThumbnail(forFile: identifier, extension: .jpg, minHeight: 160, minWidth: 160) { result in
                     switch result {
                     case let .success(data):
                         progress.completedUnitCount = 8

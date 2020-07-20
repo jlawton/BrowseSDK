@@ -10,7 +10,7 @@ import UIKit
 final class ImageCache {
     private let cache: NSCache<NSString, UIImage>
 
-    init(named: String, costLimit: Int = 4 * 1024 * 1024) {
+    init(named: String, costLimit: Int = 8 * 1024 * 1024) {
         cache = NSCache<NSString, UIImage>()
         cache.name = named
         cache.countLimit = 200
