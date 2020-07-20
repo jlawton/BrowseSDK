@@ -21,8 +21,8 @@ struct BoxFolderProvider {
     private var thumbnailQueue = DispatchQueue(label: "BoxFolderProvider.thumbnails")
 
     static let root = BoxSDK.Constants.rootFolder
-    private let folderPageSize = 35
-    private let searchPageSize = 20
+    private let folderPageSize = 30
+    private let searchPageSize = 15
 
     func rootEnumerator() -> BoxEnumerator {
         enumerator(for: Self.root)
