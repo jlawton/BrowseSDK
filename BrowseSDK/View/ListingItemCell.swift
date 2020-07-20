@@ -14,14 +14,17 @@ class ListingItemCell: UITableViewCell {
             oldValue?.cancelThumbnailLoading()
 
             textLabel?.text = itemViewModel?.name
-            let configuration = UIImage.SymbolConfiguration(pointSize: CGFloat(ItemViewModel.preferredThumbnailSize()))
+
+            let thumbSize = ItemViewModel.preferredThumbnailSize()
+            let configuration = UIImage.SymbolConfiguration(pointSize: CGFloat(thumbSize))
+
             if itemViewModel?.isFolder == true {
                 accessoryType = .disclosureIndicator
-                imageView?.image = UIImage(systemName: "folder.fill", withConfiguration: configuration)
+                imageView?.image = UIImage(systemName: "folder.fill", withConfiguration: configuration)?.squareThumbnail(thumbSize)
             }
             else {
                 accessoryType = .none
-                imageView?.image = UIImage(systemName: "doc.fill", withConfiguration: configuration)
+                imageView?.image = UIImage(systemName: "doc.fill", withConfiguration: configuration)?.squareThumbnail(thumbSize)
                 itemViewModel?.requestThumbnail { thumb in
                     self.imageView?.image = thumb
                     self.setNeedsLayout()

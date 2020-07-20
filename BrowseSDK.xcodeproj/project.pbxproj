@@ -17,6 +17,8 @@
 		0DC58FC624C5937900B7BA00 /* ListingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */; };
 		0DC58FC824C59A1500B7BA00 /* BrowseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */; };
 		0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */; };
+		0DC58FF324C5B76800B7BA00 /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */; };
+		0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF424C5B84400B7BA00 /* Math.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingItemCell.swift; sourceTree = "<group>"; };
 		0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseRouter.swift; sourceTree = "<group>"; };
 		0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowseViewController+Convenience.swift"; sourceTree = "<group>"; };
+		0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
+		0DC58FF424C5B84400B7BA00 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +54,8 @@
 			isa = PBXGroup;
 			children = (
 				0D4B732E24C5584200FA43F1 /* ImageCache.swift */,
+				0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */,
+				0DC58FF424C5B84400B7BA00 /* Math.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -232,6 +238,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DC58FC824C59A1500B7BA00 /* BrowseRouter.swift in Sources */,
+				0DC58FF324C5B76800B7BA00 /* UIImage+Scaling.swift in Sources */,
+				0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */,
 				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
 				0DC58FC624C5937900B7BA00 /* ListingItemCell.swift in Sources */,
 				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,

@@ -57,7 +57,7 @@ struct BoxFolderProvider {
 
     // MARK: Thumbnails
 
-    func loadThumbnail(for identifier: String, size _: Int, _ completion: @escaping (UIImage?) -> Void) -> Progress {
+    func loadThumbnail(for identifier: String, size: Int, _ completion: @escaping (UIImage?) -> Void) -> Progress {
         let progress = Progress.discreteProgress(totalUnitCount: 10)
 
         // Always answer asynchronously on the main thread, and only if the
@@ -80,7 +80,7 @@ struct BoxFolderProvider {
                     switch result {
                     case let .success(data):
                         progress.completedUnitCount = 8
-                        let image = UIImage(data: data, scale: 0)
+                        let image = UIImage(data: data, scale: 0)?.squareThumbnail(size)
                         progress.completedUnitCount = 10
                         done(image)
                     case .failure:
