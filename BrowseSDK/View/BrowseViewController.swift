@@ -38,8 +38,10 @@ public class BrowseViewController: UITableViewController, NeedsListingViewModel 
 
     // MARK: - Routing
 
+    var router: BrowseRouter?
 
     func browseTo(item: ItemViewModel) {
+        router?.browseTo(item: item)
     }
 
     // MARK: - UITableViewDataSource
