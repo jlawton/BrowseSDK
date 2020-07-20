@@ -66,7 +66,7 @@ extension PagingIterator {
                 case let .failure(error):
                     if !calledCompletion {
                         calledCompletion = true
-                        if error.message == .endOfList {
+                        if error.message == .endOfList, !elements.isEmpty {
                             completion(.success(elements))
                         }
                         else {
