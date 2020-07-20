@@ -5,6 +5,7 @@
 
 import AuthenticationServices
 import BoxSDK
+import BrowseSDK
 import UIKit
 
 class LoginViewController: UIViewController, ASWebAuthenticationPresentationContextProviding {
@@ -23,7 +24,7 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
             switch result {
             case let .success(client):
                 self?.client = client
-                // DO SOMETHING
+                self?.browseRoot()
             case let .failure(error):
                 print("error in login: \(error)")
                 self?.displayError(error)
@@ -32,17 +33,27 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     func displayError(_ error: Error) {
-        let alert = UIAlertController(
-            title: "Something went wrong",
-            message: error.localizedDescription,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(
-            title: "Dismiss",
-            style: .default,
-            handler: nil
-        ))
-        present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Something went wrong",
+                message: error.localizedDescription,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(
+                title: "Dismiss",
+                style: .default,
+                handler: nil
+            ))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    private func browseRoot() {
+        DispatchQueue.main.async {
+            if let nav = self.navigationController {
+                BrowseViewController.pushBrowseController(client: self.client, onto: nav)
+            }
+        }
     }
 
     // MARK: ASWebAuthenticationPresentationContextProviding
