@@ -16,6 +16,7 @@
 		0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */; };
 		0DC58FC624C5937900B7BA00 /* ListingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */; };
 		0DC58FC824C59A1500B7BA00 /* BrowseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */; };
+		0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
 		0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingItemCell.swift; sourceTree = "<group>"; };
 		0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseRouter.swift; sourceTree = "<group>"; };
+		0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowseViewController+Convenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		0D70911B24C3F99100F0337C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */,
 				0D70911C24C3F9D700F0337C /* BrowseViewController.swift */,
 				0DC58FC524C5937900B7BA00 /* ListingItemCell.swift */,
 				0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */,
@@ -233,6 +236,7 @@
 				0DC58FC624C5937900B7BA00 /* ListingItemCell.swift in Sources */,
 				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,
 				0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */,
+				0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */,
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
 				0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */,

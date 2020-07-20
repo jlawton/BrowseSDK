@@ -9,6 +9,10 @@ import UIKit
 struct BoxFolderProvider {
     let client: BoxClient
 
+    init(client: BoxClient) {
+        self.client = client
+    }
+
     // Limit the number of thumbnail requests made at once so there is room for
     // other requests.
     private var thumbnailRequestSema = DispatchSemaphore(value: 4)
