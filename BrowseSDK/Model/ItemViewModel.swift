@@ -23,6 +23,13 @@ class ItemViewModel {
         self.provider = provider
     }
 
+    var fileModel: File? {
+        if case let .file(file) = item {
+            return file
+        }
+        return nil
+    }
+
     var identifier: String {
         switch item {
         case let .folder(folder):
@@ -122,17 +129,6 @@ class ItemViewModel {
             return true
         }
         return false
-    }
-
-    var allowsReading: Bool {
-        switch item {
-        case .folder:
-            return true
-        case let .file(file):
-            return file.permissions?.canDownload ?? false
-        case .webLink:
-            return false
-        }
     }
 
     func requestThumbnail(_ completion: @escaping (UIImage) -> Void) {

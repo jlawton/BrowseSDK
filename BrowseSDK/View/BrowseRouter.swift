@@ -6,22 +6,34 @@
 import UIKit
 
 protocol BrowseRouter {
-    func browseTo(item: ItemViewModel) -> Bool
+    func canBrowseTo(item: ItemViewModel) -> Bool
+    func browseTo(item: ItemViewModel) -> SelectionBehavior
 }
 
 class DefaultBrowseRouter: BrowseRouter {
-    typealias BrowseToFile = (_ identifier: String, _ from: UIViewController) -> Bool
     let browseToFile: BrowseToFile
     weak var source: UIViewController?
     weak var navigationController: UINavigationController?
 
-    init(source: UIViewController, navigationController: UINavigationController, browseToFile: @escaping BrowseToFile) {
+    init(source: UIViewController, navigationController: UINavigationController, browseToFile: BrowseToFile) {
         self.source = source
         self.navigationController = navigationController
         self.browseToFile = browseToFile
     }
 
-    func browseTo(item: ItemViewModel) -> Bool {
+    func canBrowseTo(item: ItemViewModel) -> Bool {
+        if item.isFolder {
+            return true
+        }
+        else if let file = item.fileModel {
+            return browseToFile.canBrowseToFile(file)
+        }
+        else {
+            return false
+        }
+    }
+
+    func browseTo(item: ItemViewModel) -> SelectionBehavior {
         if let nav = navigationController, item.isFolder {
             let dest = BrowseViewController(nibName: nil, bundle: nil)
             dest.router = DefaultBrowseRouter(
@@ -32,11 +44,11 @@ class DefaultBrowseRouter: BrowseRouter {
             dest.listingViewModel = item.listingViewModel()
             dest.searchViewModel = item.searchViewModel()
             nav.pushViewController(dest, animated: true)
-            return true
+            return .remainSelected
         }
-        else if let source = source {
-            return browseToFile(item.identifier, source)
+        else if let source = source, let file = item.fileModel {
+            return browseToFile.browseToFile(file, source)
         }
-        return false
+        return .deselect
     }
 }

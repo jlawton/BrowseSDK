@@ -5,7 +5,7 @@
 
 import UIKit
 
-class BrowseItemCell: UITableViewCell, NeedsItemViewModel {
+class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled {
 
     override init(style _: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -17,6 +17,12 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel {
     }
 
     var mode: ItemViewModel.Mode = .browse
+
+    var showDisabled: Bool = false {
+        didSet {
+            textLabel?.textColor = showDisabled ? .secondaryLabel : .label
+        }
+    }
 
     var itemViewModel: ItemViewModel? {
         didSet {
@@ -37,18 +43,13 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel {
                     self.setNeedsLayout()
                 }
             }
-            if itemViewModel?.allowsReading == false {
-                textLabel?.textColor = .secondaryLabel
-            }
-            else {
-                textLabel?.textColor = .label
-            }
             detailTextLabel?.textColor = .secondaryLabel
         }
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        showDisabled = false
         itemViewModel = nil
     }
 }

@@ -7,11 +7,9 @@ import BoxSDK
 import UIKit
 
 public extension BrowseViewController {
-    typealias BrowseToFile = (_ identifier: String, _ from: UIViewController) -> Bool
-
     static func browseNavigationController(
         client: BoxClient,
-        browseToFile: @escaping BrowseToFile = { _, _ in false }
+        browseToFile: BrowseToFile = .noFileAction
     ) -> UINavigationController {
         let controller = BrowseViewController(nibName: nil, bundle: nil)
         let nav = UINavigationController(rootViewController: controller)
@@ -23,7 +21,7 @@ public extension BrowseViewController {
         client: BoxClient,
         onto navigationController: UINavigationController,
         animated: Bool = true,
-        browseToFile: @escaping BrowseToFile = { _, _ in false }
+        browseToFile: BrowseToFile = .noFileAction
     ) {
         let controller = BrowseViewController(nibName: nil, bundle: nil)
         controller.configure(client: client, navigationController: navigationController, browseToFile: browseToFile)
@@ -35,7 +33,7 @@ private extension BrowseViewController {
     func configure(
         client: BoxClient,
         navigationController: UINavigationController,
-        browseToFile: @escaping BrowseToFile
+        browseToFile: BrowseToFile
     ) {
         let provider = BoxFolderProvider(client: client)
         listingViewModel = ListingViewModel(

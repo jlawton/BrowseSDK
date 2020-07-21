@@ -5,7 +5,11 @@
 
 import UIKit
 
-typealias ListingItemCell = UITableViewCell & NeedsItemViewModel
+protocol CanShowDisabled: AnyObject {
+    var showDisabled: Bool { get set }
+}
+
+typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabled
 
 public class AbstractListingViewController: UITableViewController,
     NeedsListingViewModel, ListingViewModelDelegate {
@@ -48,9 +52,13 @@ public class AbstractListingViewController: UITableViewController,
 
     var router: BrowseRouter?
 
+    func canBrowseTo(item: ItemViewModel) -> Bool {
+        router?.canBrowseTo(item: item) ?? false
+    }
+
     func browseTo(item: ItemViewModel) {
-        let success = router?.browseTo(item: item) ?? false
-        if !success {
+        let behavior = router?.browseTo(item: item) ?? .deselect
+        if behavior == .deselect {
             for row in tableView.indexPathsForSelectedRows ?? [] {
                 tableView.deselectRow(at: row, animated: true)
             }
@@ -71,7 +79,10 @@ public class AbstractListingViewController: UITableViewController,
     }
 
     func configure(_ cell: ListingItemCell, at indexPath: IndexPath) {
-        cell.itemViewModel = listingViewModel?.item(at: indexPath)
+        if let viewModel = listingViewModel?.item(at: indexPath) {
+            cell.showDisabled = !canBrowseTo(item: viewModel)
+            cell.itemViewModel = viewModel
+        }
     }
 
     // MARK: - UITableViewDelegate
@@ -87,7 +98,7 @@ public class AbstractListingViewController: UITableViewController,
         guard let viewModel = listingViewModel?.item(at: indexPath) else {
             return nil
         }
-        return (viewModel.allowsReading) ? indexPath : nil
+        return canBrowseTo(item: viewModel) ? indexPath : nil
     }
 
     // MARK: - Paging

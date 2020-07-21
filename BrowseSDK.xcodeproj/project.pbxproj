@@ -10,6 +10,7 @@
 		0D4B732824C5500300FA43F1 /* BoxSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0D4B732724C5500300FA43F1 /* BoxSDK */; };
 		0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */; };
 		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
+		0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91224C675D200741433 /* BrowseToFile.swift */; };
 		0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70911C24C3F9D700F0337C /* BrowseViewController.swift */; };
 		0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */; };
 		0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxEnumerator.swift; sourceTree = "<group>"; };
 		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		0D66B91224C675D200741433 /* BrowseToFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseToFile.swift; sourceTree = "<group>"; };
 		0D70910A24C3C04000F0337C /* BrowseSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BrowseSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D70910E24C3C04000F0337C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D70911724C3C34000F0337C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */,
 				0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */,
 				0DC58FF624C607FB00B7BA00 /* SearchViewModel.swift */,
+				0D66B91224C675D200741433 /* BrowseToFile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			files = (
 				0DC58FC824C59A1500B7BA00 /* BrowseRouter.swift in Sources */,
 				0DC58FF324C5B76800B7BA00 /* UIImage+Scaling.swift in Sources */,
+				0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */,
 				0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */,
 				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
 				0DC58FC624C5937900B7BA00 /* BrowseItemCell.swift in Sources */,

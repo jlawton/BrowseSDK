@@ -49,11 +49,37 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     private func browseRoot() {
+        let selectFile = BrowseToFile(
+            canBrowseToFile: { (file) -> Bool in
+                (file.permissions?.canDownload ?? false)
+                    && (file.name?.lowercased().hasSuffix("pdf") ?? false)
+            },
+            browseToFile: { (file: File, fromVC: UIViewController) -> SelectionBehavior in
+                let dest = self.fileViewController(for: file)
+                fromVC.present(dest, animated: true, completion: nil)
+                return .deselect
+            }
+        )
+
         DispatchQueue.main.async {
             if let nav = self.navigationController {
-                BrowseViewController.pushBrowseController(client: self.client, onto: nav)
+                BrowseViewController.pushBrowseController(client: self.client, onto: nav, browseToFile: selectFile)
             }
         }
+    }
+
+    private func fileViewController(for file: File) -> UIViewController {
+        let alert = UIAlertController(
+            title: "Preview File",
+            message: "\(file.name!) (\(file.id))",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(
+            title: "Dismiss",
+            style: .cancel,
+            handler: nil
+        ))
+        return alert
     }
 
     // MARK: ASWebAuthenticationPresentationContextProviding
