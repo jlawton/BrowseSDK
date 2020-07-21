@@ -74,7 +74,8 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
                 BrowseViewController.pushBrowseController(
                     client: self.client,
                     onto: nav,
-                    browseToFile: selectFile)
+                    browseToFile: selectFile
+                )
             }
         }
     }
