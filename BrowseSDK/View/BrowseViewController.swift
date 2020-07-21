@@ -7,6 +7,11 @@ import UIKit
 
 public class BrowseViewController: AbstractListingViewController {
 
+    lazy var actions = FolderActions(FolderActionHandlers(
+        createFolder: { print("CREATE FOLDER") },
+        importMedia: { print("IMPORT MEDIA") }
+    ))
+
     // MARK: - Data
 
     var searchViewModel: SearchViewModel? {
@@ -31,6 +36,9 @@ public class BrowseViewController: AbstractListingViewController {
         super.viewDidLoad()
         tableView.register(BrowseItemCell.self, forCellReuseIdentifier: reuseIdentifier)
 
+        navigationItem.rightBarButtonItem = actions.addToFolderMenuButton
+
+        // Context for search presentation
         definesPresentationContext = true
     }
 
