@@ -33,6 +33,8 @@ class ListingViewModel {
 
     let title: String
 
+    var isFinishedPaging: Bool = false
+
     func item(at indexPath: IndexPath) -> ItemViewModel? {
         return itemViewModels[indexPath.row]
     }
@@ -49,11 +51,15 @@ class ListingViewModel {
         pageLoadProgress?.cancel()
         pageLoadProgress = nil
         enumerator = nil
+        isFinishedPaging = false
         loadNextPage()
     }
 
     func loadNextPage() {
         guard pageLoadProgress == nil else {
+            return
+        }
+        if isFinishedPaging {
             return
         }
 
@@ -84,10 +90,14 @@ class ListingViewModel {
                 else {
                     self.itemViewModels += page
                 }
-                self.delegate?.listingItemsChanged(self)
-            case .failure: break
+                if page.isEmpty {
+                    self.isFinishedPaging = true
+                }
+            case .failure:
+                self.isFinishedPaging = true
             }
             self.pageLoadProgress = nil
+            self.delegate?.listingItemsChanged(self)
         }
     }
 }

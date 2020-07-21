@@ -21,6 +21,7 @@ public class AbstractListingViewController: UITableViewController,
             title = listingViewModel?.title
             listingViewModel?.delegate = self
             tableView?.reloadData()
+            configureLoadingFooter()
         }
     }
 
@@ -32,6 +33,8 @@ public class AbstractListingViewController: UITableViewController,
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+
+        configureLoadingFooter()
 
         // Subclasses need to register cells for `reuseIdentifier`
     }
@@ -110,5 +113,35 @@ public class AbstractListingViewController: UITableViewController,
         assert(viewModel === listingViewModel)
         tableView?.reloadData()
         refreshControl?.endRefreshing()
+        configureLoadingFooter()
+    }
+
+    // MARK: - Footer
+
+    func configureLoadingFooter() {
+        if !isViewLoaded {
+            return
+        }
+        if let tableView = tableView {
+            tableView.tableFooterView = createLoadingFooter(tableView)
+        }
+    }
+
+    func createLoadingFooter(_ tableView: UITableView) -> UIView? {
+        if listingViewModel?.isFinishedPaging ?? true {
+            return nil
+        }
+
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 44))
+        spinner.startAnimating()
+        view.addSubview(spinner)
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+            spinner.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12)
+        ])
+        return view
     }
 }
