@@ -19,6 +19,7 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
         sdk = BoxSDK(clientId: Constants.clientID, clientSecret: Constants.clientSecret)
     }
 
+    // Handle Box login in the most basic way
     @IBAction private func login(_: UIButton?) {
         sdk.getOAuth2Client(tokenStore: KeychainTokenStore(), context: self) { [weak self] result in
             switch result {
@@ -49,6 +50,9 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     private func browseRoot() {
+        // Set up what happens if the user taps a file (rather than a folder).
+        // As an example here, we only allow tapping on PDF files, and for those
+        // we present an alert.
         let selectFile = BrowseToFile(
             canBrowseToFile: { (file) -> Bool in
                 (file.permissions?.canDownload ?? false)
@@ -61,13 +65,21 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
             }
         )
 
+        // Push a file browser onto our navigation controller. The browser will
+        // continue to push view controllers onto the navigation stack as the
+        // user taps on folders, but if a file is tapped, we do what is defined
+        // above.
         DispatchQueue.main.async {
             if let nav = self.navigationController {
-                BrowseViewController.pushBrowseController(client: self.client, onto: nav, browseToFile: selectFile)
+                BrowseViewController.pushBrowseController(
+                    client: self.client,
+                    onto: nav,
+                    browseToFile: selectFile)
             }
         }
     }
 
+    // Just an example of something to do when a file is tapped.
     private func fileViewController(for file: File) -> UIViewController {
         let alert = UIAlertController(
             title: "Preview File",
