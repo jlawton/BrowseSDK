@@ -9,12 +9,10 @@ public class BrowseViewController: AbstractListingViewController {
 
     lazy var actions = FolderActions(FolderActionHandlers(
         createFolder: { [weak self] in
-            let handlers = FolderCreationHandlers { _, done in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    done(.success(()))
-                }
+            guard let viewModel = self?.listingViewModel?.folderCreationViewModel() else {
+                return
             }
-            let viewController = CreateFolderViewController.viewControllerForModalPresentation(handlers: handlers)
+            let viewController = CreateFolderViewController.forModalPresentation(viewModel)
             self?.present(viewController, animated: true, completion: nil)
         },
         importMedia: { print("IMPORT MEDIA") }

@@ -36,8 +36,8 @@ private extension BrowseViewController {
         browseToFile: BrowseToFile
     ) {
         let provider = BoxFolderProvider(client: client)
-        listingViewModel = ListingViewModel(
-            title: "All Files",
+        listingViewModel = FolderListingViewModel(
+            folder: provider.rootFolder,
             provider: provider,
             createEnumerator: { provider.rootEnumerator() }
         )

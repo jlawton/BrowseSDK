@@ -19,7 +19,7 @@ class ListingViewModel {
     weak var delegate: ListingViewModelDelegate?
 
     private var itemViewModels: [ItemViewModel] = []
-    private let provider: BoxFolderProvider
+    let provider: BoxFolderProvider
     private let createEnumerator: () -> BoxEnumerator
     private var enumerator: BoxEnumerator?
 
@@ -41,6 +41,12 @@ class ListingViewModel {
 
     var itemCount: Int {
         return itemViewModels.count
+    }
+
+    // MARK: - Capabilities provided by subclasses
+
+    func folderCreationViewModel() -> CreateFolderViewModel? {
+        return nil
     }
 
     // MARK: - Actions

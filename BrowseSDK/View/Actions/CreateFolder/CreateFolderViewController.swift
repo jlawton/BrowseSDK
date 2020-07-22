@@ -3,10 +3,16 @@
 //  Copyright © 2020 Box. All rights reserved.
 //
 
+import BoxSDK
 import UIKit
 
-class CreateFolderViewController: UIViewController {
-    var handlers: FolderCreationHandlers?
+class CreateFolderViewController: UIViewController, NeedsCreateFolderViewModel {
+
+    var createFolderViewModel: CreateFolderViewModel? {
+        didSet {
+            breadcrumbs.text = createFolderViewModel?.breadcrumbs
+        }
+    }
 
     // MARK: - Lifecycle
 
@@ -37,15 +43,74 @@ class CreateFolderViewController: UIViewController {
         view.addSubview(scrollView)
         view.constrain(scrollView, insets: .zero)
 
-        scrollContentView.addSubview(nameField)
-        scrollContentView.constrain(nameField, top: 8, leading: 8, trailing: 8)
+        let sizeCategory = UITraitCollection.current.preferredContentSizeCategory
+        let stack = (sizeCategory <= .extraExtraExtraLarge)
+            ? createStacks() : createLargeStacks()
+
+        scrollContentView.addSubview(stack)
+        scrollContentView.constrain(stack, top: 16, leading: 16, trailing: 16)
 
         scrollContentView.addSubview(warningLabel)
-        scrollContentView.constrain(warningLabel, leading: 8, trailing: 8)
+        scrollContentView.constrain(warningLabel, leading: 8, bottom: 8, trailing: 8)
         NSLayoutConstraint.activate([
-            warningLabel.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 20)
+            warningLabel.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 20)
         ])
     }
+
+    // Used for lower size categories
+    private func createStacks() -> UIView {
+        let vstack = UIStackView(arrangedSubviews: [
+            nameField,
+            breadcrumbs
+        ])
+        vstack.translatesAutoresizingMaskIntoConstraints = false
+        vstack.axis = .vertical
+        vstack.alignment = .fill
+        vstack.spacing = 3
+
+        let hstack = UIStackView(arrangedSubviews: [
+            icon,
+            vstack
+        ])
+        hstack.translatesAutoresizingMaskIntoConstraints = false
+        hstack.axis = .horizontal
+        hstack.alignment = .center
+        hstack.spacing = 16
+
+        return hstack
+    }
+
+    // Used for higher size categories
+    func createLargeStacks() -> UIView {
+        let hstack = UIStackView(arrangedSubviews: [
+            icon,
+            nameField
+        ])
+        hstack.translatesAutoresizingMaskIntoConstraints = false
+        hstack.axis = .horizontal
+        hstack.alignment = .center
+        hstack.spacing = 16
+
+        let vstack = UIStackView(arrangedSubviews: [
+            hstack,
+            breadcrumbs
+        ])
+        vstack.translatesAutoresizingMaskIntoConstraints = false
+        vstack.axis = .vertical
+        vstack.alignment = .fill
+        vstack.spacing = 6
+
+        breadcrumbs.numberOfLines = 3
+
+        return vstack
+    }
+
+    let icon: UIImageView = {
+        let icon = UIImageView(image: UIImage.icon(.personalFolder))
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.setContentHuggingPriority(.required, for: .horizontal)
+        return icon
+    }()
 
     private(set) lazy var nameField: UITextField = {
         let field = UITextField()
@@ -55,10 +120,20 @@ class CreateFolderViewController: UIViewController {
         field.returnKeyType = .done
         field.enablesReturnKeyAutomatically = true
 
+        field.font = .preferredFont(forTextStyle: .body)
+
         field.delegate = self
         field.addTarget(self, action: #selector(textFieldValueDidChange), for: .editingChanged)
 
         return field
+    }()
+
+    let breadcrumbs: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .secondaryLabel
+        label.font = .preferredFont(forTextStyle: .caption1)
+        return label
     }()
 
     let warningLabel: UILabel = {
@@ -94,19 +169,13 @@ class CreateFolderViewController: UIViewController {
 // MARK: - Handlers
 
 private extension CreateFolderViewController {
-    func validate(name: String) -> FolderCreationHandlers.LocalNameValidationResult {
-        handlers?.validateName(name) ?? .valid(name: name)
+    typealias LocalNameValidationResult = CreateFolderViewModel.LocalNameValidationResult
+    func validate(name: String) -> LocalNameValidationResult {
+        createFolderViewModel?.validate(name: name) ?? .valid(name: name)
     }
 
-    func validName(_ name: String) -> String? {
-        if case let .valid(validName) = validate(name: name) {
-            return validName
-        }
-        return nil
-    }
-
-    func createFolder(name _: String) -> Bool {
-        return true
+    func createFolder(name: String) -> Bool {
+        createFolderViewModel?.createFolder(name: name) ?? false
     }
 }
 
@@ -137,23 +206,31 @@ extension CreateFolderViewController: UITextFieldDelegate {
 
     @objc
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let name = validName(textField.text ?? "") else {
-            return false
-        }
-        return createFolder(name: name)
+        return createFolder(name: textField.text ?? "")
+    }
+}
+
+private extension CreateFolderViewController {
+    @objc
+    func dismissButtonTapped(_: UIBarButtonItem) {
+        navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - Convenience
 
 extension CreateFolderViewController {
-    static func viewControllerForModalPresentation(
-        suggestedName: String? = nil,
-        handlers: FolderCreationHandlers
+    static func forModalPresentation(
+        _ viewModel: CreateFolderViewModel
     ) -> UINavigationController {
         let viewController = CreateFolderViewController(nibName: nil, bundle: nil)
-        viewController.nameField.text = suggestedName
-        viewController.handlers = handlers
+        viewController.createFolderViewModel = viewModel
+
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: viewController, action: #selector(dismissButtonTapped)
+        )
+
         return UINavigationController(rootViewController: viewController)
     }
 }

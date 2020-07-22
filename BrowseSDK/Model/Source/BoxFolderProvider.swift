@@ -58,6 +58,21 @@ struct BoxFolderProvider {
         }
     }
 
+    // MARK: Info
+
+    // TODO: Remove this hack!
+    var rootFolder: Folder {
+        // swiftlint:disable:next force_try
+        try! Folder(json: [
+            "id": Self.root,
+            "type": "folder",
+            "name": "All Files",
+            "path_collection": [
+                "entries": []
+            ]
+        ])
+    }
+
     // MARK: Thumbnails
 
     func loadThumbnail(for identifier: String, size: Int, _ completion: @escaping (UIImage?) -> Void) -> Progress {

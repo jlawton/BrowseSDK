@@ -3,25 +3,47 @@
 //  Copyright © 2020 Box. All rights reserved.
 //
 
+import BoxSDK
 import Foundation
 
-struct FolderCreationHandlers {
+protocol NeedsCreateFolderViewModel: AnyObject {
+    var createFolderViewModel: CreateFolderViewModel? { get set }
+}
+
+struct CreateFolderViewModel {
     enum LocalNameValidationResult {
         case valid(name: String)
         case warning(reason: String)
         case invalid(reason: String)
     }
 
-    typealias SuccessCallback = (Result<Void, Error>) -> Void
-    typealias CreateFolder = (_ name: String, _ done: @escaping SuccessCallback) -> Void
+    private let folder: Folder
+    private let provider: BoxFolderProvider
+    let suggestedName: String?
 
-    var validateName: (_ name: String) -> LocalNameValidationResult = Self.basicNameValidation
-    var createFolder: CreateFolder
+    init(folder: Folder, provider: BoxFolderProvider, suggestedName: String? = nil) {
+        self.folder = folder
+        self.provider = provider
+        self.suggestedName = suggestedName
+    }
+
+    var breadcrumbs: String? {
+        Breadcrumbs(folder: folder).abbreviatedString
+    }
+
+    func validate(name: String) -> LocalNameValidationResult {
+        Self.basicNameValidation(name)
+    }
+
+    func createFolder(name _: String) -> Bool {
+        // TODO: Implement
+        return true
+    }
 }
 
 // MARK: - Basic Validation
 
-extension FolderCreationHandlers {
+extension CreateFolderViewModel {
     // The intention here is not to avoid all invalid names, but to catch some
     // basic mistakes.
     static func basicNameValidation(_ text: String) -> LocalNameValidationResult {

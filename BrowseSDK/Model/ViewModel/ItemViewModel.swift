@@ -142,13 +142,13 @@ class ItemViewModel {
     }
 
     func listingViewModel() -> ListingViewModel? {
-        guard isFolder else {
+        guard case let .folder(folder) = item else {
             return nil
         }
         let provider = self.provider
         let identifier = self.identifier
-        return ListingViewModel(
-            title: name,
+        return FolderListingViewModel(
+            folder: folder,
             provider: provider,
             createEnumerator: { provider.enumerator(for: identifier) }
         )

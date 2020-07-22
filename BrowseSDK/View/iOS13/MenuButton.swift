@@ -39,8 +39,7 @@ class MenuButton: NSObject, UIContextMenuInteractionDelegate {
         case .add:
             button = UIButton.systemButton(
                 with: UIImage(systemName: "plus")!,
-                target: self,
-                action: #selector(buttonTapped(_:))
+                target: self, action: #selector(buttonTapped(_:))
             )
             button.accessibilityLabel = "Add"
         default:

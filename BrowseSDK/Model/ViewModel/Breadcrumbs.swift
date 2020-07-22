@@ -6,9 +6,14 @@
 import BoxSDK
 
 struct Breadcrumbs {
-    private let item: FolderItem
+    private let pathCollection: [Folder]?
+
     init(item: FolderItem) {
-        self.item = item
+        pathCollection = Self.path(containing: item)
+    }
+
+    init(folder: Folder) {
+        pathCollection = Self.path(including: folder)
     }
 
     var abbreviatedString: String? {
@@ -37,16 +42,23 @@ struct Breadcrumbs {
         }
     }
 
-    private var pathCollection: [Folder]? {
-        let pathCollection: [Folder]?
+    private static func path(containing item: FolderItem) -> [Folder]? {
+        let path: [Folder]?
         switch item {
         case let .folder(folder):
-            pathCollection = folder.pathCollection?.entries
+            path = folder.pathCollection?.entries
         case let .file(file):
-            pathCollection = file.pathCollection?.entries
+            path = file.pathCollection?.entries
         case let .webLink(link):
-            pathCollection = link.pathCollection?.entries
+            path = link.pathCollection?.entries
         }
-        return pathCollection
+        return path
+    }
+
+    private static func path(including folder: Folder) -> [Folder]? {
+        if let path = folder.pathCollection?.entries {
+            return path + [folder]
+        }
+        return nil
     }
 }
