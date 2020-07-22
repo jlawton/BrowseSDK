@@ -86,6 +86,17 @@ struct BoxFolderProvider {
         )
     }
 
+    // MARK: Folder creation
+
+    func createFolder(name: String, parentID: String, _ completion: @escaping Callback<Folder>) {
+        client.folders.create(
+            name: name,
+            parentId: parentID,
+            fields: fields,
+            completion: completion
+        )
+    }
+
     // MARK: Thumbnails
 
     func loadThumbnail(for identifier: String, size: Int, _ completion: @escaping (UIImage?) -> Void) -> Progress {
