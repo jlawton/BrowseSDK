@@ -8,7 +8,15 @@ import UIKit
 public class BrowseViewController: AbstractListingViewController {
 
     lazy var actions = FolderActions(FolderActionHandlers(
-        createFolder: { print("CREATE FOLDER") },
+        createFolder: { [weak self] in
+            let handlers = FolderCreationHandlers { _, done in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    done(.success(()))
+                }
+            }
+            let viewController = CreateFolderViewController.viewControllerForModalPresentation(handlers: handlers)
+            self?.present(viewController, animated: true, completion: nil)
+        },
         importMedia: { print("IMPORT MEDIA") }
     ))
 
