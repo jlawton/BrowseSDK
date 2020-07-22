@@ -13,7 +13,7 @@ protocol NeedsCreateFolderViewModel: AnyObject {
 struct CreateFolderViewModel {
     enum LocalNameValidationResult {
         case valid(name: String)
-        case warning(reason: String)
+        case warning(name: String, reason: String)
         case invalid(reason: String)
     }
 
@@ -35,9 +35,11 @@ struct CreateFolderViewModel {
         Self.basicNameValidation(name)
     }
 
-    func createFolder(name _: String) -> Bool {
+    func createFolder(
+        name: String,
+        completion: @escaping (Result<Folder, Error>) -> Void
+    ) {
         // TODO: Implement
-        return true
     }
 }
 
@@ -61,9 +63,9 @@ extension CreateFolderViewModel {
             return .invalid(reason: "The names \".\" and \"..\" are reserved.")
         }
         guard !name.unicodeScalars.contains(where: unsafeChars.contains) else {
-            return .warning(reason: "Consider avoiding special characters.")
+            return .warning(name: name, reason: "Consider avoiding special characters.")
         }
-        guard !name.unicodeScalars.contains(where: { $0.properties.isEmoji }) else {
+        guard !containsEmoji(name) else {
             return .invalid(reason: "The folder name cannot contain emoji.")
         }
         return .valid(name: name)
@@ -73,5 +75,12 @@ extension CreateFolderViewModel {
         var unsafeChars = CharacterSet(charactersIn: "<>:\"|?*")
         unsafeChars.insert(charactersIn: "\u{00}" ... "\u{1F}")
         return unsafeChars
+    }
+
+    private static func containsEmoji(_ name: String) -> Bool {
+        name.unicodeScalars.contains { scalar in
+            scalar.properties.isEmojiPresentation // Defaults to emoji rendering
+                || scalar == "\u{FE0F}" // Emoji variation selector applied to previous scalar
+        }
     }
 }

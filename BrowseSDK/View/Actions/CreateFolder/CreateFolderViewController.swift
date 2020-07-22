@@ -21,6 +21,8 @@ class CreateFolderViewController: UIViewController, NeedsCreateFolderViewModel {
         view.backgroundColor = .systemBackground
         navigationItem.title = "Create Folder"
 
+        navigationItem.rightBarButtonItem = createButton
+
         createSubviews()
 
         keyboardInsetAdjuster = KeyboardInsetAdjuster(scrollView)
@@ -28,6 +30,7 @@ class CreateFolderViewController: UIViewController, NeedsCreateFolderViewModel {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateCreateButton()
         // Addresses a bug where the keyboard is brought up with the view
         // controller, which is not laid out yet, and so the inset adjuster
         // sees the wrong safe area.
@@ -56,6 +59,13 @@ class CreateFolderViewController: UIViewController, NeedsCreateFolderViewModel {
             warningLabel.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 20)
         ])
     }
+
+    lazy var createButton: UIBarButtonItem = {
+        UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self, action: #selector(createButtonTapped)
+        )
+    }()
 
     // Used for lower size categories
     private func createStacks() -> UIView {
@@ -164,6 +174,12 @@ class CreateFolderViewController: UIViewController, NeedsCreateFolderViewModel {
 
     // Listens to keyboard notifications and adjusts the scrollview content inset
     private var keyboardInsetAdjuster: KeyboardInsetAdjuster?
+
+    private var isCreatingFolder: Bool = false {
+        didSet {
+            updateCreateButton()
+        }
+    }
 }
 
 // MARK: - Handlers
@@ -174,8 +190,49 @@ private extension CreateFolderViewController {
         createFolderViewModel?.validate(name: name) ?? .valid(name: name)
     }
 
+    func updateCreateButton() {
+        createButton.isEnabled = canCreateFolder()
+    }
+
+    func canCreateFolder() -> Bool {
+        guard !isCreatingFolder else {
+            return false
+        }
+        return validatedName(nameField.text ?? "") != nil
+    }
+
+    func validatedName(_ name: String) -> String? {
+        switch validate(name: nameField.text ?? "") {
+        case let .valid(name), let .warning(name, _):
+            return name
+        case .invalid:
+            return nil
+        }
+    }
+
     func createFolder(name: String) -> Bool {
-        createFolderViewModel?.createFolder(name: name) ?? false
+        precondition(!isCreatingFolder)
+        if let validName = validatedName(name) {
+            isCreatingFolder = true
+            if validName != nameField.text {
+                nameField.text = validName
+            }
+            createFolderViewModel?.createFolder(
+                name: name,
+                completion: finishedCreateFolder
+            )
+            return true
+        }
+        return false
+    }
+
+    func finishedCreateFolder(_ result: Result<Folder, Error>) {
+        switch result {
+        case .success:
+            break
+        case .failure:
+            break
+        }
     }
 }
 
@@ -184,6 +241,7 @@ private extension CreateFolderViewController {
 extension CreateFolderViewController: UITextFieldDelegate {
     @objc
     private func textFieldValueDidChange(_ textField: UITextField) {
+        updateCreateButton()
         guard let text = textField.text, !text.isEmpty else {
             warningLabel.text = ""
             return
@@ -191,7 +249,7 @@ extension CreateFolderViewController: UITextFieldDelegate {
         switch validate(name: text) {
         case .valid:
             warningLabel.text = ""
-        case let .warning(reason):
+        case let .warning(_, reason):
             warningLabel.text = reason
             warningLabel.textColor = UIColor { traits in
                 (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1) : #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
@@ -207,6 +265,11 @@ extension CreateFolderViewController: UITextFieldDelegate {
     @objc
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return createFolder(name: textField.text ?? "")
+    }
+
+    @objc
+    func createButtonTapped(_: UIBarButtonItem) {
+        _ = createFolder(name: nameField.text ?? "")
     }
 }
 
