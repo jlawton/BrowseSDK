@@ -48,6 +48,20 @@ public class AbstractListingViewController: UITableViewController,
         listingViewModel?.loadNextPage()
     }
 
+    override public func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // HACK: UISearchController has lifecycle bugs
+        if let search = navigationItem.searchController,
+            search.isActive,
+            let resultsVC = search.searchResultsController as? UITableViewController,
+            let results = resultsVC.tableView {
+            for indexPath in results.indexPathsForSelectedRows ?? [] {
+                results.deselectRow(at: indexPath, animated: true)
+            }
+        }
+    }
+
     // MARK: - Routing
 
     var router: BrowseRouter?
