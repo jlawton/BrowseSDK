@@ -39,7 +39,14 @@ struct CreateFolderViewModel {
         name: String,
         completion: @escaping (Result<Folder, Error>) -> Void
     ) {
-        // TODO: Implement
+        provider.createFolder(
+            name: name,
+            parentID: folder.id,
+            CallbackUtil(completion)
+                .comapError { $0 }
+                .dispatchToMainThread()
+                .callback
+        )
     }
 }
 

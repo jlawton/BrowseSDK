@@ -227,12 +227,34 @@ private extension CreateFolderViewController {
     }
 
     func finishedCreateFolder(_ result: Result<Folder, Error>) {
+        isCreatingFolder = false
         switch result {
         case .success:
+            // TODO: Dismiss!
             break
-        case .failure:
-            break
+        case let .failure(error):
+            display(error: error.localizedDescription)
         }
+    }
+}
+
+private extension CreateFolderViewController {
+    func display(error: String) {
+        warningLabel.text = error
+        warningLabel.textColor = UIColor { traits in
+            (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1) : #colorLiteral(red: 0.3176470697, green: 0.07450980693, blue: 0.02745098062, alpha: 1)
+        }
+    }
+
+    func display(warning: String) {
+        warningLabel.text = warning
+        warningLabel.textColor = UIColor { traits in
+            (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1) : #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
+        }
+    }
+
+    func clearError() {
+        warningLabel.text = ""
     }
 }
 
@@ -243,22 +265,16 @@ extension CreateFolderViewController: UITextFieldDelegate {
     private func textFieldValueDidChange(_ textField: UITextField) {
         updateCreateButton()
         guard let text = textField.text, !text.isEmpty else {
-            warningLabel.text = ""
+            clearError()
             return
         }
         switch validate(name: text) {
         case .valid:
-            warningLabel.text = ""
+            clearError()
         case let .warning(_, reason):
-            warningLabel.text = reason
-            warningLabel.textColor = UIColor { traits in
-                (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1) : #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
-            }
+            display(warning: reason)
         case let .invalid(reason):
-            warningLabel.text = reason
-            warningLabel.textColor = UIColor { traits in
-                (traits.userInterfaceStyle == .dark) ? #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1) : #colorLiteral(red: 0.3176470697, green: 0.07450980693, blue: 0.02745098062, alpha: 1)
-            }
+            display(error: reason)
         }
     }
 
