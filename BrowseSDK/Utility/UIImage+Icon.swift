@@ -20,7 +20,7 @@ extension UIImage {
     }
 
     private static func createIcon(_ icon: Icon) -> UIImage {
-        let size = ItemViewModel.preferredThumbnailSize()
+        let size = ThumbnailSize.preferredThumbnailSize()
         let configuration = UIImage.SymbolConfiguration(pointSize: CGFloat(size * 3))
 
         switch icon {

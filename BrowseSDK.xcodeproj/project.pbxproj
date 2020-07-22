@@ -11,6 +11,7 @@
 		0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */; };
 		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
 		0D4E98CB24C7F41C00B95025 /* FolderCreationHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CA24C7F41C00B95025 /* FolderCreationHandlers.swift */; };
+		0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */; };
 		0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91224C675D200741433 /* BrowseToFile.swift */; };
 		0D66B91824C6D41B00741433 /* UIAlertController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */; };
 		0D66B91A24C6DDD400741433 /* FolderActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91924C6DDD400741433 /* FolderActions.swift */; };
@@ -37,6 +38,7 @@
 		0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxEnumerator.swift; sourceTree = "<group>"; };
 		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		0D4E98CA24C7F41C00B95025 /* FolderCreationHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCreationHandlers.swift; sourceTree = "<group>"; };
+		0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailSize.swift; sourceTree = "<group>"; };
 		0D66B91224C675D200741433 /* BrowseToFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseToFile.swift; sourceTree = "<group>"; };
 		0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Menu.swift"; sourceTree = "<group>"; };
 		0D66B91924C6DDD400741433 /* FolderActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderActions.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */,
 				0D66B92224C78F2200741433 /* NSLayoutConstraint+Additions.swift */,
 				0D66B92624C7A71E00741433 /* KeyboardInsetAdjuster.swift */,
+				0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
 				0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */,
+				0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */,
 				0D66B92724C7A71E00741433 /* KeyboardInsetAdjuster.swift in Sources */,
 				0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */,
 			);
