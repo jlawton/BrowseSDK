@@ -83,28 +83,7 @@ class ItemViewModel {
     }
 
     var breadcrumbs: String? {
-        let pathCollection: [Folder]?
-        switch item {
-        case let .folder(folder):
-            pathCollection = folder.pathCollection?.entries
-        case let .file(file):
-            pathCollection = file.pathCollection?.entries
-        case let .webLink(link):
-            pathCollection = link.pathCollection?.entries
-        }
-        guard var folders = pathCollection, !folders.isEmpty else {
-            return nil
-        }
-        if folders.count > 1, folders[0].id == BoxFolderProvider.root {
-            folders.removeFirst()
-        }
-        var folderNames: [String] = folders.compactMap { folder in
-            folder.name
-        }
-        if folderNames.count > 3 {
-            folderNames.replaceSubrange(2 ..< folderNames.count - 1, with: ["⋯"])
-        }
-        return folderNames.joined(separator: " ≫ ")
+        Breadcrumbs(item: item).abbreviatedString
     }
 
     var icon: UIImage.Icon {

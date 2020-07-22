@@ -12,6 +12,7 @@
 		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
 		0D4E98CB24C7F41C00B95025 /* FolderCreationHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CA24C7F41C00B95025 /* FolderCreationHandlers.swift */; };
 		0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */; };
+		0D4E98D024C7FB5500B95025 /* Breadcrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */; };
 		0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91224C675D200741433 /* BrowseToFile.swift */; };
 		0D66B91824C6D41B00741433 /* UIAlertController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */; };
 		0D66B91A24C6DDD400741433 /* FolderActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91924C6DDD400741433 /* FolderActions.swift */; };
@@ -39,6 +40,7 @@
 		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		0D4E98CA24C7F41C00B95025 /* FolderCreationHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCreationHandlers.swift; sourceTree = "<group>"; };
 		0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailSize.swift; sourceTree = "<group>"; };
+		0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breadcrumbs.swift; sourceTree = "<group>"; };
 		0D66B91224C675D200741433 /* BrowseToFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseToFile.swift; sourceTree = "<group>"; };
 		0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Menu.swift"; sourceTree = "<group>"; };
 		0D66B91924C6DDD400741433 /* FolderActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderActions.swift; sourceTree = "<group>"; };
@@ -79,15 +81,71 @@
 		0D4B732D24C5582F00FA43F1 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				0D4B732E24C5584200FA43F1 /* ImageCache.swift */,
-				0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */,
-				0DC58FF424C5B84400B7BA00 /* Math.swift */,
-				0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */,
-				0D66B92224C78F2200741433 /* NSLayoutConstraint+Additions.swift */,
-				0D66B92624C7A71E00741433 /* KeyboardInsetAdjuster.swift */,
-				0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */,
+				0D4E98D524C7FE4700B95025 /* Images */,
+				0D4E98D424C7FE2D00B95025 /* View */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		0D4E98D124C7FDC300B95025 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */,
+				0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		0D4E98D224C7FDDE00B95025 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */,
+				0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */,
+				0DC58FF624C607FB00B7BA00 /* SearchViewModel.swift */,
+				0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0D4E98D324C7FE0600B95025 /* Behavior */ = {
+			isa = PBXGroup;
+			children = (
+				0D66B91224C675D200741433 /* BrowseToFile.swift */,
+			);
+			path = Behavior;
+			sourceTree = "<group>";
+		};
+		0D4E98D424C7FE2D00B95025 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0D66B92224C78F2200741433 /* NSLayoutConstraint+Additions.swift */,
+				0D66B92624C7A71E00741433 /* KeyboardInsetAdjuster.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0D4E98D524C7FE4700B95025 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				0D4B732E24C5584200FA43F1 /* ImageCache.swift */,
+				0DC58FF224C5B76800B7BA00 /* UIImage+Scaling.swift */,
+				0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */,
+				0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */,
+				0DC58FF424C5B84400B7BA00 /* Math.swift */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		0D4E98D624C7FF0B00B95025 /* Browsing */ = {
+			isa = PBXGroup;
+			children = (
+				0D70911C24C3F9D700F0337C /* BrowseViewController.swift */,
+				0DC58FFA24C6251400B7BA00 /* SearchResultsViewController.swift */,
+				0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */,
+				0DC58FC524C5937900B7BA00 /* BrowseItemCell.swift */,
+				0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */,
+			);
+			path = Browsing;
 			sourceTree = "<group>";
 		};
 		0D66B91624C6D3FE00741433 /* iOS13 */ = {
@@ -148,12 +206,9 @@
 		0D70911A24C3F50100F0337C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */,
-				0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */,
-				0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */,
-				0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */,
-				0DC58FF624C607FB00B7BA00 /* SearchViewModel.swift */,
-				0D66B91224C675D200741433 /* BrowseToFile.swift */,
+				0D4E98D124C7FDC300B95025 /* Source */,
+				0D4E98D224C7FDDE00B95025 /* ViewModel */,
+				0D4E98D324C7FE0600B95025 /* Behavior */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -162,11 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */,
-				0D70911C24C3F9D700F0337C /* BrowseViewController.swift */,
-				0DC58FFA24C6251400B7BA00 /* SearchResultsViewController.swift */,
-				0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */,
-				0DC58FC524C5937900B7BA00 /* BrowseItemCell.swift */,
-				0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */,
+				0D4E98D624C7FF0B00B95025 /* Browsing */,
 				0D66B91D24C6F46600741433 /* Actions */,
 				0D66B91624C6D3FE00741433 /* iOS13 */,
 			);
@@ -305,6 +356,7 @@
 				0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */,
 				0D4E98CB24C7F41C00B95025 /* FolderCreationHandlers.swift in Sources */,
 				0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */,
+				0D4E98D024C7FB5500B95025 /* Breadcrumbs.swift in Sources */,
 				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
 				0D66B91A24C6DDD400741433 /* FolderActions.swift in Sources */,
 				0DC58FC624C5937900B7BA00 /* BrowseItemCell.swift in Sources */,
