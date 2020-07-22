@@ -38,7 +38,7 @@ struct BoxFolderProvider {
                 usemarker: true,
                 limit: folderPageSize,
                 fields: fields,
-                completion: done
+                completion: wrapIterCallback(done)
             )
         }
     }
@@ -53,9 +53,27 @@ struct BoxFolderProvider {
                 searchTrash: false,
                 fields: fields,
                 limit: searchPageSize,
-                completion: done
+                completion: wrapIterCallback(done)
             )
         }
+    }
+
+    // Super gross.
+    // This is all because initalizers for PagingIterator and BoxSDKError
+    // are internal to the SDK.
+    private func wrapIterCallback(
+        _ done: @escaping (Result<BoxEnumeratorIterator, BoxSDKErrorEnum>) -> Void
+    ) -> Callback<PagingIterator<FolderItem>> {
+        return CallbackUtil(done)
+            .comap { iter in
+                BoxEnumeratorIterator(next: { nextCB in
+                    iter.next(completion: CallbackUtil(nextCB)
+                        .comapError { $0.message }
+                        .callback)
+                })
+            }
+            .comapError { $0.message }
+            .callback
     }
 
     // MARK: Info

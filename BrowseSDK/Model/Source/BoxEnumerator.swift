@@ -9,14 +9,14 @@ import Foundation
 /// An adapter to make folder enumeration a bit nicer to connect to UI.
 class BoxEnumerator {
     typealias PageResult = Result<[FolderItem], Error>
-    typealias Iterator = PagingIterator<FolderItem>
+    typealias Iterator = BoxEnumeratorIterator
 
     private let pageSize: Int
     private var iteratorResult: Result<Iterator, Error>?
     // This is gross, and shouldn't be necessary
     private var pageCallbacks: [(PageResult) -> Void] = []
 
-    init(pageSize: Int, _ createIterator: @escaping (@escaping Callback<Iterator>) -> Void) {
+    init(pageSize: Int, _ createIterator: @escaping (@escaping (Result<Iterator, BoxSDKErrorEnum>) -> Void) -> Void) {
         self.pageSize = pageSize
         // I think it's pretty gross that the init causes a fetch from the
         // network, but otherwise there's more state to track
@@ -53,9 +53,27 @@ class BoxEnumerator {
     }
 }
 
-extension PagingIterator {
+// MARK: - HACKS
+
+// Type erased iterator, because we can't create an empty iterator from the SDK.
+struct BoxEnumeratorIterator {
+    typealias Element = FolderItem
+    let next: (@escaping (Result<Element, BoxSDKErrorEnum>) -> Void) -> Void
+}
+
+extension BoxSDKErrorEnum: Error {}
+
+extension BoxEnumeratorIterator {
+    static let empty = BoxEnumeratorIterator(next: { done in
+        done(.failure(.endOfList))
+    })
+}
+
+// MARK: -
+
+extension BoxEnumeratorIterator {
     // This is gross, and shouldn't be necessary
-    func nextPage(pageSize: Int, completion: @escaping Callback<[Element]>) {
+    func nextPage(pageSize: Int, completion: @escaping (Result<[Element], Error>) -> Void) {
         var calledCompletion = false
         var elements: [Element] = []
         for index in 0 ..< pageSize {
@@ -66,7 +84,7 @@ extension PagingIterator {
                 case let .failure(error):
                     if !calledCompletion {
                         calledCompletion = true
-                        if error.message == .endOfList, !elements.isEmpty {
+                        if error == .endOfList {
                             completion(.success(elements))
                         }
                         else {
