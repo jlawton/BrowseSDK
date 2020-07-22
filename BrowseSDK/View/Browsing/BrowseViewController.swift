@@ -9,11 +9,12 @@ public class BrowseViewController: AbstractListingViewController {
 
     lazy var actions = FolderActions(FolderActionHandlers(
         createFolder: { [weak self] in
-            guard let viewModel = self?.listingViewModel?.folderCreationViewModel() else {
+            guard let viewModel = self?.listingViewModel?.folderCreationViewModel(),
+                let router = self?.router, router.canPresent(folderCreation: viewModel)
+            else {
                 return
             }
-            let viewController = CreateFolderViewController.forModalPresentation(viewModel)
-            self?.present(viewController, animated: true, completion: nil)
+            router.present(folderCreation: viewModel)
         },
         importMedia: { print("IMPORT MEDIA") }
     ))

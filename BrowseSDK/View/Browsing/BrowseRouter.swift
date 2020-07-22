@@ -8,6 +8,8 @@ import UIKit
 protocol BrowseRouter {
     func canBrowseTo(item: ItemViewModel) -> Bool
     func browseTo(item: ItemViewModel) -> SelectionBehavior
+    func canPresent(folderCreation: CreateFolderViewModel) -> Bool
+    func present(folderCreation: CreateFolderViewModel)
 }
 
 class DefaultBrowseRouter: BrowseRouter {
@@ -50,5 +52,17 @@ class DefaultBrowseRouter: BrowseRouter {
             return browseToFile.browseToFile(file, source)
         }
         return .deselect
+    }
+
+    func canPresent(folderCreation _: CreateFolderViewModel) -> Bool {
+        return true
+    }
+
+    func present(folderCreation: CreateFolderViewModel) {
+        let viewController = CreateFolderViewController.forModalPresentation(folderCreation) { _ in
+            self.source?.dismiss(animated: true, completion: nil)
+        }
+
+        source?.present(viewController, animated: true, completion: nil)
     }
 }

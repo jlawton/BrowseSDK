@@ -14,6 +14,8 @@ class CreateFolderViewController: UIViewController, NeedsCreateFolderViewModel {
         }
     }
 
+    var completion: ((Folder?) -> Void)?
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -229,9 +231,8 @@ private extension CreateFolderViewController {
     func finishedCreateFolder(_ result: Result<Folder, Error>) {
         isCreatingFolder = false
         switch result {
-        case .success:
-            // TODO: Dismiss!
-            break
+        case let .success(folder):
+            completion?(folder)
         case let .failure(error):
             display(error: error.localizedDescription)
         }
@@ -292,7 +293,7 @@ extension CreateFolderViewController: UITextFieldDelegate {
 private extension CreateFolderViewController {
     @objc
     func dismissButtonTapped(_: UIBarButtonItem) {
-        navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        completion?(nil)
     }
 }
 
@@ -300,10 +301,12 @@ private extension CreateFolderViewController {
 
 extension CreateFolderViewController {
     static func forModalPresentation(
-        _ viewModel: CreateFolderViewModel
+        _ viewModel: CreateFolderViewModel,
+        completion: @escaping (Folder?) -> Void
     ) -> UINavigationController {
         let viewController = CreateFolderViewController(nibName: nil, bundle: nil)
         viewController.createFolderViewModel = viewModel
+        viewController.completion = completion
 
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
