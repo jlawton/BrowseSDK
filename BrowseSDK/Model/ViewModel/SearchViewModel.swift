@@ -34,8 +34,8 @@ class SearchViewModel {
 
     private func createEnumerator() -> BoxEnumerator {
         if query.isEmpty {
-            return BoxEnumerator(pageSize: 0) { _ in
-                // Never fetches an iterator. This is probably wrong.
+            return BoxEnumerator(pageSize: 1) { done in
+                done(.failure(.endOfList))
             }
         }
         else {
@@ -48,6 +48,11 @@ class SearchViewModel {
         // spamming the server too much
         if updateTimer != nil {
             updateTimer?.invalidate()
+        }
+        // Update to the empty state instantly
+        guard !query.isEmpty else {
+            updateImmediately(query: "")
+            return
         }
         updateTimer = Timer.scheduledTimer(withTimeInterval: searchDelay, repeats: false) { [weak self] timer in
             guard let self = self else {
