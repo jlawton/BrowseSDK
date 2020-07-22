@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D1EC5C024C806240014EC34 /* CreateFolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1EC5BF24C806240014EC34 /* CreateFolderViewModel.swift */; };
 		0D1EC5C424C8187E0014EC34 /* FolderListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1EC5C324C8187E0014EC34 /* FolderListingViewModel.swift */; };
+		0D1EC5C624C8B27D0014EC34 /* Callback+Cofunctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1EC5C524C8B27D0014EC34 /* Callback+Cofunctor.swift */; };
 		0D4B732824C5500300FA43F1 /* BoxSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0D4B732724C5500300FA43F1 /* BoxSDK */; };
 		0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */; };
 		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		0D1EC5BF24C806240014EC34 /* CreateFolderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFolderViewModel.swift; sourceTree = "<group>"; };
 		0D1EC5C324C8187E0014EC34 /* FolderListingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListingViewModel.swift; sourceTree = "<group>"; };
+		0D1EC5C524C8B27D0014EC34 /* Callback+Cofunctor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Callback+Cofunctor.swift"; sourceTree = "<group>"; };
 		0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxEnumerator.swift; sourceTree = "<group>"; };
 		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailSize.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			children = (
 				0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */,
 				0D4B732924C550D800FA43F1 /* BoxEnumerator.swift */,
+				0D1EC5C524C8B27D0014EC34 /* Callback+Cofunctor.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				0D66B92724C7A71E00741433 /* KeyboardInsetAdjuster.swift in Sources */,
 				0D1EC5C024C806240014EC34 /* CreateFolderViewModel.swift in Sources */,
 				0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */,
+				0D1EC5C624C8B27D0014EC34 /* Callback+Cofunctor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
