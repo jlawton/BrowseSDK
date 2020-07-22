@@ -3,6 +3,8 @@
 //  Copyright © 2020 Box. All rights reserved.
 //
 
+import Foundation
+
 // Utilities to transform callbacks
 struct CallbackUtil<T, E: Error> {
     let callback: (Result<T, E>) -> Void
@@ -24,6 +26,14 @@ struct CallbackUtil<T, E: Error> {
 
     func coflatMapError<F: Error>(_ transform: @escaping (F) -> Result<T, E>) -> CallbackUtil<T, F> {
         return CallbackUtil<T, F>(Self.coflatMapError(callback, transform))
+    }
+
+    func dispatchToMainThread() -> CallbackUtil<T, E> {
+        CallbackUtil<T, E> { result in
+            DispatchQueue.main.async {
+                callback(result)
+            }
+        }
     }
 }
 
