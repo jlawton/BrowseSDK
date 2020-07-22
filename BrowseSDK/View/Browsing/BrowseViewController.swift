@@ -20,6 +20,16 @@ public class BrowseViewController: AbstractListingViewController {
 
     // MARK: - Data
 
+    override var router: BrowseRouter? {
+        get { super.router }
+        set {
+            super.router = newValue
+            if let searchResults = navigationItem.searchController?.searchResultsController as? SearchResultsViewController {
+                searchResults.router = newValue
+            }
+        }
+    }
+
     var searchViewModel: SearchViewModel? {
         didSet {
             guard let searchVM = searchViewModel else {
@@ -29,6 +39,7 @@ public class BrowseViewController: AbstractListingViewController {
 
             let searchResultsController = SearchResultsViewController(nibName: nil, bundle: nil)
             searchResultsController.listingViewModel = searchVM.listingViewModel
+            searchResultsController.router = router
 
             let searchController = UISearchController(searchResultsController: searchResultsController)
             navigationItem.searchController = searchController

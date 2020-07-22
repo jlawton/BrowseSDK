@@ -70,9 +70,19 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
         // user taps on folders, but if a file is tapped, we do what is defined
         // above.
         DispatchQueue.main.async {
-            if let nav = self.navigationController {
+            // TODO: Remove this hack!
+            let rootFolder = try? Folder(json: [
+                "id": BoxSDK.Constants.rootFolder,
+                "type": "folder",
+                "name": "All Files",
+                "path_collection": [
+                    "entries": []
+                ]
+            ])
+            if let nav = self.navigationController, let folder = rootFolder {
                 BrowseViewController.pushBrowseController(
                     client: self.client,
+                    folder: folder,
                     onto: nav,
                     browseToFile: selectFile
                 )
