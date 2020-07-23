@@ -11,7 +11,8 @@ public extension BrowseViewController {
         client: BoxClient,
         folder: Folder,
         withAncestors: Bool = false,
-        browseToFile: BrowseToFile = .noFileAction
+        browseToFile: BrowseToFile = .noFileAction,
+        withCloseButton: Bool = false
     ) -> UINavigationController {
         let nav = UINavigationController()
         pushBrowseController(
@@ -19,6 +20,13 @@ public extension BrowseViewController {
             folder: folder, withAncestors: withAncestors,
             onto: nav, animated: false, browseToFile: browseToFile
         )
+        if withCloseButton,
+            let root = nav.viewControllers.first as? BrowseViewController {
+            root.navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .close,
+                target: root, action: #selector(closeButtonPressed(_:))
+            )
+        }
         return nav
     }
 
@@ -79,5 +87,10 @@ private extension BrowseViewController {
             navigationController: navigationController,
             browseToFile: browseToFile
         )
+    }
+
+    @objc
+    private func closeButtonPressed(_: AnyObject?) {
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }
