@@ -9,7 +9,8 @@ import UIKit
 extension UIAlertController {
     @available(iOS, deprecated: 14.0)
     convenience init(menu: UIMenu, preferredStyle: Style = .actionSheet) {
-        self.init(title: menu.title, message: nil, preferredStyle: preferredStyle)
+        let title: String? = menu.title.isEmpty ? nil : menu.title
+        self.init(title: title, message: nil, preferredStyle: preferredStyle)
 
         for element in menu.children {
             guard let menuAction = element as? UIAction else {

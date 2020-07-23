@@ -76,7 +76,12 @@ class MenuButton: NSObject, UIContextMenuInteractionDelegate {
         let alert = UIAlertController(menu: menu)
         alert.popoverPresentationController?.sourceView = sender
         // Living with this grossness because it goes away with iOS 13
-        sender.window?.rootViewController?
-            .present(alert, animated: true, completion: nil)
+        var responder: UIResponder? = sender
+        while responder != nil, !(responder is UIViewController) {
+            responder = responder?.next
+        }
+        if let controller = responder as? UIViewController {
+            controller.present(alert, animated: true, completion: nil)
+        }
     }
 }
