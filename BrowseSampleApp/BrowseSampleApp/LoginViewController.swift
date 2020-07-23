@@ -79,14 +79,26 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
                     "entries": []
                 ]
             ])
-            if let nav = self.navigationController, let folder = rootFolder {
-                BrowseViewController.pushBrowseController(
+            guard let folder = rootFolder else {
+                return
+            }
+            #if true
+                let nav = BrowseViewController.browseNavigationController(
                     client: self.client,
                     folder: folder,
-                    onto: nav,
                     browseToFile: selectFile
                 )
-            }
+                self.present(nav, animated: true, completion: nil)
+            #else
+                if let nav = self.navigationController {
+                    BrowseViewController.pushBrowseController(
+                        client: self.client,
+                        folder: folder,
+                        onto: nav,
+                        browseToFile: selectFile
+                    )
+                }
+            #endif
         }
     }
 

@@ -10,26 +10,47 @@ public extension BrowseViewController {
     static func browseNavigationController(
         client: BoxClient,
         folder: Folder,
-        withAncestors _: Bool = false,
+        withAncestors: Bool = false,
         browseToFile: BrowseToFile = .noFileAction
     ) -> UINavigationController {
-        let controller = BrowseViewController(nibName: nil, bundle: nil)
-        let nav = UINavigationController(rootViewController: controller)
-        controller.configure(client: client, folder: folder, navigationController: nav, browseToFile: browseToFile)
+        let nav = UINavigationController()
+        pushBrowseController(
+            client: client,
+            folder: folder, withAncestors: withAncestors,
+            onto: nav, animated: false, browseToFile: browseToFile
+        )
         return nav
     }
 
     static func pushBrowseController(
         client: BoxClient,
         folder: Folder,
-        withAncestors _: Bool = false,
+        withAncestors: Bool = false,
         onto navigationController: UINavigationController,
         animated: Bool = true,
         browseToFile: BrowseToFile = .noFileAction
     ) {
-        let controller = BrowseViewController(nibName: nil, bundle: nil)
-        controller.configure(client: client, folder: folder, navigationController: navigationController, browseToFile: browseToFile)
-        navigationController.pushViewController(controller, animated: animated)
+        let folders: [Folder]
+        if withAncestors {
+            folders = (folder.pathCollection?.entries ?? []) + [folder]
+        }
+        else {
+            folders = [folder]
+        }
+
+        let controllers = folders.map { folder -> UIViewController in
+            let controller = BrowseViewController(nibName: nil, bundle: nil)
+            controller.configure(
+                client: client, folder: folder,
+                navigationController: navigationController, browseToFile: browseToFile
+            )
+            return controller
+        }
+
+        navigationController.setViewControllers(
+            navigationController.viewControllers + controllers,
+            animated: animated
+        )
     }
 }
 
@@ -41,10 +62,11 @@ private extension BrowseViewController {
         browseToFile: BrowseToFile
     ) {
         let provider = BoxFolderProvider(client: client)
+        let folderID = folder.id
         listingViewModel = FolderListingViewModel(
             folder: folder,
             provider: provider,
-            createEnumerator: { provider.rootEnumerator() }
+            createEnumerator: { provider.enumerator(for: folderID) }
         )
 
         searchViewModel = SearchViewModel(
