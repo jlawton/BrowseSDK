@@ -50,58 +50,55 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     private func browseRoot() {
-        var config = BrowseConfiguration()
+        client.folders.get(folderId: BoxSDK.Constants.rootFolder, fields: BrowseViewController.requiredFields) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(folder):
+                    self.presentBrowser(folder: folder, modal: true)
+                case let .failure(error):
+                    self.displayError(error)
+                }
+            }
+        }
+    }
+
+    private func presentBrowser(folder: Folder, modal: Bool) {
+        let config = BrowseConfiguration()
 
         // Set up the actions that appear top right while browsing folders
 //        config.folderActions.disallow([.createFolder])
-        config.folderActions.insertMenu(systemItem: .action) { folder in
-            UIMenu(title: "Share \(folder.name ?? "")", children: self.shareActions(for: folder))
-        }
+//        config.folderActions.insertMenu(systemItem: .action) { folder in
+//            UIMenu(title: "Share \(folder.name ?? "")", children: self.shareActions(for: folder))
+//        }
 
         // Set up what happens if the user taps a file (rather than a folder).
         // As an example here, we only allow tapping on PDF files, and for those
         // we present an alert.
-        config.browseToFile.forFiles(
-            withExtension: "pdf", permissions: [.download],
-            .present(fileViewController(for:))
-        )
+//        config.browseToFile.forFiles(
+//            withExtension: "pdf", permissions: [.preview],
+//            .present(fileViewController(for:))
+//        )
 
-        // Push a file browser onto our navigation controller. The browser will
-        // continue to push view controllers onto the navigation stack as the
-        // user taps on folders, but if a file is tapped, we do what is defined
-        // above.
-        DispatchQueue.main.async {
-            // TODO: Remove this hack!
-            let rootFolder = try? Folder(json: [
-                "id": BoxSDK.Constants.rootFolder,
-                "type": "folder",
-                "name": "All Files",
-                "path_collection": [
-                    "entries": []
-                ]
-            ])
-            guard let folder = rootFolder else {
-                return
-            }
-            #if true
-                let nav = BrowseViewController.browseNavigationController(
-                    client: self.client,
+        if modal {
+            let nav = BrowseViewController.browseNavigationController(
+                client: client,
+                folder: folder,
+                withAncestors: true,
+                configuration: config,
+                withCloseButton: true
+            )
+            present(nav, animated: true, completion: nil)
+        }
+        else {
+
+            if let nav = navigationController {
+                BrowseViewController.pushBrowseController(
+                    client: client,
                     folder: folder,
-                    withAncestors: true,
-                    configuration: config,
-                    withCloseButton: true
+                    onto: nav,
+                    configuration: config
                 )
-                self.present(nav, animated: true, completion: nil)
-            #else
-                if let nav = self.navigationController {
-                    BrowseViewController.pushBrowseController(
-                        client: self.client,
-                        folder: folder,
-                        onto: nav,
-                        configuration: config
-                    )
-                }
-            #endif
+            }
         }
     }
 
@@ -120,6 +117,7 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
         return alert
     }
 
+    // Some custom menu actions
     private func shareActions(for folder: Folder) -> [UIAction] {
         var actions: [UIAction] = []
 
@@ -127,8 +125,12 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
             actions.append(
                 UIAction(
                     title: "Shared Link", image: UIImage(systemName: "link")
-                ) { _ in
-                    // Stuff here
+                ) { [weak self] _ in
+                    let alert = UIAlertController(
+                        title: "Share a link", message: nil, preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                    self?.presentedViewController?.present(alert, animated: true, completion: nil)
                 }
             )
         }

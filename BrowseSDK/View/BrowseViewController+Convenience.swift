@@ -7,6 +7,10 @@ import BoxSDK
 import UIKit
 
 public extension BrowseViewController {
+    static var requiredFields: [String] {
+        BoxFolderProvider.requiredFields
+    }
+
     static func browseNavigationController(
         client: BoxClient,
         folder: Folder,
