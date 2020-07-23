@@ -8,6 +8,7 @@ import UIKit
 
 protocol ListingViewModelDelegate: AnyObject {
     func listingItemsChanged(_ viewModel: ListingViewModel)
+    func listingTitleChanged(_ viewModel: ListingViewModel)
 }
 
 protocol NeedsListingViewModel: AnyObject {
@@ -31,9 +32,15 @@ class ListingViewModel {
 
     // MARK: - Data Source
 
-    let title: String
+    var title: String {
+        didSet {
+            if title != oldValue {
+                delegate?.listingTitleChanged(self)
+            }
+        }
+    }
 
-    var isFinishedPaging: Bool = false
+    private(set) var isFinishedPaging: Bool = false
 
     func item(at indexPath: IndexPath) -> ItemViewModel? {
         return itemViewModels[indexPath.row]
@@ -106,4 +113,8 @@ class ListingViewModel {
             self.delegate?.listingItemsChanged(self)
         }
     }
+}
+
+extension ListingViewModelDelegate {
+    func listingTitleChanged(_: ListingViewModel) {}
 }
