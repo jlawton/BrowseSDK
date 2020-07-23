@@ -9,13 +9,16 @@ import UIKit
 struct BoxFolderProvider {
     let client: BoxClient
 
-    init(client: BoxClient) {
+    init(client: BoxClient, additionalFields: [String]? = nil) {
         self.client = client
+        if let additionalFields = additionalFields {
+            fields.append(contentsOf: Set(additionalFields).subtracting(fields))
+        }
     }
 
-    private let fields = [
+    private var fields = [
         "name", "permissions", "sha1", "size", "modified_at", "path_collection",
-        "has_collaborations", "is_externally_owned"
+        "has_collaborations", "is_externally_owned", "extension"
     ]
 
     // Limit the number of thumbnail requests made at once so there is room for

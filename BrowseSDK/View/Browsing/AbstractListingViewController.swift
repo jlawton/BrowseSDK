@@ -64,7 +64,13 @@ public class AbstractListingViewController: UITableViewController,
 
     // MARK: - Routing
 
-    var router: BrowseRouter?
+    var router: BrowseRouter? {
+        didSet {
+            didSetRouter()
+        }
+    }
+
+    func didSetRouter() {}
 
     func canBrowseTo(item: ItemViewModel) -> Bool {
         router?.canBrowseTo(item: item) ?? false
@@ -139,6 +145,10 @@ public class AbstractListingViewController: UITableViewController,
         tableView?.reloadData()
         refreshControl?.endRefreshing()
         configureLoadingFooter()
+    }
+
+    func listingTitleChanged(_ viewModel: ListingViewModel) {
+        title = viewModel.title
     }
 
     // MARK: - Footer

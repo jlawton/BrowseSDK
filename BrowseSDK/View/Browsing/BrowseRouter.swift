@@ -10,17 +10,22 @@ protocol BrowseRouter {
     func browseTo(item: ItemViewModel) -> SelectionBehavior
     func canPresent(folderCreation: CreateFolderViewModel) -> Bool
     func present(folderCreation: CreateFolderViewModel)
+    var folderActionCustomization: FolderActionCustomization { get }
 }
 
 class DefaultBrowseRouter: BrowseRouter {
-    let browseToFile: BrowseToFile
+    let configuration: BrowseConfiguration
     weak var source: UIViewController?
     weak var navigationController: UINavigationController?
 
-    init(source: UIViewController, navigationController: UINavigationController, browseToFile: BrowseToFile) {
+    init(source: UIViewController, navigationController: UINavigationController, configuration: BrowseConfiguration) {
         self.source = source
         self.navigationController = navigationController
-        self.browseToFile = browseToFile
+        self.configuration = configuration
+    }
+
+    var folderActionCustomization: FolderActionCustomization {
+        configuration.folderActions
     }
 
     func canBrowseTo(item: ItemViewModel) -> Bool {
@@ -28,7 +33,7 @@ class DefaultBrowseRouter: BrowseRouter {
             return true
         }
         else if let file = item.fileModel {
-            return browseToFile.canBrowseToFile(file)
+            return configuration.browseToFile.canBrowseToFile(file)
         }
         else {
             return false
@@ -41,7 +46,7 @@ class DefaultBrowseRouter: BrowseRouter {
             dest.router = DefaultBrowseRouter(
                 source: dest,
                 navigationController: nav,
-                browseToFile: browseToFile
+                configuration: configuration
             )
             dest.listingViewModel = item.listingViewModel()
             dest.searchViewModel = item.searchViewModel()
@@ -49,7 +54,7 @@ class DefaultBrowseRouter: BrowseRouter {
             return .remainSelected
         }
         else if let source = source, let file = item.fileModel {
-            return browseToFile.browseToFile(file, source)
+            return configuration.browseToFile.browseToFile(file, source)
         }
         return .deselect
     }

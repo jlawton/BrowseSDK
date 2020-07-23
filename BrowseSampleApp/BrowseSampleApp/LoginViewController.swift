@@ -50,19 +50,20 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     private func browseRoot() {
+        var config = BrowseConfiguration()
+
+        // Set up the actions that appear top right while browsing folders
+//        config.folderActions.disallow([.createFolder])
+        config.folderActions.insertMenu(systemItem: .action) { folder in
+            UIMenu(title: "Share \(folder.name ?? "")", children: self.shareActions(for: folder))
+        }
+
         // Set up what happens if the user taps a file (rather than a folder).
         // As an example here, we only allow tapping on PDF files, and for those
         // we present an alert.
-        let selectFile = BrowseToFile(
-            canBrowseToFile: { (file) -> Bool in
-                (file.permissions?.canDownload ?? false)
-                    && (file.name?.lowercased().hasSuffix("pdf") ?? false)
-            },
-            browseToFile: { (file: File, fromVC: UIViewController) -> SelectionBehavior in
-                let dest = self.fileViewController(for: file)
-                fromVC.present(dest, animated: true, completion: nil)
-                return .deselect
-            }
+        config.browseToFile.forFiles(
+            withExtension: "pdf", permissions: [.download],
+            .present(fileViewController(for:))
         )
 
         // Push a file browser onto our navigation controller. The browser will
@@ -87,7 +88,7 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
                     client: self.client,
                     folder: folder,
                     withAncestors: true,
-                    browseToFile: selectFile,
+                    configuration: config,
                     withCloseButton: true
                 )
                 self.present(nav, animated: true, completion: nil)
@@ -97,7 +98,7 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
                         client: self.client,
                         folder: folder,
                         onto: nav,
-                        browseToFile: selectFile
+                        configuration: config
                     )
                 }
             #endif
@@ -117,6 +118,32 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
             handler: nil
         ))
         return alert
+    }
+
+    private func shareActions(for folder: Folder) -> [UIAction] {
+        var actions: [UIAction] = []
+
+        if folder.permissions?.canShare ?? false {
+            actions.append(
+                UIAction(
+                    title: "Shared Link", image: UIImage(systemName: "link")
+                ) { _ in
+                    // Stuff here
+                }
+            )
+        }
+
+        if folder.permissions?.canInviteCollaborator ?? false {
+            actions.append(
+                UIAction(
+                    title: "Invite Collaborators", image: UIImage(systemName: "person.crop.circle")
+                ) { _ in
+                    // Stuff here
+                }
+            )
+        }
+
+        return actions
     }
 
     // MARK: ASWebAuthenticationPresentationContextProviding

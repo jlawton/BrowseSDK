@@ -11,14 +11,14 @@ public extension BrowseViewController {
         client: BoxClient,
         folder: Folder,
         withAncestors: Bool = false,
-        browseToFile: BrowseToFile = .noFileAction,
+        configuration: BrowseConfiguration = BrowseConfiguration(),
         withCloseButton: Bool = false
     ) -> UINavigationController {
         let nav = UINavigationController()
         pushBrowseController(
             client: client,
             folder: folder, withAncestors: withAncestors,
-            onto: nav, animated: false, browseToFile: browseToFile
+            onto: nav, animated: false, configuration: configuration
         )
         if withCloseButton,
             let root = nav.viewControllers.first as? BrowseViewController {
@@ -36,7 +36,7 @@ public extension BrowseViewController {
         withAncestors: Bool = false,
         onto navigationController: UINavigationController,
         animated: Bool = true,
-        browseToFile: BrowseToFile = .noFileAction
+        configuration: BrowseConfiguration = BrowseConfiguration()
     ) {
         let folders: [Folder]
         if withAncestors {
@@ -46,11 +46,15 @@ public extension BrowseViewController {
             folders = [folder]
         }
 
+        let provider = BoxFolderProvider(
+            client: client,
+            additionalFields: configuration.additionalFields
+        )
         let controllers = folders.map { folder -> UIViewController in
-            let controller = BrowseViewController(nibName: nil, bundle: nil)
+            let controller = BrowseViewController()
             controller.configure(
-                client: client, folder: folder,
-                navigationController: navigationController, browseToFile: browseToFile
+                provider: provider, folder: folder,
+                navigationController: navigationController, configuration: configuration
             )
             return controller
         }
@@ -64,12 +68,11 @@ public extension BrowseViewController {
 
 private extension BrowseViewController {
     func configure(
-        client: BoxClient,
+        provider: BoxFolderProvider,
         folder: Folder,
         navigationController: UINavigationController,
-        browseToFile: BrowseToFile
+        configuration: BrowseConfiguration
     ) {
-        let provider = BoxFolderProvider(client: client)
         let folderID = folder.id
         listingViewModel = FolderListingViewModel(
             folder: folder,
@@ -85,7 +88,7 @@ private extension BrowseViewController {
         router = DefaultBrowseRouter(
             source: self,
             navigationController: navigationController,
-            browseToFile: browseToFile
+            configuration: configuration
         )
     }
 

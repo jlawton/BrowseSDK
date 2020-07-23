@@ -16,12 +16,12 @@ extension FolderActions {
     static func actionButtons(
         listingViewModel: FolderListingViewModel,
         router: BrowseRouter?,
-        customizations: FolderActionCustomization?
+        customizations _: FolderActionCustomization?
     ) -> [UIBarButtonItem] {
         FolderActions(
             listingViewModel: listingViewModel,
             router: router,
-            customizations: customizations ?? FolderActionCustomization()
+            customizations: router?.folderActionCustomization ?? FolderActionCustomization()
         ).actionButtons()
     }
 }
@@ -32,7 +32,7 @@ extension FolderActions {
     }
 
     func actionButtons() -> [UIBarButtonItem] {
-        return customizations.customizeActionItems(
+        return customizations.customizeActionBarItems(
             for: listingViewModel.folder,
             suggested: [
                 addToFolderMenuButton()
@@ -42,7 +42,7 @@ extension FolderActions {
 
     func addToFolderMenuButton() -> UIBarButtonItem? {
         // Get default menu
-        var menu = addToFolderMenu()
+        var menu: UIMenu? = addToFolderMenu()
         // Allow customization
         menu = customizations.customizeAddMenu(
             for: listingViewModel.folder, suggested: menu
@@ -54,14 +54,14 @@ extension FolderActions {
         return nil
     }
 
-    func addToFolderMenu() -> UIMenu? {
+    func addToFolderMenu() -> UIMenu {
         let children: [UIMenuElement] = [
-            createFolderAction(),
-            importMedia()
+            createFolderAction()
+//            importMedia()
         ].compactMap { $0 }
 
-        return children.isEmpty ? nil : UIMenu(
-            title: "Add to folder",
+        return UIMenu(
+            title: "",
             children: children
         )
     }

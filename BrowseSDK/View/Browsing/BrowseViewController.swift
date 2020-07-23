@@ -5,17 +5,14 @@
 
 import UIKit
 
-public class BrowseViewController: AbstractListingViewController {
+public class BrowseViewController: AbstractListingViewController, FolderListingViewModelDelegate {
 
     // MARK: - Data
 
-    override var router: BrowseRouter? {
-        get { super.router }
-        set {
-            super.router = newValue
-            if let searchResults = navigationItem.searchController?.searchResultsController as? SearchResultsViewController {
-                searchResults.router = newValue
-            }
+    override func didSetRouter() {
+        super.didSetRouter()
+        if let searchResults = navigationItem.searchController?.searchResultsController as? SearchResultsViewController {
+            searchResults.router = router
         }
     }
 
@@ -51,12 +48,17 @@ public class BrowseViewController: AbstractListingViewController {
         super.viewWillAppear(animated)
 
         if let viewModel = listingViewModel as? FolderListingViewModel {
-            navigationItem.rightBarButtonItems = FolderActions.actionButtons(
-                listingViewModel: viewModel,
-                router: router,
-                customizations: nil
-            )
+            folderInfoChanged(viewModel)
+            viewModel.refreshFolderInfo()
         }
+    }
+
+    func folderInfoChanged(_ viewModel: FolderListingViewModel) {
+        navigationItem.rightBarButtonItems = FolderActions.actionButtons(
+            listingViewModel: viewModel,
+            router: router,
+            customizations: nil
+        )
     }
 }
 

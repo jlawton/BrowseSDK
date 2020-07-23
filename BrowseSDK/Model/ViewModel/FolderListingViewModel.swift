@@ -45,7 +45,10 @@ class FolderListingViewModel: ListingViewModel {
     }
 
     override func folderCreationViewModel() -> CreateFolderViewModel? {
-        CreateFolderViewModel(folder: folder, provider: provider)
+        if folder.permissions?.canUpload ?? false {
+            return CreateFolderViewModel(folder: folder, provider: provider)
+        }
+        return nil
     }
 
     private var folderListingDelegate: FolderListingViewModelDelegate? {

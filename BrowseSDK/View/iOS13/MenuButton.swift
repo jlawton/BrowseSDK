@@ -23,14 +23,12 @@ class MenuButton: NSObject, UIContextMenuInteractionDelegate {
         if #available(iOSApplicationExtension 14.0, *) {
             return createButton14()
         }
-        else {
-            let item = createButton13()
-            objc_setAssociatedObject(
-                item, &Self.MenuButtonKey,
-                self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-            )
-            return item
-        }
+        let item = createButton13()
+        objc_setAssociatedObject(
+            item, &Self.MenuButtonKey,
+            self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+        )
+        return item
     }
 
     @available(iOS 14.0, *)
@@ -52,6 +50,12 @@ class MenuButton: NSObject, UIContextMenuInteractionDelegate {
                 target: self, action: #selector(buttonTapped(_:))
             )
             button.accessibilityLabel = "Add"
+        case .action:
+            button = UIButton.systemButton(
+                with: UIImage(systemName: "square.and.arrow.up")!,
+                target: self, action: #selector(buttonTapped(_:))
+            )
+            button.accessibilityLabel = "Share"
         default:
             preconditionFailure("Unsupported button type")
         }
