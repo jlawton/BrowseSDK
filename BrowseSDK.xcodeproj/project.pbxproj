@@ -23,6 +23,7 @@
 		0D66B92324C78F2200741433 /* NSLayoutConstraint+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B92224C78F2200741433 /* NSLayoutConstraint+Additions.swift */; };
 		0D66B92724C7A71E00741433 /* KeyboardInsetAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B92624C7A71E00741433 /* KeyboardInsetAdjuster.swift */; };
 		0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70911C24C3F9D700F0337C /* BrowseViewController.swift */; };
+		0DBA61DA24C9168E00E2349F /* FolderActionCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */; };
 		0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */; };
 		0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */; };
 		0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */; };
@@ -56,6 +57,7 @@
 		0D70910E24C3C04000F0337C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D70911724C3C34000F0337C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0D70911C24C3F9D700F0337C /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderActionCustomization.swift; sourceTree = "<group>"; };
 		0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxFolderProvider.swift; sourceTree = "<group>"; };
 		0DC58FC124C56E3F00B7BA00 /* ListingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewModel.swift; sourceTree = "<group>"; };
 		0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			children = (
 				0D66B91E24C6F5D900741433 /* CreateFolder */,
 				0D66B91924C6DDD400741433 /* FolderActions.swift */,
+				0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DC58FC824C59A1500B7BA00 /* BrowseRouter.swift in Sources */,
+				0DBA61DA24C9168E00E2349F /* FolderActionCustomization.swift in Sources */,
 				0DC58FF324C5B76800B7BA00 /* UIImage+Scaling.swift in Sources */,
 				0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */,
 				0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */,

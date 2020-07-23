@@ -3,6 +3,7 @@
 //  Copyright © 2020 Box. All rights reserved.
 //
 
+import ObjectiveC
 import UIKit
 
 class MenuButton: NSObject, UIContextMenuInteractionDelegate {
@@ -14,14 +15,23 @@ class MenuButton: NSObject, UIContextMenuInteractionDelegate {
         self.menu = menu
     }
 
-    lazy var barButtonItem: UIBarButtonItem = {
+    // Just a mutable thing to which we can get a pointer that will be unique
+    // wrt objc_setAssociatedObject
+    private static var MenuButtonKey: UInt8 = 0
+
+    func barButtonItem() -> UIBarButtonItem {
         if #available(iOSApplicationExtension 14.0, *) {
             return createButton14()
         }
         else {
-            return createButton13()
+            let item = createButton13()
+            objc_setAssociatedObject(
+                item, &Self.MenuButtonKey,
+                self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+            )
+            return item
         }
-    }()
+    }
 
     @available(iOS 14.0, *)
     private func createButton14() -> UIBarButtonItem {

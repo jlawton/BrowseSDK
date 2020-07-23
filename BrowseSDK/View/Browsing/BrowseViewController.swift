@@ -7,18 +7,6 @@ import UIKit
 
 public class BrowseViewController: AbstractListingViewController {
 
-    lazy var actions = FolderActions(FolderActionHandlers(
-        createFolder: { [weak self] in
-            guard let viewModel = self?.listingViewModel?.folderCreationViewModel(),
-                let router = self?.router, router.canPresent(folderCreation: viewModel)
-            else {
-                return
-            }
-            router.present(folderCreation: viewModel)
-        },
-        importMedia: { print("IMPORT MEDIA") }
-    ))
-
     // MARK: - Data
 
     override var router: BrowseRouter? {
@@ -54,8 +42,6 @@ public class BrowseViewController: AbstractListingViewController {
         super.viewDidLoad()
         tableView.register(BrowseItemCell.self, forCellReuseIdentifier: reuseIdentifier)
 
-        navigationItem.rightBarButtonItem = actions.addToFolderMenuButton
-
         // Context for search presentation
         definesPresentationContext = true
     }
@@ -63,6 +49,14 @@ public class BrowseViewController: AbstractListingViewController {
     override public func viewWillAppear(_ animated: Bool) {
         assert(listingViewModel != nil)
         super.viewWillAppear(animated)
+
+        if let viewModel = listingViewModel as? FolderListingViewModel {
+            navigationItem.rightBarButtonItems = FolderActions.actionButtons(
+                listingViewModel: viewModel,
+                router: router,
+                customizations: nil
+            )
+        }
     }
 }
 

@@ -6,7 +6,7 @@
 import BoxSDK
 
 class FolderListingViewModel: ListingViewModel {
-    private let folder: Folder
+    let folder: Folder
 
     init(folder: Folder, provider: BoxFolderProvider, createEnumerator: @escaping () -> BoxEnumerator) {
         self.folder = folder

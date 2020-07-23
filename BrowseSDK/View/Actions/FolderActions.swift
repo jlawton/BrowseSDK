@@ -3,35 +3,61 @@
 //  Copyright © 2020 Box. All rights reserved.
 //
 
+import BoxSDK
 import UIKit
 
-struct FolderActionHandlers {
-    var createFolder: (() -> Void)?
-    var importMedia: (() -> Void)?
+struct FolderActions {
+    let listingViewModel: FolderListingViewModel
+    let router: BrowseRouter?
+    let customizations: FolderActionCustomization
 }
 
-class FolderActions {
-    let handlers: FolderActionHandlers
-
-    init(_ handlers: FolderActionHandlers) {
-        self.handlers = handlers
-    }
-
-    // Jumping through some hoops for iOS 13 compatibility
-    private lazy var addToFolderMenuButtonShim = addToFolderMenu.map {
-        MenuButton(systemItem: .add, menu: $0)
+extension FolderActions {
+    static func actionButtons(
+        listingViewModel: FolderListingViewModel,
+        router: BrowseRouter?,
+        customizations: FolderActionCustomization?
+    ) -> [UIBarButtonItem] {
+        FolderActions(
+            listingViewModel: listingViewModel,
+            router: router,
+            customizations: customizations ?? FolderActionCustomization()
+        ).actionButtons()
     }
 }
 
 extension FolderActions {
-    var addToFolderMenuButton: UIBarButtonItem? {
-        addToFolderMenuButtonShim?.barButtonItem
+    private func actionID(_ id: DefaultFolderActionIdentifier) -> UIAction.Identifier {
+        UIAction.Identifier(id.rawValue)
     }
 
-    var addToFolderMenu: UIMenu? {
-        let children = [
-            createFolder(handlers.createFolder),
-            importMedia(handlers.importMedia)
+    func actionButtons() -> [UIBarButtonItem] {
+        return customizations.customizeActionItems(
+            for: listingViewModel.folder,
+            suggested: [
+                addToFolderMenuButton()
+            ].compactMap { $0 }
+        )
+    }
+
+    func addToFolderMenuButton() -> UIBarButtonItem? {
+        // Get default menu
+        var menu = addToFolderMenu()
+        // Allow customization
+        menu = customizations.customizeAddMenu(
+            for: listingViewModel.folder, suggested: menu
+        )
+        // Stick it in a button
+        if let menu = menu {
+            return MenuButton(systemItem: .add, menu: menu).barButtonItem()
+        }
+        return nil
+    }
+
+    func addToFolderMenu() -> UIMenu? {
+        let children: [UIMenuElement] = [
+            createFolderAction(),
+            importMedia()
         ].compactMap { $0 }
 
         return children.isEmpty ? nil : UIMenu(
@@ -40,25 +66,28 @@ extension FolderActions {
         )
     }
 
-    func createFolder(_ handler: (() -> Void)?) -> UIAction? {
-        guard let handler = handler else {
+    func createFolderAction() -> UIAction? {
+        guard let viewModel = listingViewModel.folderCreationViewModel(),
+            let router = router, router.canPresent(folderCreation: viewModel)
+        else {
             return nil
         }
         return UIAction(
             title: "Create folder",
             image: UIImage(systemName: "folder.badge.plus"),
-            handler: { _ in handler() }
+            identifier: actionID(.createFolder),
+            handler: { _ in
+                router.present(folderCreation: viewModel)
+            }
         )
     }
 
-    func importMedia(_ handler: (() -> Void)?) -> UIAction? {
-        guard let handler = handler else {
-            return nil
-        }
+    func importMedia() -> UIAction? {
         return UIAction(
             title: "Import Photo",
             image: UIImage(systemName: "photo.on.rectangle"),
-            handler: { _ in handler() }
+            identifier: actionID(.importPhoto),
+            handler: { _ in /* TODO: */ }
         )
     }
 }
