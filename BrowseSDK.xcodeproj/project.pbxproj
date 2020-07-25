@@ -15,6 +15,9 @@
 		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
 		0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */; };
 		0D4E98D024C7FB5500B95025 /* Breadcrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */; };
+		0D54A3DE24CAC6DE00A3084C /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D54A3DD24CAC6DE00A3084C /* Predicate.swift */; };
+		0D54A3E024CAE10F00A3084C /* Predicated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D54A3DF24CAE10F00A3084C /* Predicated.swift */; };
+		0D54A3E224CAE6EC00A3084C /* ItemPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D54A3E124CAE6EC00A3084C /* ItemPredicates.swift */; };
 		0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91224C675D200741433 /* BrowseToFile.swift */; };
 		0D66B91824C6D41B00741433 /* UIAlertController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */; };
 		0D66B91A24C6DDD400741433 /* FolderActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91924C6DDD400741433 /* FolderActions.swift */; };
@@ -49,6 +52,9 @@
 		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailSize.swift; sourceTree = "<group>"; };
 		0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breadcrumbs.swift; sourceTree = "<group>"; };
+		0D54A3DD24CAC6DE00A3084C /* Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicate.swift; sourceTree = "<group>"; };
+		0D54A3DF24CAE10F00A3084C /* Predicated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicated.swift; sourceTree = "<group>"; };
+		0D54A3E124CAE6EC00A3084C /* ItemPredicates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPredicates.swift; sourceTree = "<group>"; };
 		0D66B91224C675D200741433 /* BrowseToFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseToFile.swift; sourceTree = "<group>"; };
 		0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Menu.swift"; sourceTree = "<group>"; };
 		0D66B91924C6DDD400741433 /* FolderActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderActions.swift; sourceTree = "<group>"; };
@@ -155,6 +161,16 @@
 			path = Browsing;
 			sourceTree = "<group>";
 		};
+		0D54A3DC24CAC63600A3084C /* Predicates */ = {
+			isa = PBXGroup;
+			children = (
+				0D70C08A24C95E4000A65439 /* FilePermissions.swift */,
+				0D70C08C24C97E4900A65439 /* FolderPermissions.swift */,
+				0D54A3E124CAE6EC00A3084C /* ItemPredicates.swift */,
+			);
+			path = Predicates;
+			sourceTree = "<group>";
+		};
 		0D66B91624C6D3FE00741433 /* iOS13 */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +222,8 @@
 				0D70911B24C3F99100F0337C /* View */,
 				0D70911A24C3F50100F0337C /* Model */,
 				0D4B732D24C5582F00FA43F1 /* Utility */,
+				0D54A3DD24CAC6DE00A3084C /* Predicate.swift */,
+				0D54A3DF24CAE10F00A3084C /* Predicated.swift */,
 			);
 			path = BrowseSDK;
 			sourceTree = "<group>";
@@ -233,11 +251,10 @@
 		0D70C08E24C97F1000A65439 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				0D54A3DC24CAC63600A3084C /* Predicates */,
 				0DBA61DB24C9517600E2349F /* BrowseConfiguration.swift */,
 				0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */,
 				0D66B91224C675D200741433 /* BrowseToFile.swift */,
-				0D70C08A24C95E4000A65439 /* FilePermissions.swift */,
-				0D70C08C24C97E4900A65439 /* FolderPermissions.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -376,7 +393,9 @@
 				0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */,
 				0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */,
 				0D4E98D024C7FB5500B95025 /* Breadcrumbs.swift in Sources */,
+				0D54A3DE24CAC6DE00A3084C /* Predicate.swift in Sources */,
 				0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */,
+				0D54A3E224CAE6EC00A3084C /* ItemPredicates.swift in Sources */,
 				0D66B91A24C6DDD400741433 /* FolderActions.swift in Sources */,
 				0DC58FC624C5937900B7BA00 /* BrowseItemCell.swift in Sources */,
 				0D1EC5C424C8187E0014EC34 /* FolderListingViewModel.swift in Sources */,
@@ -386,6 +405,7 @@
 				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,
 				0DBA61DC24C9517600E2349F /* BrowseConfiguration.swift in Sources */,
 				0DC58FF724C607FB00B7BA00 /* SearchViewModel.swift in Sources */,
+				0D54A3E024CAE10F00A3084C /* Predicated.swift in Sources */,
 				0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */,
 				0D66B92024C6F5EF00741433 /* CreateFolderViewController.swift in Sources */,
 				0D66B92324C78F2200741433 /* NSLayoutConstraint+Additions.swift in Sources */,

@@ -12,24 +12,26 @@ public enum SelectionBehavior {
 }
 
 public struct BrowseToFile {
-    var canBrowseToFile: (_ file: File) -> Bool
-    var browseToFile: (_ file: File, _ fromVC: UIViewController) -> SelectionBehavior
+    typealias BTF = Predicated<File, (File, UIViewController), SelectionBehavior>
+    var btf = BTF()
 
     public init(
         canBrowseToFile: @escaping (File) -> Bool,
         browseToFile: @escaping (File, UIViewController) -> SelectionBehavior
     ) {
-        self.canBrowseToFile = canBrowseToFile
-        self.browseToFile = browseToFile
+        btf = .init(predicate: canBrowseToFile, action: browseToFile)
     }
-}
 
-public extension BrowseToFile {
-    init() {
-        self.init(
-            canBrowseToFile: { _ in false },
-            browseToFile: { _, _ in .deselect }
-        )
+    public init() {
+        btf = .init()
+    }
+
+    func canBrowseToFile(_ file: File) -> Bool {
+        return btf.canAct(file)
+    }
+
+    func browseToFile(_ file: File, _ source: UIViewController) -> SelectionBehavior {
+        return btf.act(file, source) ?? .deselect
     }
 }
 
@@ -40,31 +42,23 @@ public extension BrowseToFile {
     }
 
     mutating func forFiles(
-        withExtension: String,
+        withExtension ext: String,
         permissions: FilePermissions = [],
         _ presentation: ViewControllerPresentation
     ) {
-        let ext = withExtension.lowercased()
         forFiles(
-            where: { file in
-                permissions.matches(file)
-                    && (extensionFrom(file) == ext)
-            },
+            where: Predicate(fileExtension: ext) && Predicate(permissions),
             browse: presentation.presentFile(_:from:)
         )
     }
 
     mutating func forFiles(
-        withExtensionIn: [String],
+        withExtensionIn extensions: [String],
         permissions: FilePermissions = [],
         _ presentation: ViewControllerPresentation
     ) {
-        let ext = Set(withExtensionIn.map { $0.lowercased() })
         forFiles(
-            where: { file in
-                permissions.matches(file)
-                    && (extensionFrom(file).map(ext.contains) ?? false)
-            },
+            where: Predicate(permissions) && Predicate(fileExtensionIn: extensions),
             browse: presentation.presentFile(_:from:)
         )
     }
@@ -73,30 +67,18 @@ public extension BrowseToFile {
         where match: @escaping (File) -> Bool,
         browse: @escaping (File, UIViewController) -> SelectionBehavior
     ) {
-        let existing = self
-        canBrowseToFile = { file in
-            match(file) || existing.canBrowseToFile(file)
-        }
-        browseToFile = { file, src in
-            if match(file) {
-                return browse(file, src)
-            }
-            else {
-                return existing.browseToFile(file, src)
-            }
-        }
+        forFiles(where: Predicate(match), browse: browse)
     }
-}
 
-private func extensionFrom(_ file: File) -> String? {
-    if let ext = file.extension {
-        return ext.lowercased()
+    internal mutating func forFiles(
+        where match: Predicate<File>,
+        browse: @escaping (File, UIViewController) -> SelectionBehavior
+    ) {
+        btf.fallbackTo(BTF(
+            predicate: match,
+            action: browse
+        ))
     }
-    if let name = file.name, let extStart = name.lastIndex(of: "."),
-        extStart != name.startIndex {
-        return name[extStart...].lowercased()
-    }
-    return nil
 }
 
 extension BrowseToFile.ViewControllerPresentation {
