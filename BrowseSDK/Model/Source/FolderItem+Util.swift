@@ -13,6 +13,19 @@ extension FolderItem {
         return nil
     }
 
+    struct Identifier: Hashable {
+        let type: String
+        let id: String
+    }
+
+    var identifier: Identifier {
+        switch self {
+        case let .folder(folder): return Identifier(type: folder.type, id: folder.id)
+        case let .file(file): return Identifier(type: file.type, id: file.id)
+        case let .webLink(webLink): return Identifier(type: webLink.type, id: webLink.id)
+        }
+    }
+
     var name: String {
         switch self {
         case let .folder(folder): return folder.name ?? ""
