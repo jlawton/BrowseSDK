@@ -183,18 +183,10 @@
 		0D66B91D24C6F46600741433 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				0D66B91E24C6F5D900741433 /* CreateFolder */,
+				0D66B91F24C6F5EF00741433 /* CreateFolderViewController.swift */,
 				0D66B91924C6DDD400741433 /* FolderActions.swift */,
 			);
 			path = Actions;
-			sourceTree = "<group>";
-		};
-		0D66B91E24C6F5D900741433 /* CreateFolder */ = {
-			isa = PBXGroup;
-			children = (
-				0D66B91F24C6F5EF00741433 /* CreateFolderViewController.swift */,
-			);
-			path = CreateFolder;
 			sourceTree = "<group>";
 		};
 		0D70910024C3C04000F0337C = {
