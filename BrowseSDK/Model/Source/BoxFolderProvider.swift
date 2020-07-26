@@ -124,6 +124,12 @@ struct BoxFolderProvider {
             // Don't make too many requests at once
             thumbnailRequestSema.wait()
 
+            guard !progress.isCancelled else {
+                // Free up for another request
+                thumbnailRequestSema.signal()
+                return
+            }
+
             progress.performAsCurrent(withPendingUnitCount: 8) {
                 // Hit the network and cache any successful result
                 client.files.getThumbnail(forFile: identifier, extension: .jpg, minHeight: 160, minWidth: 160) { result in
