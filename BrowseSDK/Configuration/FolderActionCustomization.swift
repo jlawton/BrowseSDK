@@ -37,7 +37,8 @@ public extension FolderActionCustomization {
         modifyAddMenuElements { elements in
             elements.filter { elem in
                 if let action = elem as? UIAction,
-                    let id = DefaultFolderActionIdentifier(rawValue: action.identifier.rawValue) {
+                    let id = DefaultFolderActionIdentifier(rawValue: action.identifier.rawValue)
+                {
                     return !disallowed.contains(id)
                 }
                 return true
@@ -72,7 +73,8 @@ public extension FolderActionCustomization {
         _customizeActionBarItems = { folder, suggested in
             let item: [UIBarButtonItem]
             if requiredPermissions.matches(folder),
-                let menu = createMenu(folder), !menu.children.isEmpty {
+                let menu = createMenu(folder), !menu.children.isEmpty
+            {
                 item = [MenuButton(systemItem: systemItem, menu: menu).barButtonItem()]
             }
             else {

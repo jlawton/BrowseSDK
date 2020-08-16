@@ -12,6 +12,7 @@ disabled_rules:
   - todo
   - modifier_order
   - statement_position
+  - opening_brace
 
 #
 # Some rules are only opt-in. Find all the available rules by running: swiftlint rules

@@ -25,7 +25,8 @@ public extension BrowseViewController {
             onto: nav, animated: false, configuration: configuration
         )
         if withCloseButton,
-            let root = nav.viewControllers.first as? BrowseViewController {
+            let root = nav.viewControllers.first as? BrowseViewController
+        {
             root.navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .close,
                 target: root, action: #selector(closeButtonPressed(_:))

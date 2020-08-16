@@ -33,7 +33,8 @@ private func extensionFrom(_ file: File) -> String {
         return ext.lowercased()
     }
     if let name = file.name, let extStart = name.lastIndex(of: "."),
-        extStart != name.startIndex {
+        extStart != name.startIndex
+    {
         return name[extStart...].lowercased()
     }
     return ""

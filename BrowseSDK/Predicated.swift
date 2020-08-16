@@ -50,12 +50,14 @@ extension Predicated {
 
 extension Predicated {
     func act(_ input: ActionInput) -> Output?
-        where PredicateInput == ActionInput {
+        where PredicateInput == ActionInput
+    {
         matchingInnerAction(input)?.action(input)
     }
 
     func act<T>(_ predicateInput: PredicateInput, _ second: T) -> Output?
-        where ActionInput == (PredicateInput, T) {
+        where ActionInput == (PredicateInput, T)
+    {
         matchingInnerAction(predicateInput)?.action((predicateInput, second))
     }
 }

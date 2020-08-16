@@ -12,7 +12,8 @@ protocol CanShowDisabled: AnyObject {
 typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabled
 
 public class AbstractListingViewController: UITableViewController,
-    NeedsListingViewModel, ListingViewModelDelegate {
+    NeedsListingViewModel, ListingViewModelDelegate
+{
 
     let reuseIdentifier = "ListingItemCell"
 
@@ -55,7 +56,8 @@ public class AbstractListingViewController: UITableViewController,
         if let search = navigationItem.searchController,
             search.isActive,
             let resultsVC = search.searchResultsController as? UITableViewController,
-            let results = resultsVC.tableView {
+            let results = resultsVC.tableView
+        {
             for indexPath in results.indexPathsForSelectedRows ?? [] {
                 results.deselectRow(at: indexPath, animated: true)
             }
