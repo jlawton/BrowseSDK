@@ -5,6 +5,7 @@
 
 import BoxSDK
 import Foundation
+import UIKit
 
 protocol FolderListingViewModelDelegate: ListingViewModelDelegate {
     func folderInfoChanged(_ viewModel: FolderListingViewModel)
@@ -44,7 +45,14 @@ class FolderListingViewModel: ListingViewModel {
         }
     }
 
-    override func folderCreationViewModel() -> CreateFolderViewModel? {
+    override func rightBarButtonItems(router: BrowseRouter?) -> [UIBarButtonItem] {
+        FolderActions.actionButtons(
+            listingViewModel: self,
+            router: router
+        )
+    }
+
+    func folderCreationViewModel() -> CreateFolderViewModel? {
         if folder.permissions?.canUpload ?? false {
             return CreateFolderViewModel(folder: folder, provider: provider)
         }

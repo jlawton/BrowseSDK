@@ -54,11 +54,7 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
     }
 
     func folderInfoChanged(_ viewModel: FolderListingViewModel) {
-        navigationItem.rightBarButtonItems = FolderActions.actionButtons(
-            listingViewModel: viewModel,
-            router: router,
-            customizations: nil
-        )
+        navigationItem.rightBarButtonItems = viewModel.rightBarButtonItems(router: router)
     }
 }
 

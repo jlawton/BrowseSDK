@@ -52,8 +52,8 @@ class ListingViewModel {
 
     // MARK: - Capabilities provided by subclasses
 
-    func folderCreationViewModel() -> CreateFolderViewModel? {
-        return nil
+    func rightBarButtonItems(router _: BrowseRouter?) -> [UIBarButtonItem] {
+        return []
     }
 
     // MARK: - Actions

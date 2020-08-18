@@ -13,15 +13,21 @@ struct FolderActions {
 }
 
 extension FolderActions {
-    static func actionButtons(
-        listingViewModel: FolderListingViewModel,
-        router: BrowseRouter?,
-        customizations _: FolderActionCustomization?
-    ) -> [UIBarButtonItem] {
-        FolderActions(
+    init(listingViewModel: FolderListingViewModel, router: BrowseRouter?) {
+        self.init(
             listingViewModel: listingViewModel,
             router: router,
             customizations: router?.folderActionCustomization ?? FolderActionCustomization()
+        )
+    }
+
+    static func actionButtons(
+        listingViewModel: FolderListingViewModel,
+        router: BrowseRouter?
+    ) -> [UIBarButtonItem] {
+        FolderActions(
+            listingViewModel: listingViewModel,
+            router: router
         ).actionButtons()
     }
 }
