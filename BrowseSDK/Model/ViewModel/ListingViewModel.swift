@@ -58,6 +58,10 @@ class ListingViewModel {
         return []
     }
 
+    func toolbarItems() -> [UIBarButtonItem] {
+        return []
+    }
+
     // MARK: - Actions
 
     private var pageLoadProgress: Progress?
