@@ -30,6 +30,7 @@
 		0D70911D24C3F9D700F0337C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70911C24C3F9D700F0337C /* BrowseViewController.swift */; };
 		0D70C08B24C95E4000A65439 /* FilePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70C08A24C95E4000A65439 /* FilePermissions.swift */; };
 		0D70C08D24C97E4900A65439 /* FolderPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70C08C24C97E4900A65439 /* FolderPermissions.swift */; };
+		0D92B61424EBA1BE001C35D8 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D92B61324EBA1BE001C35D8 /* ActionButton.swift */; };
 		0DBA61DA24C9168E00E2349F /* FolderActionCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */; };
 		0DBA61DC24C9517600E2349F /* BrowseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA61DB24C9517600E2349F /* BrowseConfiguration.swift */; };
 		0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */; };
@@ -72,6 +73,7 @@
 		0D70911C24C3F9D700F0337C /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		0D70C08A24C95E4000A65439 /* FilePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePermissions.swift; sourceTree = "<group>"; };
 		0D70C08C24C97E4900A65439 /* FolderPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPermissions.swift; sourceTree = "<group>"; };
+		0D92B61324EBA1BE001C35D8 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderActionCustomization.swift; sourceTree = "<group>"; };
 		0DBA61DB24C9517600E2349F /* BrowseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseConfiguration.swift; sourceTree = "<group>"; };
 		0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxFolderProvider.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				0D66B91B24C6E63800741433 /* MenuButton.swift */,
+				0D92B61324EBA1BE001C35D8 /* ActionButton.swift */,
 				0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */,
 			);
 			path = iOS13;
@@ -412,6 +415,7 @@
 				0D66B91C24C6E63800741433 /* MenuButton.swift in Sources */,
 				0DC58FFD24C642BF00B7BA00 /* UIImage+Icon.swift in Sources */,
 				0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */,
+				0D92B61424EBA1BE001C35D8 /* ActionButton.swift in Sources */,
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
 				0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */,
