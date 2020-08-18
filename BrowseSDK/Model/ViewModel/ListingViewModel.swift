@@ -52,6 +52,8 @@ class ListingViewModel {
 
     // MARK: - Capabilities provided by subclasses
 
+    var prompt: String? { nil }
+
     func rightBarButtonItems(router _: BrowseRouter?) -> [UIBarButtonItem] {
         return []
     }

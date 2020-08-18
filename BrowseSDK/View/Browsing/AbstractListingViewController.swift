@@ -24,6 +24,7 @@ public class AbstractListingViewController: UITableViewController,
             oldValue?.delegate = nil
 
             title = listingViewModel?.title
+            navigationItem.prompt = listingViewModel?.prompt
             listingViewModel?.delegate = self
             tableView?.reloadData()
             configureLoadingFooter()
