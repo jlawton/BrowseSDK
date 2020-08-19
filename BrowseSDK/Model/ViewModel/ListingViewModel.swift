@@ -3,6 +3,7 @@
 //  Copyright © 2020 Box. All rights reserved.
 //
 
+import BoxSDK
 import Foundation
 import UIKit
 
@@ -62,6 +63,10 @@ class ListingViewModel {
         return []
     }
 
+    func itemViewModel(for item: FolderItem) -> ItemViewModel {
+        ItemViewModel(item: item, provider: provider)
+    }
+
     // MARK: - Actions
 
     private var pageLoadProgress: Progress?
@@ -92,9 +97,7 @@ class ListingViewModel {
 
         enumerator?.getNextPage { result in
             let resultVM = result.flatMap { page -> Result<[ItemViewModel], Error> in
-                .success(page.map { item in
-                    ItemViewModel(item: item, provider: self.provider)
-                })
+                .success(page.map(self.itemViewModel(for:)))
             }
 
             guard !progress.isCancelled else {

@@ -13,8 +13,8 @@ protocol NeedsItemViewModel: AnyObject {
 
 class ItemViewModel {
 
-    private let item: FolderItem
-    private let provider: BoxFolderProvider
+    let item: FolderItem
+    let provider: BoxFolderProvider
 
     private var thumbnailProgress: Progress?
 
