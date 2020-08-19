@@ -76,10 +76,18 @@ public class AbstractListingViewController: UITableViewController,
     func didSetRouter() {}
 
     func canBrowseTo(item: ItemViewModel) -> Bool {
-        router?.canBrowseTo(item: item) ?? false
+        if let listing = item.listingViewModel() {
+            return router?.canBrowseTo(listing: listing, search: item.searchViewModel()) ?? false
+        }
+        return router?.canBrowseTo(item: item) ?? false
     }
 
     func browseTo(item: ItemViewModel) {
+        if let router = router, let listing = item.listingViewModel() {
+            router.browseTo(listing: listing, search: item.searchViewModel())
+            return
+        }
+
         let behavior = router?.browseTo(item: item) ?? .deselect
         if behavior == .deselect {
             for row in tableView.indexPathsForSelectedRows ?? [] {
