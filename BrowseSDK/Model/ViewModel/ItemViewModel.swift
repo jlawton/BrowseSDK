@@ -160,6 +160,13 @@ class ItemViewModel {
         }
         return SearchViewModel(provider: provider, folderID: identifier)
     }
+
+    func moveOrCopyViewModel() -> MoveOrCopyViewModel? {
+        guard MoveOrCopyViewModel.canMoveOrCopy(item) else {
+            return nil
+        }
+        return MoveOrCopyViewModel(sourceItems: [item], provider: provider)
+    }
 }
 
 // MARK: - Equality

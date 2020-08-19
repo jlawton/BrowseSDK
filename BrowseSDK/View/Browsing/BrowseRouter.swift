@@ -12,6 +12,8 @@ protocol BrowseRouter {
     func browseTo(listing: ListingViewModel, search: SearchViewModel?)
     func canPresent(folderCreation: CreateFolderViewModel) -> Bool
     func present(folderCreation: CreateFolderViewModel)
+    func canPresent(moveOrCopy: MoveOrCopyViewModel) -> Bool
+    func present(moveOrCopy: MoveOrCopyViewModel)
     var folderActionCustomization: FolderActionCustomization { get }
 }
 
@@ -81,5 +83,29 @@ class DefaultBrowseRouter: BrowseRouter {
         }
 
         source?.present(viewController, animated: true, completion: nil)
+    }
+
+    func canPresent(moveOrCopy: MoveOrCopyViewModel) -> Bool {
+        return !moveOrCopy.initialPath.isEmpty
+    }
+
+    func present(moveOrCopy: MoveOrCopyViewModel) {
+        let closeButton = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self, action: #selector(dismissPresented)
+        )
+        let viewController = BrowseViewController.pickerNavigationController(
+            path: moveOrCopy.initialPath,
+            closeButton: closeButton,
+            createListing: moveOrCopy.listingViewModel(for:),
+            createSearch: moveOrCopy.searchViewModel(for:),
+            createRouter: MoveOrCopyRouter.init(source:navigationController:)
+        )
+
+        source?.present(viewController, animated: true, completion: nil)
+    }
+
+    @objc private func dismissPresented() {
+        source?.dismiss(animated: true, completion: nil)
     }
 }

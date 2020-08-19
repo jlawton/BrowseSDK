@@ -20,6 +20,10 @@
 		0D54A3DE24CAC6DE00A3084C /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D54A3DD24CAC6DE00A3084C /* Predicate.swift */; };
 		0D54A3E024CAE10F00A3084C /* Predicated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D54A3DF24CAE10F00A3084C /* Predicated.swift */; };
 		0D54A3E224CAE6EC00A3084C /* ItemPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D54A3E124CAE6EC00A3084C /* ItemPredicates.swift */; };
+		0D583D3724ED1C7B00B9536B /* MoveOrCopyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3624ED1C7B00B9536B /* MoveOrCopyRouter.swift */; };
+		0D583D3924ED1C8900B9536B /* MoveOrCopyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3824ED1C8900B9536B /* MoveOrCopyViewModel.swift */; };
+		0D583D3B24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3A24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift */; };
+		0D583D3D24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3C24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift */; };
 		0D66B91324C675D200741433 /* BrowseToFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91224C675D200741433 /* BrowseToFile.swift */; };
 		0D66B91824C6D41B00741433 /* UIAlertController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */; };
 		0D66B91A24C6DDD400741433 /* FolderActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D66B91924C6DDD400741433 /* FolderActions.swift */; };
@@ -31,6 +35,7 @@
 		0D70C08B24C95E4000A65439 /* FilePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70C08A24C95E4000A65439 /* FilePermissions.swift */; };
 		0D70C08D24C97E4900A65439 /* FolderPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70C08C24C97E4900A65439 /* FolderPermissions.swift */; };
 		0D92B61424EBA1BE001C35D8 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D92B61324EBA1BE001C35D8 /* ActionButton.swift */; };
+		0D92B61624EBBF5B001C35D8 /* BrowseViewController+FolderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D92B61524EBBF5B001C35D8 /* BrowseViewController+FolderPicker.swift */; };
 		0DBA61DA24C9168E00E2349F /* FolderActionCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */; };
 		0DBA61DC24C9517600E2349F /* BrowseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA61DB24C9517600E2349F /* BrowseConfiguration.swift */; };
 		0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */; };
@@ -60,6 +65,10 @@
 		0D54A3DD24CAC6DE00A3084C /* Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicate.swift; sourceTree = "<group>"; };
 		0D54A3DF24CAE10F00A3084C /* Predicated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicated.swift; sourceTree = "<group>"; };
 		0D54A3E124CAE6EC00A3084C /* ItemPredicates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPredicates.swift; sourceTree = "<group>"; };
+		0D583D3624ED1C7B00B9536B /* MoveOrCopyRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyRouter.swift; sourceTree = "<group>"; };
+		0D583D3824ED1C8900B9536B /* MoveOrCopyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyViewModel.swift; sourceTree = "<group>"; };
+		0D583D3A24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyListingViewModel.swift; sourceTree = "<group>"; };
+		0D583D3C24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyItemViewModel.swift; sourceTree = "<group>"; };
 		0D66B91224C675D200741433 /* BrowseToFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseToFile.swift; sourceTree = "<group>"; };
 		0D66B91724C6D41B00741433 /* UIAlertController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Menu.swift"; sourceTree = "<group>"; };
 		0D66B91924C6DDD400741433 /* FolderActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderActions.swift; sourceTree = "<group>"; };
@@ -74,6 +83,7 @@
 		0D70C08A24C95E4000A65439 /* FilePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePermissions.swift; sourceTree = "<group>"; };
 		0D70C08C24C97E4900A65439 /* FolderPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPermissions.swift; sourceTree = "<group>"; };
 		0D92B61324EBA1BE001C35D8 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		0D92B61524EBBF5B001C35D8 /* BrowseViewController+FolderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowseViewController+FolderPicker.swift"; sourceTree = "<group>"; };
 		0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderActionCustomization.swift; sourceTree = "<group>"; };
 		0DBA61DB24C9517600E2349F /* BrowseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseConfiguration.swift; sourceTree = "<group>"; };
 		0DC58FBF24C5667F00B7BA00 /* BoxFolderProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxFolderProvider.swift; sourceTree = "<group>"; };
@@ -161,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				0D70911C24C3F9D700F0337C /* BrowseViewController.swift */,
+				0D92B61524EBBF5B001C35D8 /* BrowseViewController+FolderPicker.swift */,
 				0DC58FFA24C6251400B7BA00 /* SearchResultsViewController.swift */,
 				0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */,
 				0DC58FC524C5937900B7BA00 /* BrowseItemCell.swift */,
@@ -220,6 +231,7 @@
 			children = (
 				0D70910E24C3C04000F0337C /* Info.plist */,
 				0D70C08E24C97F1000A65439 /* Configuration */,
+				0D92B61924ED1A0A001C35D8 /* Features */,
 				0D70911B24C3F99100F0337C /* View */,
 				0D70911A24C3F50100F0337C /* Model */,
 				0D4B732D24C5582F00FA43F1 /* Utility */,
@@ -255,9 +267,29 @@
 				0D54A3DC24CAC63600A3084C /* Predicates */,
 				0DBA61DB24C9517600E2349F /* BrowseConfiguration.swift */,
 				0DBA61D924C9168E00E2349F /* FolderActionCustomization.swift */,
+				0D2D3D4724CC2A8800D64398 /* ListItemActionCustomization.swift */,
 				0D66B91224C675D200741433 /* BrowseToFile.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		0D92B61924ED1A0A001C35D8 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				0D92B61A24ED1A25001C35D8 /* MoveOrCopy */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		0D92B61A24ED1A25001C35D8 /* MoveOrCopy */ = {
+			isa = PBXGroup;
+			children = (
+				0D583D3624ED1C7B00B9536B /* MoveOrCopyRouter.swift */,
+				0D583D3824ED1C8900B9536B /* MoveOrCopyViewModel.swift */,
+				0D583D3A24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift */,
+				0D583D3C24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift */,
+			);
+			path = MoveOrCopy;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,6 +439,7 @@
 				0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */,
 				0DBA61DC24C9517600E2349F /* BrowseConfiguration.swift in Sources */,
 				0DC58FF724C607FB00B7BA00 /* SearchViewModel.swift in Sources */,
+				0D583D3B24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift in Sources */,
 				0D54A3E024CAE10F00A3084C /* Predicated.swift in Sources */,
 				0DC58FC224C56E3F00B7BA00 /* ListingViewModel.swift in Sources */,
 				0D2D3D5424CE380D00D64398 /* Callback+Collect.swift in Sources */,
@@ -419,8 +452,12 @@
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
 				0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */,
+				0D583D3D24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift in Sources */,
+				0D583D3724ED1C7B00B9536B /* MoveOrCopyRouter.swift in Sources */,
+				0D92B61624EBBF5B001C35D8 /* BrowseViewController+FolderPicker.swift in Sources */,
 				0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */,
 				0D66B92724C7A71E00741433 /* KeyboardInsetAdjuster.swift in Sources */,
+				0D583D3924ED1C8900B9536B /* MoveOrCopyViewModel.swift in Sources */,
 				0D1EC5C024C806240014EC34 /* CreateFolderViewModel.swift in Sources */,
 				0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */,
 				0D1EC5C624C8B27D0014EC34 /* Callback+Cofunctor.swift in Sources */,
