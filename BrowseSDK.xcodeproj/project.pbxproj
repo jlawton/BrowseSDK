@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D1EC5C024C806240014EC34 /* CreateFolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1EC5BF24C806240014EC34 /* CreateFolderViewModel.swift */; };
 		0D1EC5C424C8187E0014EC34 /* FolderListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1EC5C324C8187E0014EC34 /* FolderListingViewModel.swift */; };
 		0D1EC5C624C8B27D0014EC34 /* Callback+Cofunctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1EC5C524C8B27D0014EC34 /* Callback+Cofunctor.swift */; };
 		0D2D3D5024CC3D3D00D64398 /* FolderItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2D3D4F24CC3D3D00D64398 /* FolderItem+Util.swift */; };
@@ -17,7 +16,6 @@
 		0D4B732F24C5584200FA43F1 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B732E24C5584200FA43F1 /* ImageCache.swift */; };
 		0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */; };
 		0D4E98D024C7FB5500B95025 /* Breadcrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */; };
-		0D583D3724ED1C7B00B9536B /* MoveOrCopyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3624ED1C7B00B9536B /* MoveOrCopyRouter.swift */; };
 		0D583D3924ED1C8900B9536B /* MoveOrCopyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3824ED1C8900B9536B /* MoveOrCopyViewModel.swift */; };
 		0D583D3B24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3A24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift */; };
 		0D583D3D24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D583D3C24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift */; };
@@ -40,7 +38,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D1EC5BF24C806240014EC34 /* CreateFolderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFolderViewModel.swift; sourceTree = "<group>"; };
 		0D1EC5C324C8187E0014EC34 /* FolderListingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListingViewModel.swift; sourceTree = "<group>"; };
 		0D1EC5C524C8B27D0014EC34 /* Callback+Cofunctor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Callback+Cofunctor.swift"; sourceTree = "<group>"; };
 		0D2D3D4F24CC3D3D00D64398 /* FolderItem+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderItem+Util.swift"; sourceTree = "<group>"; };
@@ -49,7 +46,6 @@
 		0D4B732E24C5584200FA43F1 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		0D4E98CC24C7FA7300B95025 /* ThumbnailSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailSize.swift; sourceTree = "<group>"; };
 		0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breadcrumbs.swift; sourceTree = "<group>"; };
-		0D583D3624ED1C7B00B9536B /* MoveOrCopyRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyRouter.swift; sourceTree = "<group>"; };
 		0D583D3824ED1C8900B9536B /* MoveOrCopyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyViewModel.swift; sourceTree = "<group>"; };
 		0D583D3A24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyListingViewModel.swift; sourceTree = "<group>"; };
 		0D583D3C24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveOrCopyItemViewModel.swift; sourceTree = "<group>"; };
@@ -115,7 +111,6 @@
 				0DC58FC324C56E9000B7BA00 /* ItemViewModel.swift */,
 				0DC58FF624C607FB00B7BA00 /* SearchViewModel.swift */,
 				0D4E98CF24C7FB5500B95025 /* Breadcrumbs.swift */,
-				0D1EC5BF24C806240014EC34 /* CreateFolderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -220,7 +215,6 @@
 		0D92B61A24ED1A25001C35D8 /* MoveOrCopy */ = {
 			isa = PBXGroup;
 			children = (
-				0D583D3624ED1C7B00B9536B /* MoveOrCopyRouter.swift */,
 				0D583D3824ED1C8900B9536B /* MoveOrCopyViewModel.swift */,
 				0D583D3A24ED1C9200B9536B /* MoveOrCopyListingViewModel.swift */,
 				0D583D3C24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift */,
@@ -377,11 +371,9 @@
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
 				0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */,
 				0D583D3D24ED1C9800B9536B /* MoveOrCopyItemViewModel.swift in Sources */,
-				0D583D3724ED1C7B00B9536B /* MoveOrCopyRouter.swift in Sources */,
 				0D92B61624EBBF5B001C35D8 /* BrowseViewController+FolderPicker.swift in Sources */,
 				0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */,
 				0D583D3924ED1C8900B9536B /* MoveOrCopyViewModel.swift in Sources */,
-				0D1EC5C024C806240014EC34 /* CreateFolderViewModel.swift in Sources */,
 				0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */,
 				0D1EC5C624C8B27D0014EC34 /* Callback+Cofunctor.swift in Sources */,
 			);

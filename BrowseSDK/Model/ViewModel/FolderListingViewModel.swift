@@ -53,13 +53,6 @@ class FolderListingViewModel: ListingViewModel {
         isMultiselecting.toggle()
     }
 
-    func folderCreationViewModel() -> CreateFolderViewModel? {
-        if folder.permissions?.canUpload ?? false {
-            return CreateFolderViewModel(folder: folder, provider: provider)
-        }
-        return nil
-    }
-
     private var folderListingDelegate: FolderListingViewModelDelegate? {
         delegate as? FolderListingViewModelDelegate
     }

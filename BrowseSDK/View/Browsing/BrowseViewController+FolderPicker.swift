@@ -24,7 +24,7 @@ extension BrowseViewController {
         )
         nav.setToolbarHidden(false, animated: false)
         if let closeButton = closeButton,
-            let root = nav.viewControllers.first as? BrowseViewController
+            let root = nav.viewControllers.first
         {
             root.navigationItem.leftBarButtonItem = closeButton
         }
