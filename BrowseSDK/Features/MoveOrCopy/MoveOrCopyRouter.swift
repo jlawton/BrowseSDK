@@ -14,10 +14,6 @@ class MoveOrCopyRouter: BrowseRouter {
         self.navigationController = navigationController
     }
 
-    var folderActionCustomization: FolderActionCustomization {
-        FolderActionCustomization()
-    }
-
     func canBrowseTo(item _: ItemViewModel) -> Bool {
         return false
     }
@@ -41,18 +37,6 @@ class MoveOrCopyRouter: BrowseRouter {
             dest.searchViewModel = search
             nav.pushViewController(dest, animated: true)
         }
-    }
-
-    func canPresent(folderCreation _: CreateFolderViewModel) -> Bool {
-        return true
-    }
-
-    func present(folderCreation: CreateFolderViewModel) {
-        let viewController = CreateFolderViewController.forModalPresentation(folderCreation) { _ in
-            self.source?.dismiss(animated: true, completion: nil)
-        }
-
-        source?.present(viewController, animated: true, completion: nil)
     }
 
     func canPresent(moveOrCopy _: MoveOrCopyViewModel) -> Bool {

@@ -27,14 +27,8 @@ class MoveOrCopyToFolderListingViewModel: FolderListingViewModel {
         "Select destination folder"
     }
 
-    override func rightBarButtonItems(router: BrowseRouter?) -> [UIBarButtonItem] {
-        let folderActions = FolderActions(listingViewModel: self, router: router)
-        if let createFolder = folderActions.createFolderAction() {
-            return [UIBarButtonItem(action: createFolder)]
-        }
-        else {
-            return []
-        }
+    override func rightBarButtonItems(router _: BrowseRouter?) -> [UIBarButtonItem] {
+        []
     }
 
     override func toolbarItems() -> [UIBarButtonItem] {

@@ -10,11 +10,8 @@ protocol BrowseRouter {
     func browseTo(item: ItemViewModel) -> SelectionBehavior
     func canBrowseTo(listing: ListingViewModel, search: SearchViewModel?) -> Bool
     func browseTo(listing: ListingViewModel, search: SearchViewModel?)
-    func canPresent(folderCreation: CreateFolderViewModel) -> Bool
-    func present(folderCreation: CreateFolderViewModel)
     func canPresent(moveOrCopy: MoveOrCopyViewModel) -> Bool
     func present(moveOrCopy: MoveOrCopyViewModel)
-    var folderActionCustomization: FolderActionCustomization { get }
 }
 
 class DefaultBrowseRouter: BrowseRouter {
@@ -26,10 +23,6 @@ class DefaultBrowseRouter: BrowseRouter {
         self.source = source
         self.navigationController = navigationController
         self.configuration = configuration
-    }
-
-    var folderActionCustomization: FolderActionCustomization {
-        configuration.folderActions
     }
 
     func canBrowseTo(item: ItemViewModel) -> Bool {
@@ -71,18 +64,6 @@ class DefaultBrowseRouter: BrowseRouter {
             dest.searchViewModel = search
             nav.pushViewController(dest, animated: true)
         }
-    }
-
-    func canPresent(folderCreation _: CreateFolderViewModel) -> Bool {
-        return true
-    }
-
-    func present(folderCreation: CreateFolderViewModel) {
-        let viewController = CreateFolderViewController.forModalPresentation(folderCreation) { _ in
-            self.source?.dismiss(animated: true, completion: nil)
-        }
-
-        source?.present(viewController, animated: true, completion: nil)
     }
 
     func canPresent(moveOrCopy: MoveOrCopyViewModel) -> Bool {
