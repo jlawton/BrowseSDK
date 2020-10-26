@@ -6,7 +6,6 @@
 import BoxSDK
 
 public struct BrowseConfiguration {
-    public var browseToFile = BrowseToFile()
     public var additionalFields: [String] = []
 
     public init() {}

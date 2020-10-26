@@ -14,14 +14,6 @@ class MoveOrCopyRouter: BrowseRouter {
         self.navigationController = navigationController
     }
 
-    func canBrowseTo(item _: ItemViewModel) -> Bool {
-        return false
-    }
-
-    func browseTo(item _: ItemViewModel) -> SelectionBehavior {
-        return .deselect
-    }
-
     func canBrowseTo(listing _: ListingViewModel, search _: SearchViewModel?) -> Bool {
         return (navigationController != nil)
     }
@@ -38,10 +30,4 @@ class MoveOrCopyRouter: BrowseRouter {
             nav.pushViewController(dest, animated: true)
         }
     }
-
-    func canPresent(moveOrCopy _: MoveOrCopyViewModel) -> Bool {
-        return false
-    }
-
-    func present(moveOrCopy _: MoveOrCopyViewModel) {}
 }
