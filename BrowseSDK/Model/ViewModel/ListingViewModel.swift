@@ -10,6 +10,7 @@ import UIKit
 protocol ListingViewModelDelegate: AnyObject {
     func listingItemsChanged(_ viewModel: ListingViewModel)
     func listingTitleChanged(_ viewModel: ListingViewModel)
+    func isMultiselectingChanged(_ viewModel: ListingViewModel)
 }
 
 protocol NeedsListingViewModel: AnyObject {
@@ -19,6 +20,11 @@ protocol NeedsListingViewModel: AnyObject {
 class ListingViewModel {
 
     weak var delegate: ListingViewModelDelegate?
+    var isMultiselecting: Bool = false {
+        didSet {
+            delegate?.isMultiselectingChanged(self)
+        }
+    }
 
     private var itemViewModels: [ItemViewModel] = []
     let provider: BoxFolderProvider
