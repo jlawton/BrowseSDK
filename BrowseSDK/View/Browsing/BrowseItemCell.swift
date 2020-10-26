@@ -5,7 +5,7 @@
 
 import UIKit
 
-class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled {
+class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled, MultiSelectItem {
 
     override init(style _: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -24,26 +24,50 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled {
         }
     }
 
+    var isMultiselecting: Bool = false {
+        didSet {
+            if let model = itemViewModel {
+                setBackgroundAndAccessory(viewModel: model, isMultiSelecting: isMultiselecting)
+            }
+        }
+    }
+
     var itemViewModel: ItemViewModel? {
         didSet {
-            oldValue?.cancelThumbnailLoading()
+            // Deal with thumbnail loading
+            if oldValue != itemViewModel {
+                oldValue?.cancelThumbnailLoading()
+                imageView?.image = (itemViewModel?.icon).map(UIImage.icon(_:))
+                if !(itemViewModel?.isFolder ?? true) {
+                    itemViewModel?.requestThumbnail { thumb in
+                        self.imageView?.image = thumb
+                        self.setNeedsLayout()
+                    }
+                }
+            }
 
             textLabel?.text = itemViewModel?.name
             detailTextLabel?.text = itemViewModel?.detail(for: mode)
-
-            if itemViewModel?.isFolder == true {
-                accessoryType = .disclosureIndicator
-                imageView?.image = (itemViewModel?.icon).map(UIImage.icon(_:))
-            }
-            else {
-                accessoryType = .none
-                imageView?.image = (itemViewModel?.icon).map(UIImage.icon(_:))
-                itemViewModel?.requestThumbnail { thumb in
-                    self.imageView?.image = thumb
-                    self.setNeedsLayout()
-                }
-            }
             detailTextLabel?.textColor = .secondaryLabel
+
+            if let model = itemViewModel {
+                setBackgroundAndAccessory(viewModel: model, isMultiSelecting: isMultiselecting)
+            }
+        }
+    }
+
+    private func setBackgroundAndAccessory(viewModel: ItemViewModel, isMultiSelecting _: Bool) {
+        if isMultiselecting {
+            accessoryView = nil
+            selectionStyle = .none
+            accessoryType = viewModel.selected ? .checkmark : .none
+            backgroundColor = viewModel.selected ? .secondarySystemBackground : nil
+        }
+        else {
+            accessoryView = nil
+            selectionStyle = .default
+            accessoryType = viewModel.isFolder ? .disclosureIndicator : .none
+            backgroundColor = nil
         }
     }
 
@@ -51,5 +75,6 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled {
         super.prepareForReuse()
         showDisabled = false
         itemViewModel = nil
+        isMultiselecting = false
     }
 }

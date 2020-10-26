@@ -9,7 +9,11 @@ protocol CanShowDisabled: AnyObject {
     var showDisabled: Bool { get set }
 }
 
-typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabled
+protocol MultiSelectItem: AnyObject {
+    var isMultiselecting: Bool { get set }
+}
+
+typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabled & MultiSelectItem
 
 public class AbstractListingViewController: UITableViewController,
     NeedsListingViewModel, ListingViewModelDelegate
@@ -26,8 +30,17 @@ public class AbstractListingViewController: UITableViewController,
             title = listingViewModel?.title
             navigationItem.prompt = listingViewModel?.prompt
             listingViewModel?.delegate = self
-            tableView?.reloadData()
+            isMultiselecting = listingViewModel?.isMultiselecting ?? false
             configureLoadingFooter()
+        }
+    }
+
+    var isMultiselecting: Bool = true {
+        didSet {
+            if !isMultiselecting {
+                listingViewModel?.resetSelection()
+            }
+            tableView.reloadData()
         }
     }
 
@@ -113,6 +126,7 @@ public class AbstractListingViewController: UITableViewController,
         if let viewModel = listingViewModel?.item(at: indexPath) {
             cell.showDisabled = !canBrowseTo(item: viewModel)
             cell.itemViewModel = viewModel
+            cell.isMultiselecting = isMultiselecting
         }
     }
 
@@ -120,6 +134,15 @@ public class AbstractListingViewController: UITableViewController,
 
     override public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewModel = listingViewModel?.item(at: indexPath) else {
+            return
+        }
+        if isMultiselecting {
+            viewModel.selected.toggle()
+            if let cell = tableView.cellForRow(at: indexPath) as? ListingItemCell {
+                UIView.animate(withDuration: 0.2) {
+                    cell.itemViewModel = viewModel
+                }
+            }
             return
         }
         browseTo(item: viewModel)
@@ -160,6 +183,10 @@ public class AbstractListingViewController: UITableViewController,
 
     func listingTitleChanged(_ viewModel: ListingViewModel) {
         title = viewModel.title
+    }
+
+    func isMultiselectingChanged(_ viewModel: ListingViewModel) {
+        isMultiselecting = viewModel.isMultiselecting
     }
 
     // MARK: - Footer
