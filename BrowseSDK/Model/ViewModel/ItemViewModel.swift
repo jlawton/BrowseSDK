@@ -194,7 +194,7 @@ extension ItemViewModel {
         }
     }
 
-    private static var thumbnailCache: ImageCache = ImageCache(named: "ItemViewModel.thumbnailCache")
+    private static var thumbnailCache = ImageCache(named: "ItemViewModel.thumbnailCache")
 }
 
 // MARK: - Description
