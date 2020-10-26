@@ -54,7 +54,7 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
             DispatchQueue.main.async {
                 switch result {
                 case let .success(folder):
-                    self.presentBrowser(folder: folder, modal: true)
+                    self.presentBrowser(folder: folder)
                 case let .failure(error):
                     self.displayError(error)
                 }
@@ -62,14 +62,8 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
         }
     }
 
-    private func presentBrowser(folder: Folder, modal: Bool) {
+    private func presentBrowser(folder: Folder) {
         let config = BrowseConfiguration()
-
-        // Set up the actions that appear top right while browsing folders
-//        config.folderActions.disallow([.createFolder])
-//        config.folderActions.insertMenu(systemItem: .action) { folder in
-//            UIMenu(title: "Share \(folder.name ?? "")", children: self.shareActions(for: folder))
-//        }
 
         // Set up what happens if the user taps a file (rather than a folder).
         // As an example here, we only allow tapping on PDF files, and for those
@@ -79,73 +73,14 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
 //            .present(fileViewController(for:))
 //        )
 
-        if modal {
-            let nav = BrowseViewController.browseNavigationController(
-                client: client,
-                folder: folder,
-                withAncestors: true,
-                configuration: config,
-                withCloseButton: true
-            )
-            present(nav, animated: true, completion: nil)
-        }
-        else {
-
-            if let nav = navigationController {
-                BrowseViewController.pushBrowseController(
-                    client: client,
-                    folder: folder,
-                    onto: nav,
-                    configuration: config
-                )
-            }
-        }
-    }
-
-    // Just an example of something to do when a file is tapped.
-    private func fileViewController(for file: File) -> UIViewController {
-        let alert = UIAlertController(
-            title: "Preview File",
-            message: "\(file.name!) (\(file.id))",
-            preferredStyle: .alert
+        let nav = BrowseViewController.browseNavigationController(
+            client: client,
+            folder: folder,
+            withAncestors: true,
+            configuration: config,
+            withCloseButton: true
         )
-        alert.addAction(UIAlertAction(
-            title: "Dismiss",
-            style: .cancel,
-            handler: nil
-        ))
-        return alert
-    }
-
-    // Some custom menu actions
-    private func shareActions(for folder: Folder) -> [UIAction] {
-        var actions: [UIAction] = []
-
-        if folder.permissions?.canShare ?? false {
-            actions.append(
-                UIAction(
-                    title: "Shared Link", image: UIImage(systemName: "link")
-                ) { [weak self] _ in
-                    let alert = UIAlertController(
-                        title: "Share a link", message: nil, preferredStyle: .alert
-                    )
-                    alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-                    self?.presentedViewController?.present(alert, animated: true, completion: nil)
-                }
-            )
-        }
-
-        if folder.permissions?.canInviteCollaborator ?? false {
-            actions.append(
-                UIAction(
-                    title: "Invite Collaborators", image: UIImage(systemName: "person.crop.circle")
-                ) { _ in
-                    // Stuff here
-                }
-            )
-        }
-
-        return actions
+        present(nav, animated: true, completion: nil)
     }
 
     // MARK: ASWebAuthenticationPresentationContextProviding

@@ -34,7 +34,9 @@ public extension BrowseViewController {
         }
         return nav
     }
+}
 
+private extension BrowseViewController {
     static func pushBrowseController(
         client: BoxClient,
         folder: Folder,
@@ -69,9 +71,7 @@ public extension BrowseViewController {
             animated: animated
         )
     }
-}
 
-private extension BrowseViewController {
     func configure(
         provider: BoxFolderProvider,
         folder: Folder,
