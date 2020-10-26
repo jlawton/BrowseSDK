@@ -128,6 +128,14 @@ class ListingViewModel {
             self.delegate?.listingItemsChanged(self)
         }
     }
+
+    // MARK: - Selection
+
+    func resetSelection() {
+        for item in itemViewModels {
+            item.selected = false
+        }
+    }
 }
 
 extension ListingViewModelDelegate {
