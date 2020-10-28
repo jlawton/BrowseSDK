@@ -45,14 +45,6 @@ class FolderListingViewModel: ListingViewModel {
         }
     }
 
-    override func rightBarButtonItems(router _: BrowseRouter?) -> [UIBarButtonItem] {
-        []
-    }
-
-    @objc private func multiselect() {
-        isMultiselecting.toggle()
-    }
-
     private var folderListingDelegate: FolderListingViewModelDelegate? {
         delegate as? FolderListingViewModelDelegate
     }

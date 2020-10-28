@@ -7,6 +7,7 @@ import BoxSDK
 
 public struct BrowseConfiguration {
     public var additionalFields: [String] = []
+    public var canSelect: ((FolderItem) -> Bool)?
 
     public init() {}
 }

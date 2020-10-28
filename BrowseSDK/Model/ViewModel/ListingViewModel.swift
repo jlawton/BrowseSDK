@@ -10,7 +10,6 @@ import UIKit
 protocol ListingViewModelDelegate: AnyObject {
     func listingItemsChanged(_ viewModel: ListingViewModel)
     func listingTitleChanged(_ viewModel: ListingViewModel)
-    func isMultiselectingChanged(_ viewModel: ListingViewModel)
 }
 
 protocol NeedsListingViewModel: AnyObject {
@@ -20,11 +19,6 @@ protocol NeedsListingViewModel: AnyObject {
 class ListingViewModel {
 
     weak var delegate: ListingViewModelDelegate?
-    var isMultiselecting: Bool = false {
-        didSet {
-            delegate?.isMultiselectingChanged(self)
-        }
-    }
 
     private var itemViewModels: [ItemViewModel] = []
     let provider: BoxFolderProvider
@@ -60,14 +54,6 @@ class ListingViewModel {
     // MARK: - Capabilities provided by subclasses
 
     var prompt: String? { nil }
-
-    func rightBarButtonItems(router _: BrowseRouter?) -> [UIBarButtonItem] {
-        return []
-    }
-
-    func toolbarItems() -> [UIBarButtonItem] {
-        return []
-    }
 
     func itemViewModel(for item: FolderItem) -> ItemViewModel {
         ItemViewModel(item: item, provider: provider)
@@ -130,6 +116,10 @@ class ListingViewModel {
     }
 
     // MARK: - Selection
+
+    func selectedItems() -> [ItemViewModel] {
+        itemViewModels.filter { $0.selected }
+    }
 
     func resetSelection() {
         for item in itemViewModels {

@@ -28,6 +28,7 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             searchResultsController.router = router
 
             let searchController = UISearchController(searchResultsController: searchResultsController)
+//            searchController.searchBar.searchTextField.inputAccessoryView = UIToolbar(frame: CGRect(x: 0, y: 0, width: 200, height: 64))
             navigationItem.searchController = searchController
             searchController.searchResultsUpdater = self
         }
@@ -51,11 +52,6 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             folderInfoChanged(viewModel)
             viewModel.refreshFolderInfo()
         }
-    }
-
-    func folderInfoChanged(_ viewModel: FolderListingViewModel) {
-        navigationItem.rightBarButtonItems = viewModel.rightBarButtonItems(router: router)
-        toolbarItems = viewModel.toolbarItems()
     }
 }
 

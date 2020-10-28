@@ -18,7 +18,6 @@ typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabl
 public class AbstractListingViewController: UITableViewController,
     NeedsListingViewModel, ListingViewModelDelegate
 {
-
     let reuseIdentifier = "ListingItemCell"
 
     // MARK: - Data
@@ -30,17 +29,19 @@ public class AbstractListingViewController: UITableViewController,
             title = listingViewModel?.title
             navigationItem.prompt = listingViewModel?.prompt
             listingViewModel?.delegate = self
-            isMultiselecting = listingViewModel?.isMultiselecting ?? false
             configureLoadingFooter()
         }
     }
 
-    var isMultiselecting: Bool = true {
+    var isMultiselecting: Bool = false {
         didSet {
             if !isMultiselecting {
                 listingViewModel?.resetSelection()
             }
             tableView.reloadData()
+
+            navigationItem.rightBarButtonItems = rightNagivationItems(multiselecting: isMultiselecting)
+            toolbarItems = selectionToolbarItems()
         }
     }
 
@@ -49,10 +50,12 @@ public class AbstractListingViewController: UITableViewController,
     override public func viewDidLoad() {
         super.viewDidLoad()
         clearsSelectionOnViewWillAppear = true
+        isMultiselecting = false
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
 
+        navigationItem.rightBarButtonItems = rightNagivationItems(multiselecting: isMultiselecting)
         configureLoadingFooter()
 
         // Subclasses need to register cells for `reuseIdentifier`
@@ -95,11 +98,19 @@ public class AbstractListingViewController: UITableViewController,
         return false
     }
 
-    func browseTo(item: ItemViewModel) {
+    func browseTo(item: ItemViewModel) -> Bool {
         if let router = router, let listing = item.listingViewModel() {
             router.browseTo(listing: listing, search: item.searchViewModel())
-            return
+            return true
         }
+        return false
+    }
+
+    func canMultiselect(item: ItemViewModel) -> Bool {
+        if let router = router {
+            return router.canSelect(item: item)
+        }
+        return false
     }
 
     // MARK: - UITableViewDataSource
@@ -117,7 +128,7 @@ public class AbstractListingViewController: UITableViewController,
 
     func configure(_ cell: ListingItemCell, at indexPath: IndexPath) {
         if let viewModel = listingViewModel?.item(at: indexPath) {
-            cell.showDisabled = !canBrowseTo(item: viewModel)
+            cell.showDisabled = !canBrowseTo(item: viewModel) && !canMultiselect(item: viewModel)
             cell.itemViewModel = viewModel
             cell.isMultiselecting = isMultiselecting
         }
@@ -129,23 +140,34 @@ public class AbstractListingViewController: UITableViewController,
         guard let viewModel = listingViewModel?.item(at: indexPath) else {
             return
         }
-        if isMultiselecting {
-            viewModel.selected.toggle()
-            if let cell = tableView.cellForRow(at: indexPath) as? ListingItemCell {
-                UIView.animate(withDuration: 0.2) {
-                    cell.itemViewModel = viewModel
-                }
+
+        if !isMultiselecting {
+            if browseTo(item: viewModel) {
+                return
             }
-            return
+            if canMultiselect(item: viewModel) {
+                isMultiselecting = true
+            }
+            else {
+                return
+            }
         }
-        browseTo(item: viewModel)
+
+        // Multiselecting
+        viewModel.selected.toggle()
+        if let cell = tableView.cellForRow(at: indexPath) as? ListingItemCell {
+            UIView.animate(withDuration: 0.2) {
+                cell.itemViewModel = viewModel
+            }
+            toolbarItems = selectionToolbarItems()
+        }
     }
 
     override public func tableView(_: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         guard let viewModel = listingViewModel?.item(at: indexPath) else {
             return nil
         }
-        return canBrowseTo(item: viewModel) ? indexPath : nil
+        return canBrowseTo(item: viewModel) || canMultiselect(item: viewModel) ? indexPath : nil
     }
 
     // MARK: - Paging
@@ -178,10 +200,6 @@ public class AbstractListingViewController: UITableViewController,
         title = viewModel.title
     }
 
-    func isMultiselectingChanged(_ viewModel: ListingViewModel) {
-        isMultiselecting = viewModel.isMultiselecting
-    }
-
     // MARK: - Footer
 
     func configureLoadingFooter() {
@@ -209,5 +227,54 @@ public class AbstractListingViewController: UITableViewController,
             spinner.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12)
         ])
         return view
+    }
+
+    // MARK: - Selecting
+
+    private func rightNagivationItems(multiselecting: Bool) -> [UIBarButtonItem] {
+        if multiselecting {
+            return [
+                UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(toggleMultiselect))
+            ]
+        }
+        else {
+            return [
+                UIBarButtonItem(
+                    title: NSLocalizedString("Select", comment: "Enter selection mode for files and filders."),
+                    style: .plain,
+                    target: self, action: #selector(toggleMultiselect)
+                )
+            ]
+        }
+    }
+
+    @objc private func toggleMultiselect() {
+        isMultiselecting.toggle()
+    }
+
+    //
+
+    func selectionToolbarItems() -> [UIBarButtonItem] {
+        let selectedItemCount = listingViewModel?.selectedItems().count ?? 0
+        let confirmationTitle = NSString.localizedStringWithFormat(
+            NSLocalizedString("Select %d items", comment: "Confirm the selected files, folders and weblinks") as NSString,
+            selectedItemCount
+        )
+
+        let confirmButton = UIBarButtonItem(
+            title: confirmationTitle as String?,
+            style: .plain,
+            target: self, action: #selector(confirmTapped)
+        )
+        confirmButton.isEnabled = (selectedItemCount > 0)
+
+        return [
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            confirmButton
+        ]
+    }
+
+    @objc private func confirmTapped() {
+        print("Confirm from \(String(describing: self))")
     }
 }

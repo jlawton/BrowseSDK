@@ -63,22 +63,26 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     private func presentBrowser(folder: Folder) {
-        let config = BrowseConfiguration()
-
-        // Set up what happens if the user taps a file (rather than a folder).
-        // As an example here, we only allow tapping on PDF files, and for those
-        // we present an alert.
-//        config.browseToFile.forFiles(
-//            withExtension: "pdf", permissions: [.preview],
-//            .present(fileViewController(for:))
-//        )
+        var config = BrowseConfiguration()
+        config.additionalFields = ["shared_link"]
+        config.canSelect = { item in
+            switch item {
+            case let .folder(folder):
+                return (folder.sharedLink != nil)
+                    || (folder.permissions?.canShare ?? false)
+            case let .file(file):
+                return (file.sharedLink != nil)
+                    || (file.permissions?.canShare ?? false)
+            case let .webLink(link):
+                return (link.sharedLink != nil)
+                    || (link.permissions?.canShare ?? false)
+            }
+        }
 
         let nav = BrowseViewController.browseNavigationController(
             client: client,
             folder: folder,
-            withAncestors: true,
-            configuration: config,
-            withCloseButton: true
+            configuration: config
         )
         present(nav, animated: true, completion: nil)
     }

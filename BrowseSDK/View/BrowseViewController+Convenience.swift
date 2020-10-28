@@ -14,16 +14,16 @@ public extension BrowseViewController {
     static func browseNavigationController(
         client: BoxClient,
         folder: Folder,
-        withAncestors: Bool = false,
         configuration: BrowseConfiguration = BrowseConfiguration(),
-        withCloseButton: Bool = false
+        withCloseButton: Bool = true
     ) -> UINavigationController {
         let nav = UINavigationController()
         pushBrowseController(
             client: client,
-            folder: folder, withAncestors: withAncestors,
+            folder: folder, withAncestors: true,
             onto: nav, animated: false, configuration: configuration
         )
+        nav.setToolbarHidden(false, animated: false)
         if withCloseButton,
             let root = nav.viewControllers.first as? BrowseViewController
         {

@@ -8,6 +8,7 @@ import UIKit
 protocol BrowseRouter {
     func canBrowseTo(listing: ListingViewModel, search: SearchViewModel?) -> Bool
     func browseTo(listing: ListingViewModel, search: SearchViewModel?)
+    func canSelect(item: ItemViewModel) -> Bool
 }
 
 class DefaultBrowseRouter: BrowseRouter {
@@ -37,5 +38,9 @@ class DefaultBrowseRouter: BrowseRouter {
             dest.searchViewModel = search
             nav.pushViewController(dest, animated: true)
         }
+    }
+
+    func canSelect(item: ItemViewModel) -> Bool {
+        configuration.canSelect?(item.item) ?? false
     }
 }

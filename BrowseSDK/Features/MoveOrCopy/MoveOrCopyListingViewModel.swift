@@ -27,34 +27,6 @@ class MoveOrCopyToFolderListingViewModel: FolderListingViewModel {
         "Select destination folder"
     }
 
-    override func rightBarButtonItems(router _: BrowseRouter?) -> [UIBarButtonItem] {
-        []
-    }
-
-    override func toolbarItems() -> [UIBarButtonItem] {
-        let actions = actionViewModel.possibleActions(to: folder)
-
-        let copyButton = UIBarButtonItem(
-            title: "Copy Here",
-            style: .plain,
-            target: self, action: #selector(copyTapped)
-        )
-        copyButton.isEnabled = actions.contains(.copy)
-
-        let moveButton = UIBarButtonItem(
-            title: "Move Here",
-            style: .plain,
-            target: self, action: #selector(moveTapped)
-        )
-        moveButton.isEnabled = actions.contains(.move)
-
-        return [
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            copyButton,
-            moveButton
-        ]
-    }
-
     @objc private func copyTapped() {
         actionViewModel.copy(to: folder.id) { _ in
         }
