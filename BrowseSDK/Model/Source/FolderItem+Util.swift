@@ -41,6 +41,14 @@ extension FolderItem {
         case let .webLink(webLink): return webLink.pathCollection?.entries
         }
     }
+
+    var sharedLink: SharedLink? {
+        switch self {
+        case let .folder(folder): return folder.sharedLink
+        case let .file(file): return file.sharedLink
+        case let .webLink(webLink): return webLink.sharedLink
+        }
+    }
 }
 
 // MARK: - Permissions

@@ -139,4 +139,29 @@ struct BoxFolderProvider {
 
         return progress
     }
+
+    // MARK: Shared Links
+
+    func setSharedLink(forItem item: FolderItem, completion: @escaping Callback<SharedLink>) -> Progress {
+        let progress = Progress.discreteProgress(totalUnitCount: 1)
+        let done = { (result: Result<SharedLink, BoxSDKError>) in
+            progress.completedUnitCount = 1
+            completion(result)
+        }
+
+        if let sharedLink = item.sharedLink {
+            done(.success(sharedLink))
+            return progress
+        }
+
+        switch item {
+        case let .file(file):
+            client.files.setSharedLink(forFile: file.id, completion: done)
+        case let .folder(folder):
+            client.folders.setSharedLink(forFolder: folder.id, completion: done)
+        case let .webLink(link):
+            client.webLinks.setSharedLink(forWebLink: link.id, completion: done)
+        }
+        return progress
+    }
 }
