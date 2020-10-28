@@ -67,6 +67,7 @@ class ItemViewModel {
     }
 
     var sizeAndModification: String {
+        // TODO: NSLocalizedString
         switch item {
         case let .folder(folder):
             return [

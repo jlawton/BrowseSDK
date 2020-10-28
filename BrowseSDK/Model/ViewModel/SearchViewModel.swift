@@ -26,7 +26,7 @@ class SearchViewModel {
 
     private var query: String = ""
     private(set) lazy var listingViewModel = ListingViewModel(
-        title: "Search",
+        title: NSLocalizedString("Search", comment: "Title of search view"),
         provider: self.provider,
         createEnumerator: self.createEnumerator
     )
