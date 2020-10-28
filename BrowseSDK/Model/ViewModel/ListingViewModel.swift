@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 
 protocol ListingViewModelDelegate: AnyObject {
-    func listingItemsChanged(_ viewModel: ListingViewModel)
+    func listingItemsChanged(_ viewModel: ListingViewModel, appendingOnly: Bool)
     func listingTitleChanged(_ viewModel: ListingViewModel)
 }
 
@@ -111,19 +111,7 @@ class ListingViewModel {
                 self.isFinishedPaging = true
             }
             self.pageLoadProgress = nil
-            self.delegate?.listingItemsChanged(self)
-        }
-    }
-
-    // MARK: - Selection
-
-    func selectedItems() -> [ItemViewModel] {
-        itemViewModels.filter { $0.selected }
-    }
-
-    func resetSelection() {
-        for item in itemViewModels {
-            item.selected = false
+            self.delegate?.listingItemsChanged(self, appendingOnly: !firstPage)
         }
     }
 }

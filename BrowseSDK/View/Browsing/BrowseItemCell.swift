@@ -5,7 +5,7 @@
 
 import UIKit
 
-class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled, MultiSelectItem {
+class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled {
 
     override init(style _: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -18,17 +18,32 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled, Mult
 
     var mode: ItemViewModel.Mode = .browse
 
-    var showDisabled: Bool = false {
+    var showDisabledWhileNotEditing: Bool = false {
         didSet {
-            textLabel?.textColor = showDisabled ? .secondaryLabel : .label
+            if !isEditing {
+                showDisabled = showDisabledWhileNotEditing
+            }
         }
     }
 
-    var isMultiselecting: Bool = false {
+    var showDisabledDuringEditing: Bool = false {
         didSet {
-            if let model = itemViewModel {
-                setBackgroundAndAccessory(viewModel: model, isMultiSelecting: isMultiselecting)
+            if isEditing {
+                showDisabled = showDisabledDuringEditing
             }
+        }
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        showDisabled = editing
+            ? showDisabledDuringEditing
+            : showDisabledWhileNotEditing
+    }
+
+    private var showDisabled: Bool = false {
+        didSet {
+            textLabel?.textColor = showDisabled ? .secondaryLabel : .label
         }
     }
 
@@ -51,30 +66,15 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled, Mult
             detailTextLabel?.textColor = .secondaryLabel
 
             if let model = itemViewModel {
-                setBackgroundAndAccessory(viewModel: model, isMultiSelecting: isMultiselecting)
+                accessoryType = model.isFolder ? .disclosureIndicator : .none
             }
-        }
-    }
-
-    private func setBackgroundAndAccessory(viewModel: ItemViewModel, isMultiSelecting _: Bool) {
-        if isMultiselecting {
-            accessoryView = nil
-            selectionStyle = .none
-            accessoryType = viewModel.selected ? .checkmark : .none
-            backgroundColor = viewModel.selected ? .secondarySystemBackground : nil
-        }
-        else {
-            accessoryView = nil
-            selectionStyle = .default
-            accessoryType = viewModel.isFolder ? .disclosureIndicator : .none
-            backgroundColor = nil
         }
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        showDisabled = false
         itemViewModel = nil
-        isMultiselecting = false
+        showDisabledWhileNotEditing = false
+        showDisabledDuringEditing = false
     }
 }

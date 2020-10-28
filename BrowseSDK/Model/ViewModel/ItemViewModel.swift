@@ -15,14 +15,12 @@ class ItemViewModel {
 
     let item: FolderItem
     let provider: BoxFolderProvider
-    var selected: Bool
 
     private var thumbnailProgress: Progress?
 
-    init(item: FolderItem, provider: BoxFolderProvider, selected: Bool = false) {
+    init(item: FolderItem, provider: BoxFolderProvider) {
         self.item = item
         self.provider = provider
-        self.selected = selected
     }
 
     var fileModel: File? {

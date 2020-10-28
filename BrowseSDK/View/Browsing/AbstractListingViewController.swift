@@ -6,14 +6,11 @@
 import UIKit
 
 protocol CanShowDisabled: AnyObject {
-    var showDisabled: Bool { get set }
+    var showDisabledWhileNotEditing: Bool { get set }
+    var showDisabledDuringEditing: Bool { get set }
 }
 
-protocol MultiSelectItem: AnyObject {
-    var isMultiselecting: Bool { get set }
-}
-
-typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabled & MultiSelectItem
+typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabled
 
 public class AbstractListingViewController: UITableViewController,
     NeedsListingViewModel, ListingViewModelDelegate
@@ -33,16 +30,14 @@ public class AbstractListingViewController: UITableViewController,
         }
     }
 
-    var isMultiselecting: Bool = false {
-        didSet {
-            if !isMultiselecting {
-                listingViewModel?.resetSelection()
-            }
-            tableView.reloadData()
+    override public func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
 
-            navigationItem.rightBarButtonItems = rightNagivationItems(multiselecting: isMultiselecting)
-            toolbarItems = selectionToolbarItems()
+        if let searchBar = navigationItem.searchController?.searchBar {
+            searchBar.searchTextField.isEnabled = !editing
         }
+        toolbarItems = selectionToolbarItems()
+        navigationController?.setToolbarHidden(!editing, animated: animated)
     }
 
     // MARK: - Lifecycle
@@ -50,13 +45,14 @@ public class AbstractListingViewController: UITableViewController,
     override public func viewDidLoad() {
         super.viewDidLoad()
         clearsSelectionOnViewWillAppear = true
-        isMultiselecting = false
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
 
-        navigationItem.rightBarButtonItems = rightNagivationItems(multiselecting: isMultiselecting)
+        navigationItem.rightBarButtonItems = [editButtonItem]
         configureLoadingFooter()
+
+        tableView.allowsMultipleSelectionDuringEditing = true
 
         // Subclasses need to register cells for `reuseIdentifier`
     }
@@ -128,9 +124,11 @@ public class AbstractListingViewController: UITableViewController,
 
     func configure(_ cell: ListingItemCell, at indexPath: IndexPath) {
         if let viewModel = listingViewModel?.item(at: indexPath) {
-            cell.showDisabled = !canBrowseTo(item: viewModel) && !canMultiselect(item: viewModel)
+            let canSelect = canMultiselect(item: viewModel)
+            let canBrowse = canBrowseTo(item: viewModel)
+            cell.showDisabledWhileNotEditing = !canBrowse && !canSelect
+            cell.showDisabledDuringEditing = !canSelect
             cell.itemViewModel = viewModel
-            cell.isMultiselecting = isMultiselecting
         }
     }
 
@@ -141,33 +139,35 @@ public class AbstractListingViewController: UITableViewController,
             return
         }
 
-        if !isMultiselecting {
-            if browseTo(item: viewModel) {
-                return
-            }
-            if canMultiselect(item: viewModel) {
-                isMultiselecting = true
-            }
-            else {
-                return
+        if !isEditing {
+            if !browseTo(item: viewModel) {
+                // This is unexpected
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         }
-
-        // Multiselecting
-        viewModel.selected.toggle()
-        if let cell = tableView.cellForRow(at: indexPath) as? ListingItemCell {
-            UIView.animate(withDuration: 0.2) {
-                cell.itemViewModel = viewModel
-            }
+        else {
             toolbarItems = selectionToolbarItems()
         }
+    }
+
+    override public func tableView(_: UITableView, didDeselectRowAt _: IndexPath) {
+        toolbarItems = selectionToolbarItems()
     }
 
     override public func tableView(_: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         guard let viewModel = listingViewModel?.item(at: indexPath) else {
             return nil
         }
-        return canBrowseTo(item: viewModel) || canMultiselect(item: viewModel) ? indexPath : nil
+        if !isEditing, canBrowseTo(item: viewModel) {
+            return indexPath
+        }
+        if canMultiselect(item: viewModel) {
+            if !isEditing {
+                setEditing(true, animated: true)
+            }
+            return indexPath
+        }
+        return nil
     }
 
     // MARK: - Paging
@@ -189,11 +189,24 @@ public class AbstractListingViewController: UITableViewController,
 
     // MARK: - ListingViewModelDelegate
 
-    func listingItemsChanged(_ viewModel: ListingViewModel) {
+    func listingItemsChanged(_ viewModel: ListingViewModel, appendingOnly: Bool) {
         assert(viewModel === listingViewModel)
+        let selection = tableView.indexPathsForSelectedRows
         tableView?.reloadData()
         refreshControl?.endRefreshing()
         configureLoadingFooter()
+
+        // If we only appended, we can simply keep the existing selected rows
+        // Otherwise, we just let it get reset
+        // TODO: Use Identifiable item view models to reconstruct the selection.
+        if appendingOnly, let selection = selection {
+            for indexPath in selection {
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            }
+        }
+        else {
+            toolbarItems = selectionToolbarItems()
+        }
     }
 
     func listingTitleChanged(_ viewModel: ListingViewModel) {
@@ -231,31 +244,8 @@ public class AbstractListingViewController: UITableViewController,
 
     // MARK: - Selecting
 
-    private func rightNagivationItems(multiselecting: Bool) -> [UIBarButtonItem] {
-        if multiselecting {
-            return [
-                UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(toggleMultiselect))
-            ]
-        }
-        else {
-            return [
-                UIBarButtonItem(
-                    title: NSLocalizedString("Select", comment: "Enter selection mode for files and filders."),
-                    style: .plain,
-                    target: self, action: #selector(toggleMultiselect)
-                )
-            ]
-        }
-    }
-
-    @objc private func toggleMultiselect() {
-        isMultiselecting.toggle()
-    }
-
-    //
-
     func selectionToolbarItems() -> [UIBarButtonItem] {
-        let selectedItemCount = listingViewModel?.selectedItems().count ?? 0
+        let selectedItemCount = tableView.indexPathsForSelectedRows?.count ?? 0
         let confirmationTitle = NSString.localizedStringWithFormat(
             NSLocalizedString("Select %d items", comment: "Confirm the selected files, folders and weblinks") as NSString,
             selectedItemCount
