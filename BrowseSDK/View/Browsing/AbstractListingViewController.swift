@@ -265,6 +265,15 @@ public class AbstractListingViewController: UITableViewController,
     }
 
     @objc private func confirmTapped() {
-        print("Confirm from \(String(describing: self))")
+        guard
+            let viewModel = listingViewModel,
+            let indexPaths = tableView.indexPathsForSelectedRows, !indexPaths.isEmpty
+        else {
+            return
+        }
+        let items: [ItemViewModel] = indexPaths
+            .compactMap(viewModel.item(at:))
+
+        router?.handleSelected(items: items)
     }
 }
