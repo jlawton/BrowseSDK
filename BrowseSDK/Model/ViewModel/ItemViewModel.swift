@@ -65,21 +65,21 @@ class ItemViewModel {
     }
 
     var sizeAndModification: String {
-        // TODO: NSLocalizedString
+        let sep = NSLocalizedString(" · ", comment: "Separator between file size and modification date in Box browse UI")
         switch item {
         case let .folder(folder):
             return [
                 folder.modifiedAt.flatMap(Self.dateFormatter.string(from:))
-            ].compactMap { $0 }.joined(separator: " · ")
+            ].compactMap { $0 }.joined(separator: sep)
         case let .file(file):
             return [
                 file.size.flatMap(Self.sizeFormatter.string(for:)),
                 file.modifiedAt.flatMap(Self.dateFormatter.string(from:))
-            ].compactMap { $0 }.joined(separator: " · ")
+            ].compactMap { $0 }.joined(separator: sep)
         case let .webLink(link):
             return [
                 link.modifiedAt.flatMap(Self.dateFormatter.string(from:))
-            ].compactMap { $0 }.joined(separator: " · ")
+            ].compactMap { $0 }.joined(separator: sep)
         }
     }
 

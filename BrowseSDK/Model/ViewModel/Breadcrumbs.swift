@@ -4,7 +4,12 @@
 //
 
 import BoxSDK
+import Foundation
 
+/// Generates a string representing the path to a given Box item.
+///
+/// This may not be very localization-friendly, as we're doing a bunch of string
+/// concatenation.
 struct Breadcrumbs {
     private let pathCollection: [Folder]?
 
@@ -17,7 +22,8 @@ struct Breadcrumbs {
     }
 
     var abbreviatedString: String? {
-        return abbreviatedNames?.joined(separator: " ≫ ")
+        let sep = NSLocalizedString(" ≫ ", comment: "Separator between path components rendered in the Box search UI")
+        return abbreviatedNames?.joined(separator: sep)
     }
 
     private var abbreviatedNames: [String]? {
@@ -25,7 +31,8 @@ struct Breadcrumbs {
             return nil
         }
         if names.count > 3 {
-            names.replaceSubrange(2 ..< names.count - 1, with: ["⋯"])
+            let trunc = NSLocalizedString("⋯", comment: "Indicator that one or more path components have been elided for space reasons, in the Box search UI")
+            names.replaceSubrange(2 ..< names.count - 1, with: [trunc])
         }
         return names
     }
