@@ -53,6 +53,29 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             viewModel.refreshFolderInfo()
         }
     }
+
+    override public func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // HACK: UISearchController has lifecycle bugs
+        if let search = navigationItem.searchController,
+            search.isActive,
+            let resultsVC = search.searchResultsController as? UITableViewController,
+            let results = resultsVC.tableView
+        {
+            for indexPath in results.indexPathsForSelectedRows ?? [] {
+                results.deselectRow(at: indexPath, animated: true)
+            }
+        }
+    }
+
+    override public func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        // Disable search while editing
+        if let searchBar = navigationItem.searchController?.searchBar {
+            searchBar.searchTextField.isEnabled = !editing
+        }
+    }
 }
 
 // MARK: - Search

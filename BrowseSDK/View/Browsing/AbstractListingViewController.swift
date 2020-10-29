@@ -33,9 +33,6 @@ public class AbstractListingViewController: UITableViewController,
     override public func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
 
-        if let searchBar = navigationItem.searchController?.searchBar {
-            searchBar.searchTextField.isEnabled = !editing
-        }
         toolbarItems = selectionToolbarItems()
         navigationController?.setToolbarHidden(!editing, animated: animated)
     }
@@ -60,21 +57,6 @@ public class AbstractListingViewController: UITableViewController,
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         listingViewModel?.loadNextPage()
-    }
-
-    override public func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        // HACK: UISearchController has lifecycle bugs
-        if let search = navigationItem.searchController,
-            search.isActive,
-            let resultsVC = search.searchResultsController as? UITableViewController,
-            let results = resultsVC.tableView
-        {
-            for indexPath in results.indexPathsForSelectedRows ?? [] {
-                results.deselectRow(at: indexPath, animated: true)
-            }
-        }
     }
 
     // MARK: - Routing
