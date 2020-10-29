@@ -94,7 +94,6 @@ private extension BrowseViewController {
         )
 
         router = DefaultBrowseRouter(
-            source: self,
             navigationController: navigationController,
             selectionHandler: selectionHandler
         )

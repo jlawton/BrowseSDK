@@ -5,6 +5,9 @@
 
 import UIKit
 
+/// Manages transitions between view controllers while browsing Box. Also
+/// makes exposes the conirmation action from anywhere in the browsing
+/// hierarchy.
 protocol BrowseRouter {
     func canBrowseTo(listing: ListingViewModel, search: SearchViewModel?) -> Bool
     func browseTo(listing: ListingViewModel, search: SearchViewModel?)
@@ -13,12 +16,10 @@ protocol BrowseRouter {
 }
 
 class DefaultBrowseRouter: BrowseRouter {
-    weak var source: UIViewController?
     weak var navigationController: UINavigationController?
     let selectionHandler: SelectionHandler
 
-    init(source: UIViewController, navigationController: UINavigationController, selectionHandler: SelectionHandler) {
-        self.source = source
+    init(navigationController: UINavigationController, selectionHandler: SelectionHandler) {
         self.navigationController = navigationController
         self.selectionHandler = selectionHandler
     }
@@ -30,11 +31,7 @@ class DefaultBrowseRouter: BrowseRouter {
     func browseTo(listing: ListingViewModel, search: SearchViewModel?) {
         if let nav = navigationController {
             let dest = BrowseViewController(nibName: nil, bundle: nil)
-            dest.router = DefaultBrowseRouter(
-                source: dest,
-                navigationController: nav,
-                selectionHandler: selectionHandler
-            )
+            dest.router = self
             dest.listingViewModel = listing
             dest.searchViewModel = search
             nav.pushViewController(dest, animated: true)
