@@ -5,6 +5,8 @@
 
 import BoxSDK
 
+// Just a few conveniences to lift concepts that are shared across files, folders
+// and weblinks up to FolderItem, to avoid seeing the switching everywhere.
 extension FolderItem {
     var asFolder: Folder? {
         if case let .folder(folder) = self {

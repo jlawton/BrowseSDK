@@ -16,6 +16,17 @@ protocol NeedsListingViewModel: AnyObject {
     var listingViewModel: ListingViewModel? { get set }
 }
 
+/// Represents a list of Box items, backed by a BoxEnumerator (usually a folder
+/// listing or search on the Box API).
+///
+/// Main features:
+/// * Cache the pages of items that come back from the enumerator, and serve them
+///   as a simple interface suatable to back a UITableView.
+/// * Notify a delegate when the cached items change.
+/// * Implement list refresh by creating a new enumerator and replacing the cached
+///   items once the first page comes back, which is reasonable semantics for pull
+///   to refresh in the view, and for handling search query updates.
+/// * Title and prompt complete the information for a bare-bones list view.
 class ListingViewModel {
 
     weak var delegate: ListingViewModelDelegate?

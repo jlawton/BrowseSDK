@@ -12,6 +12,15 @@ protocol FolderListingViewModelDelegate: ListingViewModelDelegate {
     func folderInfoFailed(_ viewModel: FolderListingViewModel, error: BoxSDKError)
 }
 
+/// A refinement of ListingViewModel for folder listing.
+///
+/// Main features:
+/// * Title is set from folder name.
+/// * Exposes a folder object.
+/// * Folder info can be refreshed. Even when folders aren't being changed often,
+///   This is useful to allow providing a partial folder object and fetching one
+///   with complete permission info. The common case would be fetching the root
+///   folder starting with the equivalent of Folder(id: 0, name: "All Files").
 class FolderListingViewModel: ListingViewModel {
     private(set) var folder: Folder {
         didSet {

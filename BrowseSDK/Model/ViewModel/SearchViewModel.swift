@@ -10,6 +10,13 @@ protocol NeedsSearchViewModel: AnyObject {
     var searchViewModel: SearchViewModel? { get set }
 }
 
+/// An interface to search queries.
+///
+/// Main features:
+/// * Constructs a ListingViewModel which can back a search results view.
+/// * Triggers refresh of the listing when the query changes, serving a new
+///   enumerator for the current query during the refresh.
+/// * Throttle the refresh rate when the user is typing fast.
 class SearchViewModel {
     // To avoid searching very frequently while the user is typing, delay a bit
     // after the most recent keystroke, before updating the search.

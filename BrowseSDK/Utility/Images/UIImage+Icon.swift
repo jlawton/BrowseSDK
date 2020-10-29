@@ -19,6 +19,8 @@ extension UIImage {
         return iconCache["\(icon)", default: createIcon(icon)]
     }
 
+    // Better icons could be added here by changing this to look up in an
+    // asset bundle.
     private static func createIcon(_ icon: Icon) -> UIImage {
         let size = ThumbnailSize.preferredThumbnailSize()
         let configuration = UIImage.SymbolConfiguration(pointSize: CGFloat(size * 3))

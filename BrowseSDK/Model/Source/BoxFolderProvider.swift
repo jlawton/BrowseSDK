@@ -6,6 +6,16 @@
 import BoxSDK
 import UIKit
 
+/// A wrapper around a BoxClient that provides a few things we'll find useful
+/// for browsing. This much simpler API than the full BoxClient could be mocked
+/// much more simply if required for testing.
+///
+/// Main features:
+/// * Exposes BoxEnumerator, which has a slightly nicer interface for
+///   progressively loading lists of items from paged Box APIs.
+/// * Remembers the set of fields we always want to request for items.
+/// * Maintains a limited width work queue for thumbnail download and scaling.
+/// * Create shared links directly on FolderItem, returning FolderItem.
 struct BoxFolderProvider {
     static let requiredFields = [
         "name", "permissions", "sha1", "size", "modified_at", "path_collection",

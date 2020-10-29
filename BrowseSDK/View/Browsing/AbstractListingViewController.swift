@@ -12,6 +12,19 @@ protocol CanShowDisabled: AnyObject {
 
 typealias ListingItemCell = UITableViewCell & NeedsItemViewModel & CanShowDisabled
 
+/// A base class for Box item listings (eg. folder contents or search results).
+///
+/// * Display of files, folders and weblinks.
+/// * Manages a toolbar for acting on selected files.
+///
+/// With the help of ListingViewModel:
+/// * Fetching more items in response to scrolling.
+/// * Pull-to-refresh to get fresh pages.
+///
+/// With the help of BoxRouter:
+/// * Browsing into folders (outside of editing mode).
+/// * Multiple selection of files, folders and weblinks (in editing mode).
+/// * Triggering an action on the selected items (in editing mode).
 public class AbstractListingViewController: UITableViewController,
     NeedsListingViewModel, ListingViewModelDelegate
 {

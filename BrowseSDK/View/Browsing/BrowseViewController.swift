@@ -5,6 +5,13 @@
 
 import UIKit
 
+/// Lists the contents of a Box folder.
+///
+/// * General listing logic in base class.
+///
+/// With the help of FolderListingViewModel:
+/// * Search for descendants of the folder.
+/// * Refresh details about the folder (eg name, permissions) when presented.
 public class BrowseViewController: AbstractListingViewController, FolderListingViewModelDelegate {
 
     // MARK: - Data
@@ -28,7 +35,6 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             searchResultsController.router = router
 
             let searchController = UISearchController(searchResultsController: searchResultsController)
-//            searchController.searchBar.searchTextField.inputAccessoryView = UIToolbar(frame: CGRect(x: 0, y: 0, width: 200, height: 64))
             navigationItem.searchController = searchController
             searchController.searchResultsUpdater = self
         }

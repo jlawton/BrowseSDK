@@ -11,6 +11,17 @@ protocol NeedsItemViewModel: AnyObject {
     var itemViewModel: ItemViewModel? { get set }
 }
 
+/// Model to back the display of an item in a listing.
+///
+/// Main features:
+/// * Construct strings to describe items in the listing UI (name and details).
+/// * Fetch icons and thumbnails.
+/// * Store thumbnails backed by a global in-memory thumbnail cache to avoid
+///   using too much memory when browsing deeply.
+///
+/// Also (cells don't use these, so maybe this should be 2 objects):
+/// * Construct FolderListingViewModel and SearchViewModel for folders, used
+///   when navigating into the folder.
 class ItemViewModel {
 
     let item: FolderItem
@@ -80,6 +91,8 @@ class ItemViewModel {
         Breadcrumbs(item: item).abbreviatedString
     }
 
+    /// The icon represents the file type, and is generally displayed for folders
+    /// and files for which there is no available thumbnail.
     var icon: UIImage.Icon {
         switch item {
         case let .folder(folder):

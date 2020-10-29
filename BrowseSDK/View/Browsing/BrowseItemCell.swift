@@ -5,6 +5,14 @@
 
 import UIKit
 
+/// A very simple cell for displaying Box items.
+///
+/// Main features:
+/// * Standard cell layout with a subtitle.
+/// * Disabled state which can be set to indicate the cell can't be selected.
+/// * Most properties backed by ItemViewModel.
+/// * Automatic icon and thumbnail loading with cancellation.
+/// * Tracks whether to display "browse" or "search" variation.
 class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled {
 
     override init(style _: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -6,8 +6,8 @@
 import UIKit
 
 /// Manages transitions between view controllers while browsing Box. Also
-/// makes exposes the conirmation action from anywhere in the browsing
-/// hierarchy.
+/// makes exposes the selection confirmation action from anywhere in the
+/// browsing hierarchy.
 protocol BrowseRouter {
     func canBrowseTo(listing: ListingViewModel, search: SearchViewModel?) -> Bool
     func browseTo(listing: ListingViewModel, search: SearchViewModel?)
