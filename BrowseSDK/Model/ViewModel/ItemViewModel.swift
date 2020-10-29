@@ -23,14 +23,7 @@ class ItemViewModel {
         self.provider = provider
     }
 
-    var fileModel: File? {
-        if case let .file(file) = item {
-            return file
-        }
-        return nil
-    }
-
-    var identifier: String {
+    private var identifier: String {
         switch item {
         case let .folder(folder):
             return folder.id
@@ -64,7 +57,7 @@ class ItemViewModel {
         }
     }
 
-    var sizeAndModification: String {
+    private var sizeAndModification: String {
         let sep = NSLocalizedString(" · ", comment: "Separator between file size and modification date in Box browse UI")
         switch item {
         case let .folder(folder):
@@ -83,7 +76,7 @@ class ItemViewModel {
         }
     }
 
-    var breadcrumbs: String? {
+    private var breadcrumbs: String? {
         Breadcrumbs(item: item).abbreviatedString
     }
 
