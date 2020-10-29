@@ -44,6 +44,12 @@ class BrowseItemCell: UITableViewCell, NeedsItemViewModel, CanShowDisabled {
     private var showDisabled: Bool = false {
         didSet {
             textLabel?.textColor = showDisabled ? .secondaryLabel : .label
+            if showDisabled {
+                accessibilityTraits.formUnion(.notEnabled)
+            }
+            else {
+                accessibilityTraits.subtract(.notEnabled)
+            }
         }
     }
 
