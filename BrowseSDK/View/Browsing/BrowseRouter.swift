@@ -9,17 +9,18 @@ protocol BrowseRouter {
     func canBrowseTo(listing: ListingViewModel, search: SearchViewModel?) -> Bool
     func browseTo(listing: ListingViewModel, search: SearchViewModel?)
     func canSelect(item: ItemViewModel) -> Bool
+    func handleSelected(items: [ItemViewModel])
 }
 
 class DefaultBrowseRouter: BrowseRouter {
-    let configuration: BrowseConfiguration
     weak var source: UIViewController?
     weak var navigationController: UINavigationController?
+    let selectionHandler: SelectionHandler
 
-    init(source: UIViewController, navigationController: UINavigationController, configuration: BrowseConfiguration) {
+    init(source: UIViewController, navigationController: UINavigationController, selectionHandler: SelectionHandler) {
         self.source = source
         self.navigationController = navigationController
-        self.configuration = configuration
+        self.selectionHandler = selectionHandler
     }
 
     func canBrowseTo(listing _: ListingViewModel, search _: SearchViewModel?) -> Bool {
@@ -32,7 +33,7 @@ class DefaultBrowseRouter: BrowseRouter {
             dest.router = DefaultBrowseRouter(
                 source: dest,
                 navigationController: nav,
-                configuration: configuration
+                selectionHandler: selectionHandler
             )
             dest.listingViewModel = listing
             dest.searchViewModel = search
@@ -41,6 +42,10 @@ class DefaultBrowseRouter: BrowseRouter {
     }
 
     func canSelect(item: ItemViewModel) -> Bool {
-        configuration.canSelect?(item.item) ?? false
+        selectionHandler.canSelect(item: item)
+    }
+
+    func handleSelected(items: [ItemViewModel]) {
+        selectionHandler.handleSelected(items: items)
     }
 }

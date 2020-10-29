@@ -76,9 +76,12 @@ private extension BrowseViewController {
         provider: BoxFolderProvider,
         folder: Folder,
         navigationController: UINavigationController,
-        configuration: BrowseConfiguration
+        configuration _: BrowseConfiguration
     ) {
         let folderID = folder.id
+
+        let selectionHandler = SharedLinkSelectionHandler(provider: provider)
+
         listingViewModel = FolderListingViewModel(
             folder: folder,
             provider: provider,
@@ -93,7 +96,7 @@ private extension BrowseViewController {
         router = DefaultBrowseRouter(
             source: self,
             navigationController: navigationController,
-            configuration: configuration
+            selectionHandler: selectionHandler
         )
     }
 
