@@ -142,25 +142,43 @@ struct BoxFolderProvider {
 
     // MARK: Shared Links
 
-    func setSharedLink(forItem item: FolderItem, completion: @escaping Callback<SharedLink>) -> Progress {
+    func setSharedLink(forItem item: FolderItem, completion: @escaping Callback<FolderItem>) -> Progress {
         let progress = Progress.discreteProgress(totalUnitCount: 1)
-        let done = { (result: Result<SharedLink, BoxSDKError>) in
+        let done = { (result: Result<FolderItem, BoxSDKError>) in
             progress.completedUnitCount = 1
             completion(result)
         }
 
-        if let sharedLink = item.sharedLink {
-            done(.success(sharedLink))
+        if item.sharedLink != nil {
+            done(.success(item))
             return progress
         }
 
+        // This might already be requested, but no harm in ennsuring it
+        let fieldsWithSharedLink = fields + Set(["shared_link"]).subtracting(fields)
+
         switch item {
         case let .file(file):
-            client.files.setSharedLink(forFile: file.id, completion: done)
+            client.files.update(
+                fileId: file.id,
+                sharedLink: .value(SharedLinkData()),
+                fields: fieldsWithSharedLink,
+                completion: { done($0.map(FolderItem.file)) }
+            )
         case let .folder(folder):
-            client.folders.setSharedLink(forFolder: folder.id, completion: done)
+            client.folders.update(
+                folderId: folder.id,
+                sharedLink: .value(SharedLinkData()),
+                fields: fieldsWithSharedLink,
+                completion: { done($0.map(FolderItem.folder)) }
+            )
         case let .webLink(link):
-            client.webLinks.setSharedLink(forWebLink: link.id, completion: done)
+            client.webLinks.update(
+                webLinkId: link.id,
+                sharedLink: .value(SharedLinkData()),
+                fields: fieldsWithSharedLink,
+                completion: { done($0.map(FolderItem.webLink)) }
+            )
         }
         return progress
     }

@@ -43,9 +43,9 @@ class SharedLinkSelectionHandler: SelectionHandler {
     // Create shared links for items that don't have one before returning the results.
     // The results are a map from item identifier to either a result containing
     // either a shared link or an error. This could be refined for the specific use case.
-    func handleSelected(items vms: [ItemViewModel], progress: (Progress) -> Void, completion: @escaping ([String: Result<SharedLink, BoxSDKError>]) -> Void) {
+    func handleSelected(items vms: [ItemViewModel], progress: (Progress) -> Void, completion: @escaping ([String: Result<FolderItem, BoxSDKError>]) -> Void) {
         let items = vms.map { $0.item }
-        var sharedLinks: [String: Result<SharedLink, BoxSDKError>] = [:]
+        var sharedLinks: [String: Result<FolderItem, BoxSDKError>] = [:]
 
         let totalProgress = Progress.discreteProgress(totalUnitCount: Int64(items.count))
         progress(totalProgress)
