@@ -14,14 +14,13 @@ public extension BrowseViewController {
     static func browseNavigationController(
         client: BoxClient,
         folder: Folder,
-        configuration: BrowseConfiguration = BrowseConfiguration(),
         withCloseButton: Bool = true
     ) -> UINavigationController {
         let nav = UINavigationController()
         pushBrowseController(
             client: client,
             folder: folder, withAncestors: true,
-            onto: nav, animated: false, configuration: configuration
+            onto: nav, animated: false
         )
         nav.setToolbarHidden(false, animated: false)
         if withCloseButton,
@@ -42,8 +41,7 @@ private extension BrowseViewController {
         folder: Folder,
         withAncestors: Bool = false,
         onto navigationController: UINavigationController,
-        animated: Bool = true,
-        configuration: BrowseConfiguration = BrowseConfiguration()
+        animated: Bool = true
     ) {
         let folders: [Folder]
         if withAncestors {
@@ -55,13 +53,15 @@ private extension BrowseViewController {
 
         let provider = BoxFolderProvider(
             client: client,
-            additionalFields: configuration.additionalFields
+            additionalFields: SharedLinkSelectionHandler.requiredFields
         )
+        let selectionHandler = SharedLinkSelectionHandler(provider: provider)
+
         let controllers = folders.map { folder -> UIViewController in
             let controller = BrowseViewController()
             controller.configure(
                 provider: provider, folder: folder,
-                navigationController: navigationController, configuration: configuration
+                navigationController: navigationController, selectionHandler: selectionHandler
             )
             return controller
         }
@@ -76,11 +76,9 @@ private extension BrowseViewController {
         provider: BoxFolderProvider,
         folder: Folder,
         navigationController: UINavigationController,
-        configuration _: BrowseConfiguration
+        selectionHandler: SelectionHandler
     ) {
         let folderID = folder.id
-
-        let selectionHandler = SharedLinkSelectionHandler(provider: provider)
 
         listingViewModel = FolderListingViewModel(
             folder: folder,

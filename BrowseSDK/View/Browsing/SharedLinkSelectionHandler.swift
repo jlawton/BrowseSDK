@@ -6,7 +6,12 @@
 import BoxSDK
 import Foundation
 
+/// Handles selection of items from Box by attempting to create shared links.
 class SharedLinkSelectionHandler: SelectionHandler {
+    static var requiredFields: [String] {
+        ["shared_link", "permissions"]
+    }
+
     private let provider: BoxFolderProvider
     private let workQueue = DispatchQueue(label: "box.SharedLinkSelectionActionHandler")
 
@@ -14,6 +19,7 @@ class SharedLinkSelectionHandler: SelectionHandler {
         self.provider = provider
     }
 
+    // The item has a shared link already, or we expect to be able to create one
     func canSelect(item: ItemViewModel) -> Bool {
         switch item.item {
         case let .folder(folder):
@@ -34,6 +40,9 @@ class SharedLinkSelectionHandler: SelectionHandler {
         }
     }
 
+    // Create shared links for items that don't have one before returning the results.
+    // The results are a map from item identifier to either a result containing
+    // either a shared link or an error. This could be refined for the specific use case.
     func handleSelected(items vms: [ItemViewModel], progress: (Progress) -> Void, completion: @escaping ([String: Result<SharedLink, BoxSDKError>]) -> Void) {
         let items = vms.map { $0.item }
         var sharedLinks: [String: Result<SharedLink, BoxSDKError>] = [:]
