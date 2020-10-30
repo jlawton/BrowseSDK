@@ -27,4 +27,22 @@ public class SearchResultsViewController: AbstractListingViewController {
         }
         super.configure(cell, at: indexPath)
     }
+
+    override public func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        didSetEditing(editing)
+    }
+
+    var didSetEditing: (Bool) -> Void = { _ in }
+
+    override func selectionUpdated(animated: Bool = false) {
+        super.selectionUpdated(animated: animated)
+        didUpdateSelection()
+    }
+
+    var didUpdateSelection: () -> Void = {}
+
+    @objc func toggleEditing() {
+        setEditing(!isEditing, animated: true)
+    }
 }

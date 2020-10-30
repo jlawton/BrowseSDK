@@ -16,6 +16,8 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
 
     // MARK: - Data
 
+    var isEditingSearchResults: Bool = false
+
     override func didSetRouter() {
         super.didSetRouter()
         if let searchResults = navigationItem.searchController?.searchResultsController as? SearchResultsViewController {
@@ -33,8 +35,34 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             let searchResultsController = SearchResultsViewController(nibName: nil, bundle: nil)
             searchResultsController.listingViewModel = searchVM.listingViewModel
             searchResultsController.router = router
+            searchResultsController.didSetEditing = { [weak self] editing in
+                if let self = self {
+                    if editing {
+                        self.navigationItem.searchController?.searchBar.endEditing(true)
+                    }
+                    self.isEditingSearchResults = editing
+                    self.selectionUpdated(animated: true)
+                }
+            }
+            searchResultsController.didUpdateSelection = { [weak self] in
+                self?.selectionUpdated()
+            }
 
             let searchController = UISearchController(searchResultsController: searchResultsController)
+
+            // FIXME: Doesn't handle safe area when keyboard is hidden
+            let toolbar = UIToolbar()
+            toolbar.items = [
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                UIBarButtonItem(
+                    title: NSLocalizedString("Select", comment: "Enter selection mode for files and filders."),
+                    style: .plain,
+                    target: searchResultsController, action: #selector(SearchResultsViewController.toggleEditing)
+                )
+            ]
+            toolbar.sizeToFit()
+            searchController.searchBar.searchTextField.inputAccessoryView = toolbar
+
             navigationItem.searchController = searchController
             searchController.searchResultsUpdater = self
         }
@@ -67,9 +95,10 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
         if let search = navigationItem.searchController,
             search.isActive,
             let resultsVC = search.searchResultsController as? UITableViewController,
-            let results = resultsVC.tableView
+            let results = resultsVC.tableView,
+            let selectedIndexPaths = results.indexPathsForSelectedRows
         {
-            for indexPath in results.indexPathsForSelectedRows ?? [] {
+            for indexPath in selectedIndexPaths {
                 results.deselectRow(at: indexPath, animated: true)
             }
         }
@@ -82,6 +111,21 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             searchBar.searchTextField.isEnabled = !editing
         }
     }
+
+    // MARK: - Selection
+
+    override func selectedItems() -> [ItemViewModel] {
+        if isEditingSearchResults {
+            if let results = navigationItem.searchController?.searchResultsController as? SearchResultsViewController {
+                return results.selectedItems()
+            }
+        }
+        return super.selectedItems()
+    }
+
+    override var isSelecting: Bool {
+        super.isSelecting || isEditingSearchResults
+    }
 }
 
 // MARK: - Search
@@ -89,5 +133,8 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
 extension BrowseViewController: UISearchResultsUpdating {
     public func updateSearchResults(for searchController: UISearchController) {
         searchViewModel?.update(query: searchController.searchBar.text ?? "")
+        if let results = searchController.searchResultsController, results.isEditing {
+            results.setEditing(false, animated: true)
+        }
     }
 }
