@@ -50,7 +50,7 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     private func browseRoot() {
-        client.folders.get(folderId: BoxSDK.Constants.rootFolder, fields: BrowseViewController.requiredFields) { result in
+        client.folders.get(folderId: BoxSDK.Constants.rootFolder, fields: BoxSharedLinkPicker.requiredFields) { result in
             DispatchQueue.main.async {
                 switch result {
                 case let .success(folder):
@@ -63,11 +63,13 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
     }
 
     private func presentBrowser(folder: Folder) {
-        let nav = BrowseViewController.browseNavigationController(
+        let picker = BoxSharedLinkPicker(
             client: client,
             folder: folder
-        )
-        present(nav, animated: true, completion: nil)
+        ) { items in
+            print(items.compactMap(\.sharedLink?.url))
+        }
+        present(picker, animated: true, completion: nil)
     }
 
     // MARK: ASWebAuthenticationPresentationContextProviding

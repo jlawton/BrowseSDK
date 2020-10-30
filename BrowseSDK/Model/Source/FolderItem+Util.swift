@@ -28,7 +28,7 @@ extension FolderItem {
         }
     }
 
-    var name: String {
+    public var name: String {
         switch self {
         case let .folder(folder): return folder.name ?? ""
         case let .file(file): return file.name ?? ""
@@ -44,7 +44,7 @@ extension FolderItem {
         }
     }
 
-    var sharedLink: SharedLink? {
+    public var sharedLink: SharedLink? {
         switch self {
         case let .folder(folder): return folder.sharedLink
         case let .file(file): return file.sharedLink

@@ -7,16 +7,18 @@ import BoxSDK
 import Foundation
 
 /// Handles selection of items from Box by attempting to create shared links.
-class SharedLinkSelectionHandler: SelectionHandler {
+class BoxSharedLinkPickerSelectionHandler: SelectionHandler {
     static var requiredFields: [String] {
         ["shared_link", "permissions"]
     }
 
     private let provider: BoxFolderProvider
     private let workQueue = DispatchQueue(label: "box.SharedLinkSelectionActionHandler")
+    private weak var picker: BoxSharedLinkPicker?
 
-    init(provider: BoxFolderProvider) {
+    init(provider: BoxFolderProvider, picker: BoxSharedLinkPicker) {
         self.provider = provider
+        self.picker = picker
     }
 
     // The item has a shared link already, or we expect to be able to create one
@@ -34,21 +36,14 @@ class SharedLinkSelectionHandler: SelectionHandler {
         }
     }
 
-    func handleSelected(items: [ItemViewModel]) {
-        handleSelected(items: items) { _ in
-        } completion: { _ in
-        }
-    }
-
     // Create shared links for items that don't have one before returning the results.
-    // The results are a map from item identifier to either a result containing
-    // either a shared link or an error. This could be refined for the specific use case.
-    func handleSelected(items vms: [ItemViewModel], progress: (Progress) -> Void, completion: @escaping ([String: Result<FolderItem, BoxSDKError>]) -> Void) {
+    func handleSelected(items vms: [ItemViewModel]) {
         let items = vms.map { $0.item }
-        var sharedLinks: [String: Result<FolderItem, BoxSDKError>] = [:]
+        var successes: [FolderItem] = []
+        var failures: [(FolderItem, BoxSDKError)] = []
 
         let totalProgress = Progress.discreteProgress(totalUnitCount: Int64(items.count))
-        progress(totalProgress)
+        willCreateSharedLinks(progress: totalProgress)
 
         let grp = DispatchGroup()
         for item in items {
@@ -59,7 +54,10 @@ class SharedLinkSelectionHandler: SelectionHandler {
             grp.enter()
             let progress = provider.setSharedLink(forItem: item) { result in
                 self.workQueue.async {
-                    sharedLinks[item.identifier.id] = result
+                    switch result {
+                    case let .success(itemWithLink): successes.append(itemWithLink)
+                    case let .failure(error): failures.append((item, error))
+                    }
                     grp.leave()
                 }
             }
@@ -68,8 +66,25 @@ class SharedLinkSelectionHandler: SelectionHandler {
 
         grp.notify(queue: workQueue) {
             if !totalProgress.isCancelled {
-                completion(sharedLinks)
+                self.complete(successes: successes, failures: failures)
             }
+        }
+    }
+
+    private func complete(successes: [FolderItem], failures: [(FolderItem, BoxSDKError)]) {
+        if let picker = picker {
+            if !failures.isEmpty {
+                picker.didFail(failures)
+            }
+            if !successes.isEmpty {
+                picker.didSelect(successes)
+            }
+        }
+    }
+
+    private func willCreateSharedLinks(progress: Progress) {
+        if let picker = picker {
+            picker.willCreateSharedLinks(progress)
         }
     }
 }
