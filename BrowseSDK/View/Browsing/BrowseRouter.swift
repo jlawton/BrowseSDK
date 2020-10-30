@@ -44,6 +44,5 @@ class DefaultBrowseRouter: BrowseRouter {
 
     func handleSelected(items: [ItemViewModel]) {
         selectionHandler.handleSelected(items: items)
-        navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }
