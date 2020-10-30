@@ -45,9 +45,7 @@ public class AbstractListingViewController: UITableViewController,
 
     override public func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-
-        toolbarItems = selectionToolbarItems()
-        navigationController?.setToolbarHidden(!editing, animated: animated)
+        selectionUpdated(animated: true)
     }
 
     // MARK: - Lifecycle
@@ -141,12 +139,12 @@ public class AbstractListingViewController: UITableViewController,
             }
         }
         else {
-            toolbarItems = selectionToolbarItems()
+            selectionUpdated()
         }
     }
 
     override public func tableView(_: UITableView, didDeselectRowAt _: IndexPath) {
-        toolbarItems = selectionToolbarItems()
+        selectionUpdated()
     }
 
     override public func tableView(_: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -200,7 +198,7 @@ public class AbstractListingViewController: UITableViewController,
             }
         }
         else {
-            toolbarItems = selectionToolbarItems()
+            selectionUpdated()
         }
     }
 
@@ -239,8 +237,29 @@ public class AbstractListingViewController: UITableViewController,
 
     // MARK: - Selecting
 
+    func selectedItems() -> [ItemViewModel] {
+        guard
+            let viewModel = listingViewModel,
+            let indexPaths = tableView.indexPathsForSelectedRows
+        else {
+            return []
+        }
+        return indexPaths.compactMap(viewModel.item(at:))
+    }
+
+    var isSelecting: Bool {
+        isEditing
+    }
+
+    func selectionUpdated(animated: Bool = false) {
+        if let nav = navigationController, isSelecting == nav.isToolbarHidden {
+            nav.setToolbarHidden(!isSelecting, animated: animated)
+        }
+        toolbarItems = selectionToolbarItems()
+    }
+
     func selectionToolbarItems() -> [UIBarButtonItem] {
-        let selectedItemCount = tableView.indexPathsForSelectedRows?.count ?? 0
+        let selectedItemCount = selectedItems().count
         let confirmationTitle = NSString.localizedStringWithFormat(
             NSLocalizedString("Select %d items", comment: "Confirm the selected files, folders and weblinks") as NSString,
             selectedItemCount
@@ -260,15 +279,9 @@ public class AbstractListingViewController: UITableViewController,
     }
 
     @objc private func confirmTapped() {
-        guard
-            let viewModel = listingViewModel,
-            let indexPaths = tableView.indexPathsForSelectedRows, !indexPaths.isEmpty
-        else {
-            return
+        let items = selectedItems()
+        if !items.isEmpty {
+            router?.handleSelected(items: items)
         }
-        let items: [ItemViewModel] = indexPaths
-            .compactMap(viewModel.item(at:))
-
-        router?.handleSelected(items: items)
     }
 }
