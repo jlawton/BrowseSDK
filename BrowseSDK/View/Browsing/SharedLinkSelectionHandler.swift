@@ -73,18 +73,22 @@ class BoxSharedLinkPickerSelectionHandler: SelectionHandler {
 
     private func complete(successes: [FolderItem], failures: [(FolderItem, BoxSDKError)]) {
         if let picker = picker {
-            if !failures.isEmpty {
-                picker.didFail(failures)
-            }
-            if !successes.isEmpty {
-                picker.didSelect(successes)
+            DispatchQueue.main.async {
+                if !failures.isEmpty {
+                    picker.didFail(failures)
+                }
+                if !successes.isEmpty {
+                    picker.didSelect(successes)
+                }
             }
         }
     }
 
     private func willCreateSharedLinks(progress: Progress) {
         if let picker = picker {
-            picker.willCreateSharedLinks(progress)
+            DispatchQueue.main.async {
+                picker.willCreateSharedLinks(progress)
+            }
         }
     }
 }

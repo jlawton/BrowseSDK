@@ -66,8 +66,9 @@ class LoginViewController: UIViewController, ASWebAuthenticationPresentationCont
         let picker = BoxSharedLinkPicker(
             client: client,
             folder: folder
-        ) { items in
+        ) { [weak self] items in
             print(items.compactMap(\.sharedLink?.url))
+            self?.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil)
     }
