@@ -68,9 +68,4 @@ extension BrowseViewController {
             selectionHandler: selectionHandler
         )
     }
-
-    @objc
-    private func closeButtonPressed(_: AnyObject?) {
-        presentingViewController?.dismiss(animated: true, completion: nil)
-    }
 }
