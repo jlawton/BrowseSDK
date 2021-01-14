@@ -48,7 +48,7 @@ public class BoxSharedLinkPicker: UINavigationController {
         {
             root.navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .close,
-                target: root, action: #selector(closeButtonPressed(_:))
+                target: self, action: #selector(closeButtonPressed(_:))
             )
         }
     }
