@@ -55,7 +55,7 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             toolbar.items = [
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
                 UIBarButtonItem(
-                    title: NSLocalizedString("Select", comment: "Enter selection mode for files and filders."),
+                    title: NSLocalizedString("Select", comment: "Enter selection mode for files and folders."),
                     style: .plain,
                     target: searchResultsController, action: #selector(SearchResultsViewController.toggleEditing)
                 )

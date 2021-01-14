@@ -4,7 +4,7 @@
 /* Title of search view */
 "Search" = "Search";
 
-/* Enter selection mode for files and filders. */
+/* Enter selection mode for files and folders. */
 "Select" = "Select";
 
 /* Separator between path components rendered in the Box search UI */
