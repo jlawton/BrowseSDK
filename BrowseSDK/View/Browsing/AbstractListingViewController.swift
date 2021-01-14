@@ -81,15 +81,12 @@ public class AbstractListingViewController: UITableViewController,
     func didSetRouter() {}
 
     func canBrowseTo(item: ItemViewModel) -> Bool {
-        if let listing = item.listingViewModel() {
-            return router?.canBrowseTo(listing: listing, search: item.searchViewModel()) ?? false
-        }
-        return false
+        router?.canBrowseTo(item: item) ?? false
     }
 
     func browseTo(item: ItemViewModel) -> Bool {
-        if let router = router, let listing = item.listingViewModel() {
-            router.browseTo(listing: listing, search: item.searchViewModel())
+        if let router = router {
+            router.browseTo(item: item)
             return true
         }
         return false
