@@ -44,7 +44,7 @@ public class BoxSharedLinkPicker: UINavigationController {
             onto: self, animated: false
         )
         if withCloseButton,
-            let root = viewControllers.first as? BrowseViewController
+           let root = viewControllers.first as? BrowseViewController
         {
             root.navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .close,

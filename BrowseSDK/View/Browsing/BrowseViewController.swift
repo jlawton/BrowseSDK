@@ -93,10 +93,10 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
 
         // HACK: UISearchController has lifecycle bugs
         if let search = navigationItem.searchController,
-            search.isActive,
-            let resultsVC = search.searchResultsController as? UITableViewController,
-            let results = resultsVC.tableView,
-            let selectedIndexPaths = results.indexPathsForSelectedRows
+           search.isActive,
+           let resultsVC = search.searchResultsController as? UITableViewController,
+           let results = resultsVC.tableView,
+           let selectedIndexPaths = results.indexPathsForSelectedRows
         {
             for indexPath in selectedIndexPaths {
                 results.deselectRow(at: indexPath, animated: true)
