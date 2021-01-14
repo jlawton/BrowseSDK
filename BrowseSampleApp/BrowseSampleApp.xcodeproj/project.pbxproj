@@ -37,6 +37,7 @@
 /* Begin PBXFileReference section */
 		0D9BAF94254A6CA200D1B102 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0D9BAF97254A704C00D1B102 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		0D9BAFAF254D3DBD00D1B102 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		0DC58FD224C5A1C500B7BA00 /* BrowseSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrowseSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC58FD524C5A1C500B7BA00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DC58FD724C5A1C500B7BA00 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0DC58FDC24C5A1C500B7BA00 /* Base */,
+				0D9BAFAF254D3DBD00D1B102 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
