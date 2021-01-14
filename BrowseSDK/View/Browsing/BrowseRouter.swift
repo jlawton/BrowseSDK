@@ -11,15 +11,17 @@ import UIKit
 protocol BrowseRouter {
     func canBrowseTo(item: ItemViewModel) -> Bool
     func browseTo(item: ItemViewModel)
+
+    var supportsSelection: Bool { get }
     func canSelect(item: ItemViewModel) -> Bool
     func handleSelected(items: [ItemViewModel])
 }
 
 class DefaultBrowseRouter: BrowseRouter {
     weak var navigationController: UINavigationController?
-    let selectionHandler: SelectionHandler
+    let selectionHandler: SelectionHandler?
 
-    init(navigationController: UINavigationController, selectionHandler: SelectionHandler) {
+    init(navigationController: UINavigationController, selectionHandler: SelectionHandler?) {
         self.navigationController = navigationController
         self.selectionHandler = selectionHandler
     }
@@ -51,11 +53,15 @@ class DefaultBrowseRouter: BrowseRouter {
         }
     }
 
+    var supportsSelection: Bool {
+        false && (selectionHandler != nil)
+    }
+
     func canSelect(item: ItemViewModel) -> Bool {
-        selectionHandler.canSelect(item: item)
+        selectionHandler?.canSelect(item: item) ?? false
     }
 
     func handleSelected(items: [ItemViewModel]) {
-        selectionHandler.handleSelected(items: items)
+        selectionHandler?.handleSelected(items: items)
     }
 }

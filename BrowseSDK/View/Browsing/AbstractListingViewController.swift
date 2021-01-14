@@ -57,7 +57,6 @@ public class AbstractListingViewController: UITableViewController,
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
 
-        navigationItem.rightBarButtonItems = [editButtonItem]
         configureLoadingFooter()
 
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -78,7 +77,14 @@ public class AbstractListingViewController: UITableViewController,
         }
     }
 
-    func didSetRouter() {}
+    func didSetRouter() {
+        if router?.supportsSelection ?? false {
+            navigationItem.rightBarButtonItems = [editButtonItem]
+        }
+        else {
+            navigationItem.rightBarButtonItems = []
+        }
+    }
 
     func canBrowseTo(item: ItemViewModel) -> Bool {
         router?.canBrowseTo(item: item) ?? false
@@ -94,7 +100,7 @@ public class AbstractListingViewController: UITableViewController,
 
     func canMultiselect(item: ItemViewModel) -> Bool {
         if let router = router {
-            return router.canSelect(item: item)
+            return router.supportsSelection && router.canSelect(item: item)
         }
         return false
     }

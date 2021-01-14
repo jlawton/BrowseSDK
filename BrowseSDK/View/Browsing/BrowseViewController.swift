@@ -20,8 +20,31 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
 
     override func didSetRouter() {
         super.didSetRouter()
-        if let searchResults = navigationItem.searchController?.searchResultsController as? SearchResultsViewController {
+        if let searchController = navigationItem.searchController,
+           let searchResults = searchController.searchResultsController as? SearchResultsViewController
+        {
             searchResults.router = router
+
+            if router?.supportsSelection ?? false {
+                // FIXME: Doesn't handle safe area when keyboard is hidden
+                let toolbar = UIToolbar()
+                toolbar.items = [
+                    UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                    UIBarButtonItem(
+                        title: NSLocalizedString(
+                            "Select",
+                            comment: "Enter selection mode for files and folders."
+                        ),
+                        style: .plain,
+                        target: searchResults, action: #selector(SearchResultsViewController.toggleEditing)
+                    )
+                ]
+                toolbar.sizeToFit()
+                searchController.searchBar.searchTextField.inputAccessoryView = toolbar
+            }
+            else {
+                searchController.searchBar.searchTextField.inputAccessoryView = nil
+            }
         }
     }
 
@@ -49,19 +72,6 @@ public class BrowseViewController: AbstractListingViewController, FolderListingV
             }
 
             let searchController = UISearchController(searchResultsController: searchResultsController)
-
-            // FIXME: Doesn't handle safe area when keyboard is hidden
-            let toolbar = UIToolbar()
-            toolbar.items = [
-                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-                UIBarButtonItem(
-                    title: NSLocalizedString("Select", comment: "Enter selection mode for files and folders."),
-                    style: .plain,
-                    target: searchResultsController, action: #selector(SearchResultsViewController.toggleEditing)
-                )
-            ]
-            toolbar.sizeToFit()
-            searchController.searchBar.searchTextField.inputAccessoryView = toolbar
 
             navigationItem.searchController = searchController
             searchController.searchResultsUpdater = self
