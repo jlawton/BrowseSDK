@@ -15,7 +15,7 @@ extension BrowseViewController {
 extension BrowseViewController {
     static func pushBrowseController(
         provider: BoxFolderProvider,
-        selectionHandler: SelectionHandler,
+        router: BrowseRouter,
         folder: Folder,
         withAncestors: Bool = false,
         onto navigationController: UINavigationController,
@@ -31,10 +31,8 @@ extension BrowseViewController {
 
         let controllers = folders.map { folder -> UIViewController in
             let controller = BrowseViewController()
-            controller.configure(
-                provider: provider, folder: folder,
-                navigationController: navigationController, selectionHandler: selectionHandler
-            )
+            controller.router = router
+            controller.configure(provider: provider, folder: folder)
             return controller
         }
 
@@ -46,9 +44,7 @@ extension BrowseViewController {
 
     private func configure(
         provider: BoxFolderProvider,
-        folder: Folder,
-        navigationController: UINavigationController,
-        selectionHandler: SelectionHandler
+        folder: Folder
     ) {
         let folderID = folder.id
 
@@ -61,11 +57,6 @@ extension BrowseViewController {
         searchViewModel = SearchViewModel(
             provider: provider,
             folderID: folder.id
-        )
-
-        router = DefaultBrowseRouter(
-            navigationController: navigationController,
-            selectionHandler: selectionHandler
         )
     }
 }

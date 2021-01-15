@@ -36,10 +36,14 @@ public class BoxSharedLinkPicker: UINavigationController {
             provider: provider,
             picker: self
         )
+        let router = DefaultBrowseRouter(
+            navigationController: self,
+            selectionHandler: selectionHandler
+        )
 
         BrowseViewController.pushBrowseController(
             provider: provider,
-            selectionHandler: selectionHandler,
+            router: router,
             folder: folder, withAncestors: true,
             onto: self, animated: false
         )
