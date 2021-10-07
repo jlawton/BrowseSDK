@@ -54,7 +54,7 @@ class DefaultBrowseRouter: BrowseRouter {
     }
 
     var supportsSelection: Bool {
-        (selectionHandler != nil)
+        selectionHandler != nil
     }
 
     func canSelect(item: ItemViewModel) -> Bool {
