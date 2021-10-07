@@ -32,6 +32,8 @@
 		0DC58FF924C621D700B7BA00 /* AbstractListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */; };
 		0DC58FFB24C6251400B7BA00 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FFA24C6251400B7BA00 /* SearchResultsViewController.swift */; };
 		0DC58FFD24C642BF00B7BA00 /* UIImage+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */; };
+		0DCA2A17270EE87900D75B76 /* BoxFilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA2A16270EE87900D75B76 /* BoxFilePicker.swift */; };
+		0DCA2A19270EE8E400D75B76 /* ItemActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA2A18270EE8E400D75B76 /* ItemActionHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		0DC58FF824C621D700B7BA00 /* AbstractListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractListingViewController.swift; sourceTree = "<group>"; };
 		0DC58FFA24C6251400B7BA00 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		0DC58FFC24C642BF00B7BA00 /* UIImage+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Icon.swift"; sourceTree = "<group>"; };
+		0DCA2A16270EE87900D75B76 /* BoxFilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxFilePicker.swift; sourceTree = "<group>"; };
+		0DCA2A18270EE8E400D75B76 /* ItemActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemActionHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 				0DC58FC724C59A1500B7BA00 /* BrowseRouter.swift */,
 				0D9BAF132549491400D1B102 /* SelectionHandler.swift */,
 				0D9BAF8A254A3C2400D1B102 /* SharedLinkSelectionHandler.swift */,
+				0DCA2A18270EE8E400D75B76 /* ItemActionHandler.swift */,
 			);
 			path = Browsing;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 		0D70911B24C3F99100F0337C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0DCA2A16270EE87900D75B76 /* BoxFilePicker.swift */,
 				0D9BAF9B254AC12900D1B102 /* BoxSharedLinkPicker.swift */,
 				0DC58FF024C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift */,
 				0D4E98D624C7FF0B00B95025 /* Browsing */,
@@ -310,6 +316,7 @@
 			files = (
 				0DC58FC824C59A1500B7BA00 /* BrowseRouter.swift in Sources */,
 				0DC58FF324C5B76800B7BA00 /* UIImage+Scaling.swift in Sources */,
+				0DCA2A19270EE8E400D75B76 /* ItemActionHandler.swift in Sources */,
 				0DC58FF524C5B84400B7BA00 /* Math.swift in Sources */,
 				0D2D3D5024CC3D3D00D64398 /* FolderItem+Util.swift in Sources */,
 				0D4E98D024C7FB5500B95025 /* Breadcrumbs.swift in Sources */,
@@ -327,6 +334,7 @@
 				0DC58FF124C5AA3D00B7BA00 /* BrowseViewController+Convenience.swift in Sources */,
 				0DC58FC024C5667F00B7BA00 /* BoxFolderProvider.swift in Sources */,
 				0D4B732A24C550D800FA43F1 /* BoxEnumerator.swift in Sources */,
+				0DCA2A17270EE87900D75B76 /* BoxFilePicker.swift in Sources */,
 				0DC58FC424C56E9000B7BA00 /* ItemViewModel.swift in Sources */,
 				0D92B61624EBBF5B001C35D8 /* BrowseViewController+FolderPicker.swift in Sources */,
 				0D4E98CD24C7FA7300B95025 /* ThumbnailSize.swift in Sources */,

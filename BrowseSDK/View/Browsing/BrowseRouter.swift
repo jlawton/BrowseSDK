@@ -19,10 +19,16 @@ protocol BrowseRouter {
 
 class DefaultBrowseRouter: BrowseRouter {
     weak var navigationController: UINavigationController?
+    let fileBrowseHandler: ItemActionHandler?
     let selectionHandler: SelectionHandler?
 
-    init(navigationController: UINavigationController, selectionHandler: SelectionHandler?) {
+    init(
+        navigationController: UINavigationController,
+        fileBrowseHandler: ItemActionHandler? = nil,
+        selectionHandler: SelectionHandler? = nil
+    ) {
         self.navigationController = navigationController
+        self.fileBrowseHandler = fileBrowseHandler
         self.selectionHandler = selectionHandler
     }
 
@@ -30,12 +36,18 @@ class DefaultBrowseRouter: BrowseRouter {
         if let listing = item.listingViewModel() {
             return canBrowseTo(listing: listing, search: item.searchViewModel())
         }
+        if let handler = fileBrowseHandler {
+            return handler.canAct(on: item)
+        }
         return false
     }
 
     func browseTo(item: ItemViewModel) {
         if let listing = item.listingViewModel() {
             return browseTo(listing: listing, search: item.searchViewModel())
+        }
+        else if let handler = fileBrowseHandler {
+            return handler.act(on: item)
         }
     }
 
