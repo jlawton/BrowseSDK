@@ -18,13 +18,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/box/box-ios-sdk.git", .upToNextMajor(from: "4.0.0")),
+        .package(url: "https://github.com/box/box-ios-sdk.git", .upToNextMajor(from: "4.0.0"))
     ],
     targets: [
         .target(
             name: "BrowseSDK",
             dependencies: [],
             path: "BrowseSDK"
-        ),
+        )
     ]
 )
